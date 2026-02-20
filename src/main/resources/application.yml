@@ -1,0 +1,92 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: backend
+  profiles:
+    active: dev
+  
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_desktoppet_todo?useSSL=false&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF8&autoReconnect=true&failOverReadOnly=false&allowPublicKeyRetrieval=true&failOverReadOnly=false
+    username: root
+    password: 123456
+    
+    # HikariCP连接池配置
+    hikari:
+      pool-name: WeGoHikariCP
+      # 连接测试配置
+      connection-test-query: SELECT 1
+      validation-timeout: 3000
+      # 性能优化配置
+      read-only: false
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 900000
+      maximum-pool-size: 30
+      minimum-idle: 10
+      # 高级配置
+      auto-commit: true
+      allow-pool-suspension: false
+      leak-detection-threshold: 30000
+      register-mbeans: true
+  
+  # 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 20MB
+      enabled: true
+
+# MyBatis配置
+mybatis:
+  # Mapper XML文件位置
+  mapper-locations: classpath*:mapper/*.xml
+  # 实体类包别名
+  type-aliases-package: com.backend.domain.entity,com.backend.domain.vo,com.backend.domain.dto,com.backend.domain.query
+  # 全局配置
+  configuration:
+    # 日志配置
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+    log-prefix: '[MyBatis] '
+    # 命名规则配置
+    map-underscore-to-camel-case: true
+    local-cache-scope: SESSION
+    # 性能优化配置
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    multiple-result-sets-enabled: true
+    use-column-label: true
+    # 执行器配置
+    default-executor-type: REUSE
+    # 安全性配置
+    call-setters-on-nulls: true
+    jdbc-type-for-null: NULL
+    # 超时设置
+    default-statement-timeout: 30
+    # 结果集获取大小
+    default-fetch-size: 100
+
+# PageHelper分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  params: pageNum=pageNum;pageSize=pageSize;count=countSql;reasonable=reasonable;pageSizeZero=pageSizeZero
+  page-size-zero: true
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.backend: DEBUG
+    com.backend.mapper: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"

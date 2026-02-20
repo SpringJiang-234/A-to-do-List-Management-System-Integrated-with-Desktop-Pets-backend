@@ -109,6 +109,7 @@ com\backend\domain\vo\FeedbackVO.class
 com\backend\domain\vo\CategoryVO.class
 com\backend\domain\enums\CategoryIsDefault.class
 com\backend\domain\vo\TodoVO.class
+com\backend\config\WebMvcConfig.class
 com\backend\domain\excel\UserExcel.class
 com\backend\controller\UserTagController$1.class
 com\backend\domain\enums\UserStatus.class
@@ -118,6 +119,7 @@ com\backend\domain\excel\CategoryExcel.class
 com\backend\domain\entity\Category.class
 com\backend\mapper\TagMapper.class
 com\backend\service\FeedbackService.class
+com\backend\BackendApplication.class
 com\backend\controller\FeedbackController$1.class
 com\backend\domain\details\AnnouncementDetails.class
 com\backend\domain\excel\FeedbackExcel.class

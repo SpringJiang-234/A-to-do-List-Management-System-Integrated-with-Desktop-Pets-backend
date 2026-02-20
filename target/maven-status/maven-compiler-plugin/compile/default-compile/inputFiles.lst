@@ -7,6 +7,7 @@ D:\Code\graduation-project\backend\src\main\java\com\backend\domain\dto\UserDTO.
 D:\Code\graduation-project\backend\src\main\java\com\backend\service\impl\CategoryServiceImpl.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\domain\vo\FeedbackVO.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\domain\query\AnnouncementQuery.java
+D:\Code\graduation-project\backend\src\main\java\com\backend\BackendApplication.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\service\DesktopPetService.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\controller\TodoController.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\utils\excel\EasyExcelWriterFactory.java
@@ -24,6 +25,7 @@ D:\Code\graduation-project\backend\src\main\java\com\backend\domain\entity\UserT
 D:\Code\graduation-project\backend\src\main\java\com\backend\service\TagService.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\domain\excel\UserExcel.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\service\CategoryService.java
+D:\Code\graduation-project\backend\src\main\java\com\backend\config\WebMvcConfig.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\domain\vo\DesktopPetVO.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\domain\excel\TodoExcel.java
 D:\Code\graduation-project\backend\src\main\java\com\backend\domain\enums\CategoryIsDefault.java
