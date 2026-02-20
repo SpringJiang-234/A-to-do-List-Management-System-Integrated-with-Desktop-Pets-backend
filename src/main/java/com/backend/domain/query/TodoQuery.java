@@ -1,0 +1,70 @@
+package com.backend.domain.query;
+
+import com.backend.bean.LocalDateTimeRange;
+import com.backend.bean.base.BaseQuery;
+import lombok.*;
+
+/**
+ * 待办事项表
+ */
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class TodoQuery extends BaseQuery {
+    /**
+    * 用户id
+    */
+    private Long userId;
+
+    /**
+    * 标题
+    */
+    private String title;
+
+    /**
+    * 内容
+    */
+    private String content;
+
+    /**
+    * 类别id
+    */
+    private Long categoryId;
+
+    /**
+    * 优先级：1-非常低 2-低 3-中 4-高 默认值为非常低
+    */
+    private Integer priority;
+
+    /**
+    * 开始时间
+    */
+    private LocalDateTimeRange startTime;
+
+    /**
+    * 截止时间(结束时间)
+    */
+    private LocalDateTimeRange endTime;
+
+    /**
+    * 状态：1-未完成 2-完成 3-放弃
+    */
+    private Integer status;
+
+    /**
+    * 完成/放弃时间
+    */
+    private LocalDateTimeRange finishTime;
+
+    /**
+    * 是否已删除：1-未删除 2-已删除
+    */
+    private Integer isDelete;
+
+    /**
+    * 是否置顶：1-未置顶 2-置顶
+    */
+    private Integer isTop;
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="fastRequestCurrentParamGroup">
+    <option name="className" value="com.backend.controller.UserController" />
+    <option name="filePath" value="" />
+    <option name="method" value="getDetails" />
+    <option name="module" value="backend" />
+    <option name="originUrl" value="/user/details/{id}" />
+    <option name="pathParamMap">
+      <map>
+        <entry key="id">
+          <value>
+            <Object />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="returnDocument" value="{&quot;code&quot;:&quot;响应码&quot;,&quot;msg&quot;:&quot;响应消息&quot;,&quot;data&quot;:{&quot;account&quot;:&quot;邮箱账号&quot;,&quot;passwordHash&quot;:&quot;加密后的密码&quot;,&quot;nickname&quot;:&quot;昵称&quot;,&quot;avatar&quot;:&quot;头像&quot;,&quot;gender&quot;:&quot;性别：1-男 2-女 3-未知&quot;,&quot;birth&quot;:&quot;生日&quot;,&quot;status&quot;:&quot;状态：1-正常 2-已注销&quot;,&quot;id&quot;:&quot;主键&quot;,&quot;createTime&quot;:&quot;创建时间&quot;,&quot;updateTime&quot;:&quot;修改时间&quot;}}" />
+    <option name="url" value="/user/details/1" />
+  </component>
+</project>

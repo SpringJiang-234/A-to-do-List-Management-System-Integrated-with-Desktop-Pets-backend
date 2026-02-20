@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Spring应用上下文配置文件 -->
+<!-- 集成核心配置和Web配置，为应用提供完整的Spring容器支持 -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 导入核心业务配置文件 -->
+    <import resource="spring.xml"/>
+
+    <!-- 导入Web MVC配置文件 -->
+    <import resource="spring-mvc.xml"/>
+</beans>

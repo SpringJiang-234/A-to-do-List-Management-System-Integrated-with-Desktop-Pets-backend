@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 加载数据库属性配置文件，支持多个环境配置 -->
+    <context:property-placeholder location="classpath:mysql.properties" ignore-unresolvable="true" system-properties-mode="OVERRIDE"/>
+
+    <!-- 配置高性能HikariCP数据库连接池 -->
+    <bean id="ds" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <!-- 基本连接配置 -->
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <!-- 连接测试配置 -->
+        <property name="connectionTestQuery" value="SELECT 1"/>
+        <property name="validationTimeout" value="3000"/>
+
+        <!-- 性能优化配置 -->
+        <!-- 连接只读数据库时配置为true， 保证安全 -->
+        <property name="readOnly" value="false"/>
+        <!-- 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException -->
+        <property name="connectionTimeout" value="30000"/>
+        <!-- 一个连接idle状态的最大时长（毫秒），超时则被释放（retired）
+             优化：从5分钟调整为10分钟，减少连接频繁创建和销毁的开销 -->
+        <property name="idleTimeout" value="600000"/>
+        <!-- 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired）
+             优化：从30分钟调整为15分钟，避免连接长时间占用且接近数据库wait_timeout -->
+        <property name="maxLifetime" value="900000"/>
+        <!-- 连接池中允许的最大连接数
+             优化：从20调整为30，根据服务器配置和并发情况增加最大连接数，推荐公式：((core_count * 2) + effective_spindle_count) -->
+        <property name="maximumPoolSize" value="30"/>
+        <!-- 最小空闲连接数
+             优化：从5调整为10，确保有足够的空闲连接应对并发请求 -->
+        <property name="minimumIdle" value="10"/>
+
+        <!-- 高级配置 -->
+        <property name="poolName" value="WeGoHikariCP"/>
+        <property name="autoCommit" value="true"/>
+        <property name="allowPoolSuspension" value="false"/>
+        <property name="leakDetectionThreshold" value="30000"/>
+        <property name="registerMbeans" value="true"/>
+    </bean>
+
+    <!-- 配置MyBatis SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 引用高性能数据源 -->
+        <property name="dataSource" ref="ds"/>
+
+        <!-- 
+        自动扫描所有Mapper XML文件 
+         classpath* 不仅在当前路径下查找，还在当前路径下的jar正点面查找。比如：多Module工程，当前Module依赖其它Module打包后的jar
+        classpath 仅仅在当前路径下面查找
+        -->
+        <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
+
+        <!-- 指定MyBatis配置文件 -->
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+    </bean>
+
+    <!--
+    配置扫描mapper接口所在包名，Spring会自动查找其下的类
+    有了这个配置后，Mapper接口上面就不再需要使用注解@Mapper了
+     -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 给出需要扫描mapper接口包 -->
+        <property name="basePackage" value="com.backend.mapper"/>
+        <!-- 注入sqlSessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!-- 配置增强型事务管理器 -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="ds"/>
+        <!-- 配置事务同步管理器 -->
+        <property name="globalRollbackOnParticipationFailure" value="true"/>
+        <property name="enforceReadOnly" value="true"/>
+    </bean>
+
+    <!-- 配置基于注解的声明式事务 -->
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+</beans>
