@@ -13,16 +13,6 @@ import lombok.*;
 @NoArgsConstructor
 public class FeedbackDetails extends BaseDetails {
     /**
-    * 创建时间
-    */
-    private String createTime;
-
-    /**
-    * 修改时间
-    */
-    private String updateTime;
-
-    /**
     * 用户id
     */
     private Long userId;

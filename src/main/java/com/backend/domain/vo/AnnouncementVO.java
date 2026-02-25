@@ -3,6 +3,8 @@ package com.backend.domain.vo;
 import com.backend.bean.base.BaseVO;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 /**
  * 公告表
  */
@@ -30,10 +32,10 @@ public class AnnouncementVO extends BaseVO {
     /**
      * 创建时间
      */
-    private String createTime;
+    private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
-    private String updateTime;
+    private LocalDateTime updateTime;
 }
