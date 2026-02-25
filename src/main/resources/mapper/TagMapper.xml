@@ -465,4 +465,17 @@
     </where>
     order by create_time desc
   </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.TagQuery">
+    select count(*)
+    from tb_tag
+    <where>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="name != null and name != ''">
+        and name like concat('%', #{name}, '%')
+      </if>
+    </where>
+  </select>
 </mapper>

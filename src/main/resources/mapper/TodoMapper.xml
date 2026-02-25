@@ -840,4 +840,44 @@
     </where>
     order by create_time desc
   </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.TodoQuery">
+    select count(*)
+    from tb_todo
+    <where>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="title != null and title != ''">
+        and title like concat('%', #{title}, '%')
+      </if>
+      <if test="content != null">
+        and content between #{content} and #{content}
+      </if>
+      <if test="categoryId != null">
+        and category_id = #{categoryId,jdbcType=BIGINT}
+      </if>
+      <if test="priority != null">
+        and priority = #{priority,jdbcType=TINYINT}
+      </if>
+      <if test="startTime != null">
+        and start_time between #{startTime.start} and #{startTime.end}
+      </if>
+      <if test="endTime != null">
+        and end_time between #{endTime.start} and #{endTime.end}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="finishTime != null">
+        and finish_time between #{finishTime.start} and #{finishTime.end}
+      </if>
+      <if test="isDelete != null">
+        and is_delete = #{isDelete,jdbcType=TINYINT}
+      </if>
+      <if test="isTop != null">
+        and is_top = #{isTop,jdbcType=TINYINT}
+      </if>
+    </where>
+  </select>
 </mapper>

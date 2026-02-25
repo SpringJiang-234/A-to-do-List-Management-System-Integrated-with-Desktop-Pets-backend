@@ -38,4 +38,6 @@ public interface AuditLogMapper {
     int batchInsertOrUpdate(@Param("list") List<AuditLog> list);
 
     List<AuditLog> selectWithCondition(AuditLogQuery auditLogQuery);
+
+    int countByCondition(AuditLogQuery auditLogQuery);
 }

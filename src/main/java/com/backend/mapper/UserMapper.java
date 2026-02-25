@@ -38,4 +38,6 @@ public interface UserMapper {
     int batchInsertOrUpdate(@Param("list") List<User> list);
 
     List<User> selectWithCondition(UserQuery userQuery);
+
+    int countByCondition(UserQuery userQuery);
 }

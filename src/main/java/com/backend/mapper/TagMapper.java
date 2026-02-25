@@ -39,4 +39,6 @@ public interface TagMapper {
     int batchInsertOrUpdate(@Param("list") List<Tag> list);
 
     List<Tag> selectWithCondition(TagQuery tagQuery);
+
+    int countByCondition(TagQuery tagQuery);
 }

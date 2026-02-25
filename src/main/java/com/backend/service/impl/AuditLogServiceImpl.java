@@ -23,7 +23,8 @@ public class AuditLogServiceImpl implements AuditLogService {
         final Integer pageSize = auditLogQuery.getPageSize();
         final Page<AuditLog> page = PageHelper.startPage(pageNum, pageSize);
         auditLogMapper.selectWithCondition(auditLogQuery);
-        return PageBean.page2pageBean(page);
+        final int total = auditLogMapper.countByCondition(auditLogQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

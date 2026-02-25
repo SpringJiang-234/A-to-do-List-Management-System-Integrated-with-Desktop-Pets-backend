@@ -522,4 +522,26 @@
     </where>
     order by update_time desc
   </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.AuditLogQuery">
+    select count(*)
+    from tb_audit_log
+    <where>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="username != null and username != ''">
+        and username like concat('%', #{username}, '%')
+      </if>
+      <if test="operation != null and operation != ''">
+        and operation like concat('%', #{operation}, '%')
+      </if>
+      <if test="module != null and module != ''">
+        and module like concat('%', #{module}, '%')
+      </if>
+      <if test="ipAddress != null and ipAddress != ''">
+        and ip_address like concat('%', #{ipAddress}, '%')
+      </if>
+    </where>
+  </select>
 </mapper>

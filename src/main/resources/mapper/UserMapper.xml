@@ -677,4 +677,29 @@
     </where>
     order by create_time desc
   </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.UserQuery">
+    select count(*)
+    from tb_user
+    <where>
+      <if test="account != null and account != ''">
+        and account like concat('%', #{account}, '%')
+      </if>
+      <if test="nickname != null and nickname != ''">
+        and nickname like concat('%', #{nickname}, '%')
+      </if>
+      <if test="gender != null">
+        and gender = #{gender,jdbcType=TINYINT}
+      </if>
+      <if test="birth != null">
+        and birth between #{birth.start} and #{birth.end}
+      </if>
+      <if test="status != null">
+        and `status` = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="type != null">
+        and `type` = #{type,jdbcType=TINYINT}
+      </if>
+    </where>
+  </select>
 </mapper>

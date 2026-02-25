@@ -522,4 +522,26 @@
     </where>
     order by create_time desc
   </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.FeedbackQuery">
+    select count(*)
+    from tb_feedback
+    <where>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="title != null and title != ''">
+        and title like concat('%', #{title}, '%')
+      </if>
+      <if test="content != null and content != ''">
+        and content like concat('%', #{content}, '%')
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="replyContent != null and replyContent != ''">
+        and reply_content like concat('%', #{replyContent}, '%')
+      </if>
+    </where>
+  </select>
 </mapper>

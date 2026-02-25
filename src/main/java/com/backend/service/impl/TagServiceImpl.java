@@ -23,7 +23,8 @@ public class TagServiceImpl implements TagService {
         final Integer pageSize = tagQuery.getPageSize();
         final Page<Tag> page = PageHelper.startPage(pageNum, pageSize);
         tagMapper.selectWithCondition(tagQuery);
-        return PageBean.page2pageBean(page);
+        final int total = tagMapper.countByCondition(tagQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

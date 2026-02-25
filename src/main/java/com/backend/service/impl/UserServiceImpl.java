@@ -23,7 +23,8 @@ public class UserServiceImpl implements UserService {
         final Integer pageSize = userQuery.getPageSize();
         final Page<User> page = PageHelper.startPage(pageNum, pageSize);
         userMapper.selectWithCondition(userQuery);
-        return PageBean.page2pageBean(page);
+        final int total = userMapper.countByCondition(userQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

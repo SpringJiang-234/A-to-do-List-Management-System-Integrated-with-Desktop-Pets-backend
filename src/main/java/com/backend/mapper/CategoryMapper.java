@@ -39,4 +39,6 @@ public interface CategoryMapper {
     int batchInsertOrUpdate(@Param("list") List<Category> list);
 
     List<Category> selectWithCondition(CategoryQuery CategoryQuery);
+
+    int countByCondition(CategoryQuery CategoryQuery);
 }

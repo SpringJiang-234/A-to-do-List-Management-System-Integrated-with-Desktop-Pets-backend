@@ -619,4 +619,20 @@
     </where>
     order by create_time desc
   </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.DesktopPetQuery">
+    select count(*)
+    from tb_desktop_pet
+    <where>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="nickname != null and nickname != ''">
+        and nickname like concat('%', #{nickname}, '%')
+      </if>
+      <if test="level != null">
+        and level between #{level.start} and #{level.end}
+      </if>
+    </where>
+  </select>
 </mapper>

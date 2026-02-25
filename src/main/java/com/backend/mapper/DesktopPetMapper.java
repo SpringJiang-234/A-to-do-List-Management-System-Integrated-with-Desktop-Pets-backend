@@ -39,4 +39,6 @@ public interface DesktopPetMapper {
     int batchInsertOrUpdate(@Param("list") List<DesktopPet> list);
 
     List<DesktopPet> selectWithCondition(DesktopPetQuery desktopPetQuery);
+
+    int countByCondition(DesktopPetQuery desktopPetQuery);
 }

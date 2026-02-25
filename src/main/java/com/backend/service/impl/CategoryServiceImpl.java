@@ -23,7 +23,8 @@ public class CategoryServiceImpl implements CategoryService {
         final Integer pageSize = categoryQuery.getPageSize();
         final Page<Category> page = PageHelper.startPage(pageNum, pageSize);
         categoryMapper.selectWithCondition(categoryQuery);
-        return PageBean.page2pageBean(page);
+        final int total = categoryMapper.countByCondition(categoryQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

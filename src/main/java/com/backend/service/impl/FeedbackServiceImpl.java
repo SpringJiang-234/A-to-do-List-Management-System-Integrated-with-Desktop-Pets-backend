@@ -23,7 +23,8 @@ public class FeedbackServiceImpl implements FeedbackService {
         final Integer pageSize = feedbackQuery.getPageSize();
         final Page<Feedback> page = PageHelper.startPage(pageNum, pageSize);
         feedbackMapper.selectWithCondition(feedbackQuery);
-        return PageBean.page2pageBean(page);
+        final int total = feedbackMapper.countByCondition(feedbackQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

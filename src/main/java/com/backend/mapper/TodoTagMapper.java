@@ -39,4 +39,6 @@ public interface TodoTagMapper {
     int batchInsertOrUpdate(@Param("list") List<TodoTag> list);
 
     List<TodoTag> selectWithCondition(TodoTagQuery todoTagQuery);
+
+    int countByCondition(TodoTagQuery todoTagQuery);
 }

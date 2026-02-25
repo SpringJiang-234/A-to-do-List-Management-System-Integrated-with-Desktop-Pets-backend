@@ -23,7 +23,8 @@ public class UserTagServiceImpl implements UserTagService {
         final Integer pageSize = userTagQuery.getPageSize();
         final Page<UserTag> page = PageHelper.startPage(pageNum, pageSize);
         userTagMapper.selectWithCondition(userTagQuery);
-        return PageBean.page2pageBean(page);
+        final int total = userTagMapper.countByCondition(userTagQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

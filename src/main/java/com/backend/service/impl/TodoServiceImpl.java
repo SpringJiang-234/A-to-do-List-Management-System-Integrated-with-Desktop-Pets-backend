@@ -23,7 +23,8 @@ public class TodoServiceImpl implements TodoService {
         final Integer pageSize = todoQuery.getPageSize();
         final Page<Todo> page = PageHelper.startPage(pageNum, pageSize);
         todoMapper.selectWithCondition(todoQuery);
-        return PageBean.page2pageBean(page);
+        final int total = todoMapper.countByCondition(todoQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

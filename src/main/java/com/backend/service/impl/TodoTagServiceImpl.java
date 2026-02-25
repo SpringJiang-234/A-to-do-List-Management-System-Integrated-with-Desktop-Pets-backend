@@ -23,7 +23,8 @@ public class TodoTagServiceImpl implements TodoTagService {
         final Integer pageSize = todoTagQuery.getPageSize();
         final Page<TodoTag> page = PageHelper.startPage(pageNum, pageSize);
         todoTagMapper.selectWithCondition(todoTagQuery);
-        return PageBean.page2pageBean(page);
+        final int total = todoTagMapper.countByCondition(todoTagQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

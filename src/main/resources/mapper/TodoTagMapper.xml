@@ -365,4 +365,17 @@
     </where>
     order by create_time desc
   </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.TodoTagQuery">
+    select count(*)
+    from tb_todo_tag
+    <where>
+      <if test="todoId != null">
+        and todo_id = #{todoId,jdbcType=BIGINT}
+      </if>
+      <if test="tagId != null">
+        and tag_id = #{tagId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </select>
 </mapper>

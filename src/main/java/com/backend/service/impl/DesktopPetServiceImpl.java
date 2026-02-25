@@ -23,7 +23,8 @@ public class DesktopPetServiceImpl implements DesktopPetService {
         final Integer pageSize = desktopPetQuery.getPageSize();
         final Page<DesktopPet> page = PageHelper.startPage(pageNum, pageSize);
         desktopPetMapper.selectWithCondition(desktopPetQuery);
-        return PageBean.page2pageBean(page);
+        final int total = desktopPetMapper.countByCondition(desktopPetQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

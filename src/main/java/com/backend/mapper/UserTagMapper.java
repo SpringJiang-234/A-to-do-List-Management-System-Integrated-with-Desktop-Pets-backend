@@ -38,4 +38,6 @@ public interface UserTagMapper {
     int batchInsertOrUpdate(@Param("list") List<UserTag> list);
 
     List<UserTag> selectWithCondition(UserTagQuery userTagQuery);
+
+    int countByCondition(UserTagQuery userTagQuery);
 }

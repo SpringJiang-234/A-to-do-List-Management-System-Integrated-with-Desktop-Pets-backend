@@ -468,4 +468,20 @@
     </where>
     order by create_time desc
   </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.CategoryQuery">
+    select count(*)
+    from tb_category
+    <where>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="name != null and name != ''">
+        and name like concat('%', #{name}, '%')
+      </if>
+      <if test="isDefault != null">
+        and is_default = #{isDefault,jdbcType=TINYINT}
+      </if>
+    </where>
+  </select>
 </mapper>

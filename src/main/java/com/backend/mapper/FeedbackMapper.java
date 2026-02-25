@@ -39,4 +39,6 @@ public interface FeedbackMapper {
     int batchInsertOrUpdate(@Param("list") List<Feedback> list);
 
     List<Feedback> selectWithCondition(FeedbackQuery feedbackQuery);
+
+    int countByCondition(FeedbackQuery feedbackQuery);
 }
