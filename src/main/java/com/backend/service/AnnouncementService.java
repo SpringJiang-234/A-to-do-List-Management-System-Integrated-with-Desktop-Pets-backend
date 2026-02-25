@@ -16,6 +16,13 @@ public interface AnnouncementService {
     PageBean<Announcement> getPage(AnnouncementQuery announcementQuery);
 
     /**
+     * 获取所有符合查询条件的公告列表（不分页）
+     * @param announcementQuery 查询参数
+     * @return 公告列表
+     */
+    List<Announcement> getAll(AnnouncementQuery announcementQuery);
+
+    /**
      * 根据ID获取公告信息
      * @param id 公告ID
      * @return 公告信息

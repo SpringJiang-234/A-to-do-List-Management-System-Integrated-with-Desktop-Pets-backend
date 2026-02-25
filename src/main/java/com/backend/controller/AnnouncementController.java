@@ -83,15 +83,25 @@ public class AnnouncementController {
 
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody AnnouncementQuery announcementQuery) {
-        final PageBean<Announcement> pageBean = announcementService.getPage(announcementQuery);
-
-        final List<AnnouncementExcel> list = announcementConverter.announcementList2announcementExcelList(pageBean.getRecords());
+        final List<Announcement> list = announcementService.getAll(announcementQuery);
+        final List<AnnouncementExcel> excelList = announcementConverter.announcementList2announcementExcelList(list);
         try {
             EasyExcelUtil.writeWithSheetsWeb(response, "announcement列表")
-                    .writeModel(AnnouncementExcel.class, list, "announcement")
+                    .writeModel(AnnouncementExcel.class, excelList, "announcement")
                     .finish();
         } catch (IOException e) {
             throw new GlobalException("公告信息导出失败！");
+        }
+    }
+
+    @GetMapping("/downloadTemplate")
+    public void downloadTemplate(HttpServletResponse response) {
+        try {
+            EasyExcelUtil.writeWithSheetsWeb(response, "公告导入模板")
+                    .writeModel(AnnouncementExcel.class, List.of(), "公告数据")
+                    .finish();
+        } catch (IOException e) {
+            throw new GlobalException("模板下载失败！");
         }
     }
 

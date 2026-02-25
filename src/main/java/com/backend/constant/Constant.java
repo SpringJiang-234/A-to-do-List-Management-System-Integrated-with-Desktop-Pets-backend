@@ -7,7 +7,7 @@ package com.backend.constant;
  */
 public interface Constant {
     /**
-     * 每页显示的记录数：交给前端控制，已废弃
+     * 每页显示的记录数
      */
     Integer PAGE_SIZE = 16;
 }

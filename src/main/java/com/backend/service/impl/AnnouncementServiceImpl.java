@@ -21,25 +21,15 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     public PageBean<Announcement> getPage(AnnouncementQuery announcementQuery) {
         final Integer pageNum = announcementQuery.getPageNum();
         final Integer pageSize = announcementQuery.getPageSize();
-        // 判断是否需要分页
-        if (pageNum == null || pageSize == null || pageNum <= 0 || pageSize <= 0) {
-            // 不分页，查询所有数据
-            List<Announcement> allData = announcementMapper.selectWithCondition(announcementQuery);
-            int total = announcementMapper.countByCondition(announcementQuery);
-            PageBean<Announcement> pageBean = new PageBean<>();
-            pageBean.setPageNum(1);
-            pageBean.setPageSize(allData.size());
-            pageBean.setPages(1);
-            pageBean.setTotal((long) total);
-            pageBean.setRecords(allData);
-            return pageBean;
-        } else {
-            // 分页查询
-            final Page<Announcement> page = PageHelper.startPage(pageNum, pageSize);
-            announcementMapper.selectWithCondition(announcementQuery);
-            final int total = announcementMapper.countByCondition(announcementQuery);
-            return PageBean.page2pageBean(page, (long) total);
-        }
+        final Page<Announcement> page = PageHelper.startPage(pageNum, pageSize);
+        announcementMapper.selectWithCondition(announcementQuery);
+        final int total = announcementMapper.countByCondition(announcementQuery);
+        return PageBean.page2pageBean(page, (long) total);
+    }
+
+    @Override
+    public List<Announcement> getAll(AnnouncementQuery announcementQuery) {
+        return announcementMapper.selectWithCondition(announcementQuery);
     }
 
 
