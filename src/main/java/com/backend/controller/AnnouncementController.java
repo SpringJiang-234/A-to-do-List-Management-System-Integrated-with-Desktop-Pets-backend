@@ -97,8 +97,18 @@ public class AnnouncementController {
     @GetMapping("/downloadTemplate")
     public void downloadTemplate(HttpServletResponse response) {
         try {
+            AnnouncementExcel example1 = new AnnouncementExcel();
+            example1.setTitle("示例公告标题1");
+            example1.setContent("示例公告内容1");
+            example1.setIsTop("否");
+
+            AnnouncementExcel example2 = new AnnouncementExcel();
+            example2.setTitle("示例公告标题2");
+            example2.setContent("示例公告内容2");
+            example2.setIsTop("是");
+
             EasyExcelUtil.writeWithSheetsWeb(response, "公告导入模板")
-                    .writeModel(AnnouncementExcel.class, List.of(), "公告数据")
+                    .writeModel(AnnouncementExcel.class, List.of(example1, example2), "公告数据")
                     .finish();
         } catch (IOException e) {
             throw new GlobalException("模板下载失败！");

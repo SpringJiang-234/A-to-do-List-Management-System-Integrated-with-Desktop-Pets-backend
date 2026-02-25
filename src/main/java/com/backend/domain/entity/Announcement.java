@@ -29,7 +29,7 @@ public class Announcement extends BaseEntity {
     private String content;
 
     /**
-     * 是否置顶：1-未置顶 2-置顶
+     * 是否置顶：1-否 2-是
      */
     private Integer isTop;
 }

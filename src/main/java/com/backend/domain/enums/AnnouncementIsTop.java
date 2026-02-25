@@ -5,12 +5,12 @@ import com.backend.utils.EnumUtil;
 import lombok.Getter;
 
 /**
- * 是否置顶：1-未置顶 2-置顶
+ * 是否置顶：1-否 2-是
  */
 @Getter
 public enum AnnouncementIsTop implements BaseEnum {
-    NOT_TOP(1, "未置顶"),
-    TOPPED(2, "置顶");
+    NOT_TOP(1, "否"),
+    TOPPED(2, "是");
 
     private final Integer code;
     private final String text;
@@ -26,7 +26,7 @@ public enum AnnouncementIsTop implements BaseEnum {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static String getTextByCode(Integer code) {
-        return EnumUtil.getTextByCode(UserGender.class, code);
+        return EnumUtil.getTextByCode(AnnouncementIsTop.class, code);
     }
 
     /**
@@ -35,7 +35,7 @@ public enum AnnouncementIsTop implements BaseEnum {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static Integer getCodeByText(String text) {
-        return EnumUtil.getCodeByText(UserGender.class, text);
+        return EnumUtil.getCodeByText(AnnouncementIsTop.class, text);
     }
 
 }

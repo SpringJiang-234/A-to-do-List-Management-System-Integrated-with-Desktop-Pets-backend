@@ -4,10 +4,12 @@ import com.backend.bean.PageBean;
 import com.backend.domain.details.AnnouncementDetails;
 import com.backend.domain.dto.AnnouncementDTO;
 import com.backend.domain.entity.Announcement;
+import com.backend.domain.enums.AnnouncementIsTop;
 import com.backend.domain.excel.AnnouncementExcel;
 import com.backend.domain.vo.AnnouncementVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public interface AnnouncementConverter {
      * @param announcement 源Announcement对象，包含公告基本信息
      * @return AnnouncementDetails对象，包含公告详细信息
      */
+    @Mapping(source = "isTop", target = "isTop", qualifiedByName = "isTopToText")
     AnnouncementDetails announcement2announcementDetails(Announcement announcement);
 
     /**
@@ -35,12 +38,23 @@ public interface AnnouncementConverter {
     PageBean<AnnouncementVO> announcementPageBean2announcementVOPageBean(PageBean<Announcement> announcementPageBean);
 
     /**
+     * 将Announcement对象转换为AnnouncementVO对象
+     * 用于列表展示
+     *
+     * @param announcement 源Announcement对象，包含公告基本信息
+     * @return AnnouncementVO对象，包含公告展示信息
+     */
+    @Mapping(source = "isTop", target = "isTop", qualifiedByName = "isTopToText")
+    AnnouncementVO announcement2announcementVO(Announcement announcement);
+
+    /**
      * 将Announcement对象转换为AnnouncementExcel对象
      * 用于Excel导出公告信息
      *
      * @param announcement 源Announcement对象，包含公告基本信息
      * @return AnnouncementExcel对象，包含公告Excel信息
      */
+    @Mapping(source = "isTop", target = "isTop", qualifiedByName = "isTopToText")
     AnnouncementExcel announcement2announcementExcel(Announcement announcement);
 
     /**
@@ -59,6 +73,7 @@ public interface AnnouncementConverter {
      * @param announcementExcel 源AnnouncementExcel对象，包含从Excel导入的公告信息
      * @return Announcement对象，包含转换后的公告基本信息
      */
+    @Mapping(source = "isTop", target = "isTop", qualifiedByName = "textToIsTop")
     Announcement announcementExcel2announcement(AnnouncementExcel announcementExcel);
 
     /**
@@ -69,6 +84,30 @@ public interface AnnouncementConverter {
      * @return Announcement对象列表，包含转换后的公告基本信息
      */
     List<Announcement> announcementExcelList2announcementList(List<AnnouncementExcel> announcementExcelList);
+
+    /**
+     * 将Integer类型的isTop转换为String类型的文本
+     * 用于导出Excel时显示中文
+     *
+     * @param isTop 是否置顶的数字编码
+     * @return 是否置顶的中文文本
+     */
+    @Named("isTopToText")
+    default String isTopToText(Integer isTop) {
+        return AnnouncementIsTop.getTextByCode(isTop);
+    }
+
+    /**
+     * 将String类型的文本转换为Integer类型的isTop
+     * 用于导入Excel时解析中文
+     *
+     * @param text 是否置顶的中文文本
+     * @return 是否置顶的数字编码
+     */
+    @Named("textToIsTop")
+    default Integer textToIsTop(String text) {
+        return AnnouncementIsTop.getCodeByText(text);
+    }
 
 }
 
