@@ -40,4 +40,6 @@ public interface AnnouncementMapper {
     int batchInsertOrUpdate(@Param("list") List<Announcement> list);
 
     List<Announcement> selectWithCondition(AnnouncementQuery announcementQuery);
+
+    int countByCondition(AnnouncementQuery announcementQuery);
 }

@@ -23,7 +23,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         final Integer pageSize = announcementQuery.getPageSize();
         final Page<Announcement> page = PageHelper.startPage(pageNum, pageSize);
         announcementMapper.selectWithCondition(announcementQuery);
-        return PageBean.page2pageBean(page);
+        final int total = announcementMapper.countByCondition(announcementQuery);
+        return PageBean.page2pageBean(page, (long) total);
     }
 
 

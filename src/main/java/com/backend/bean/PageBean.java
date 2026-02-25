@@ -30,6 +30,11 @@ public class PageBean<T> {
     private Integer pages;
 
     /**
+     * 总记录数
+     */
+    private Long total;
+
+    /**
      * 当前页的数据记录列表
      */
     private List<T> records;
@@ -41,6 +46,17 @@ public class PageBean<T> {
      * @param <T>
      */
     public static <T> PageBean<T> page2pageBean(Page<T> page) {
+        return page2pageBean(page, null);
+    }
+
+    /**
+     * 将 Page 对象转换为 PageBean 对象，支持手动指定 total
+     * @param page
+     * @param total 手动指定的总数
+     * @return
+     * @param <T>
+     */
+    public static <T> PageBean<T> page2pageBean(Page<T> page, Long total) {
         if (page == null) {
             throw new IllegalArgumentException("Page 参数不能为 null");
         }
@@ -48,6 +64,7 @@ public class PageBean<T> {
         pageBean.setPageNum(page.getPageNum());
         pageBean.setPageSize(page.getPageSize());
         pageBean.setPages(page.getPages());
+        pageBean.setTotal(total != null ? total : page.getTotal());
         pageBean.setRecords(page.getResult());
         return pageBean;
     }

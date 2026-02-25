@@ -422,4 +422,26 @@
     </where>
     order by update_time desc
   </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.AnnouncementQuery">
+    select count(*)
+    from tb_announcement
+    <where>
+      <if test="title != null and title != ''">
+        and title like concat('%', #{title}, '%')
+      </if>
+      <if test="content != null and content != ''">
+        and content like concat('%', #{content}, '%')
+      </if>
+      <if test="isTop != null">
+        and is_top = #{isTop,jdbcType=TINYINT}
+      </if>
+      <if test="createTime != null">
+        and create_time between #{createTime.start} and #{createTime.end}
+      </if>
+      <if test="updateTime != null">
+        and update_time between #{updateTime.start} and #{updateTime.end}
+      </if>
+    </where>
+  </select>
 </mapper>
