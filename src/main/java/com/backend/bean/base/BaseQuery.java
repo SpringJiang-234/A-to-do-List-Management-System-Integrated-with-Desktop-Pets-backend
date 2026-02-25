@@ -1,11 +1,9 @@
 package com.backend.bean.base;
 
 import com.backend.constant.Constant;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,11 +18,11 @@ public class BaseQuery {
      */
     private Integer pageSize;
 
-    public Integer getPageNum() {
-        return this.pageNum == null ? 1 : this.pageNum;
-    }
-
-    public Integer getPageSize() {
-        return this.pageSize == null ? Constant.PAGE_SIZE : this.pageSize;
-    }
+//    public Integer getPageNum() {
+//        return this.pageNum == null ? 1 : this.pageNum;
+//    }
+//
+//    public Integer getPageSize() {
+//        return this.pageSize == null ? Constant.PAGE_SIZE : this.pageSize;
+//    }
 }

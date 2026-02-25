@@ -26,4 +26,14 @@ public class AnnouncementVO extends BaseVO {
      * 是否置顶：1-未置顶 2-置顶
      */
     private String isTop;
+
+    /**
+     * 创建时间
+     */
+    private String createTime;
+
+    /**
+     * 修改时间
+     */
+    private String updateTime;
 }
