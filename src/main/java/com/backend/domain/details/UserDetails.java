@@ -49,4 +49,9 @@ public class UserDetails extends BaseDetails {
      * 状态：1-正常 2-已注销
      */
     private String status;
+
+    /**
+     * 用户类型：1-管理员 2-普通用户
+     */
+    private String type;
 }

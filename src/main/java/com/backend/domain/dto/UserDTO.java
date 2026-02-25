@@ -53,4 +53,9 @@ public class UserDTO {
      * 状态：1-正常 2-已注销
      */
     private Integer status;
+
+    /**
+     * 用户类型：1-管理员 2-普通用户
+     */
+    private Integer type;
 }

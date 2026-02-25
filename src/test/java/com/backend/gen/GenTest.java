@@ -13,10 +13,10 @@ import java.io.FileWriter;
 @Slf4j
 public class GenTest {
     // 实体名
-    private String entity = "UserTag";
+    private String entity = "AuditLog";
     private String obj = StringUtil.lowerCaseFirstLetter(entity);
     // 描述
-    private String desc = "用户标签关联";
+    private String desc = "审计日志表";
 
     // 模板文件路径
     private String ftlPath = "D:\\Code\\graduation-project\\backend\\src\\test\\java\\com\\backend\\gen\\ftl\\";

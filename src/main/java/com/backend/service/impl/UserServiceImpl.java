@@ -1,11 +1,11 @@
 package com.backend.service.impl;
 
+import com.backend.mapper.UserMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.backend.bean.PageBean;
 import com.backend.domain.entity.User;
 import com.backend.domain.query.UserQuery;
-import com.backend.mapper.UserMapper;
 import com.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

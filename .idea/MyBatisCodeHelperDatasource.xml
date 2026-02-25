@@ -31,7 +31,7 @@
                   <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/src/main/java" />
                   <option name="javaServicePath" value="$PROJECT_DIR$/src/main/java" />
                   <option name="xmlPackage" value="mapper" />
-                  <option name="xmlPath" value="$PROJECT_DIR$/src/main/java/resources/mapper" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/src/main/resources" />
                 </UserPackageAndPathInfoByModule>
               </value>
             </entry>
@@ -51,6 +51,27 @@
                   <option name="generatedKey" value="id" />
                   <option name="insertOnDuplicateKey" value="true" />
                   <option name="javaModelName" value="Announcements" />
+                  <option name="moduleName" value="backend" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="updateBatchuseMultiQuery" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="db_desktoppet_todo:tb_audit_log">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertOnDuplicate" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="deleteByPrimaryKeyIn" value="true" />
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="AuditLog" />
                   <option name="moduleName" value="backend" />
                   <option name="mybatisplusIdType" value="AUTO" />
                   <option name="sequenceColumn" value="" />
@@ -157,6 +178,27 @@
                 </TableGenerateConfig>
               </value>
             </entry>
+            <entry key="db_desktoppet_todo:tb_todo_tag">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertOnDuplicate" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="deleteByPrimaryKeyIn" value="true" />
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="TodoTag" />
+                  <option name="moduleName" value="backend" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="updateBatchuseMultiQuery" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
             <entry key="db_desktoppet_todo:tb_todos">
               <value>
                 <TableGenerateConfig>
@@ -169,6 +211,27 @@
                   <option name="javaModelName" value="Todos" />
                   <option name="moduleName" value="backend" />
                   <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="updateBatchuseMultiQuery" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="db_desktoppet_todo:tb_user">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertOnDuplicate" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="deleteByPrimaryKeyIn" value="true" />
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="User" />
+                  <option name="moduleName" value="backend" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
                   <option name="updateBatch" value="true" />
                   <option name="updateBatchSelective" value="true" />
                   <option name="updateBatchuseMultiQuery" value="true" />
@@ -221,7 +284,7 @@
         <option name="updateBatchUseMultiQuery" value="true" />
         <option name="useInsertOrUpdateAsMethodNameWhenMybatisPlus3" value="true" />
         <option name="xmlMapperPackage" value="mapper" />
-        <option name="xmlMapperPath" value="$PROJECT_DIR$/src/main/java/resources/mapper" />
+        <option name="xmlMapperPath" value="$PROJECT_DIR$/src/main/resources" />
       </ProjectProfile>
     </option>
   </component>

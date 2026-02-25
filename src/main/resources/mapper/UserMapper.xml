@@ -14,11 +14,12 @@
     <result column="gender" jdbcType="TINYINT" property="gender" />
     <result column="birth" jdbcType="DATE" property="birth" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="type" jdbcType="TINYINT" property="type" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, create_time, update_time, account, password_hash, nickname, avatar, gender, birth, 
-    `status`
+    `status`, `type`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -36,10 +37,12 @@
     <!--@mbg.generated-->
     insert into tb_user (create_time, update_time, account, 
       password_hash, nickname, avatar, 
-      gender, birth, `status`)
+      gender, birth, `status`, 
+      `type`)
     values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{account,jdbcType=VARCHAR}, 
       #{passwordHash,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=TINYINT}, #{birth,jdbcType=DATE}, #{status,jdbcType=TINYINT})
+      #{gender,jdbcType=TINYINT}, #{birth,jdbcType=DATE}, #{status,jdbcType=TINYINT}, 
+      #{type,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.backend.domain.entity.User" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -72,6 +75,9 @@
       <if test="status != null">
         `status`,
       </if>
+      <if test="type != null">
+        `type`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="createTime != null">
@@ -100,6 +106,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -134,6 +143,9 @@
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
       </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -148,7 +160,8 @@
       avatar = #{avatar,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=TINYINT},
       birth = #{birth,jdbcType=DATE},
-      `status` = #{status,jdbcType=TINYINT}
+      `status` = #{status,jdbcType=TINYINT},
+      `type` = #{type,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateBatch" parameterType="java.util.List">
@@ -198,6 +211,11 @@
       <trim prefix="`status` = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           when id = #{item.id,jdbcType=BIGINT} then #{item.status,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.type,jdbcType=TINYINT}
         </foreach>
       </trim>
     </trim>
@@ -273,6 +291,13 @@
           </if>
         </foreach>
       </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.type != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.type,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
     </trim>
     where id in
     <foreach close=")" collection="list" item="item" open="(" separator=", ">
@@ -283,26 +308,26 @@
     <!--@mbg.generated-->
     insert into tb_user
     (create_time, update_time, account, password_hash, nickname, avatar, gender, birth, 
-      `status`)
+      `status`, `type`)
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.account,jdbcType=VARCHAR}, 
         #{item.passwordHash,jdbcType=VARCHAR}, #{item.nickname,jdbcType=VARCHAR}, #{item.avatar,jdbcType=VARCHAR}, 
-        #{item.gender,jdbcType=TINYINT}, #{item.birth,jdbcType=DATE}, #{item.status,jdbcType=TINYINT}
-        )
+        #{item.gender,jdbcType=TINYINT}, #{item.birth,jdbcType=DATE}, #{item.status,jdbcType=TINYINT}, 
+        #{item.type,jdbcType=TINYINT})
     </foreach>
   </insert>
   <insert id="batchInsertOrUpdate" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_user
     (create_time, update_time, account, password_hash, nickname, avatar, gender, birth, 
-      `status`)
+      `status`, `type`)
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.account,jdbcType=VARCHAR}, 
         #{item.passwordHash,jdbcType=VARCHAR}, #{item.nickname,jdbcType=VARCHAR}, #{item.avatar,jdbcType=VARCHAR}, 
-        #{item.gender,jdbcType=TINYINT}, #{item.birth,jdbcType=DATE}, #{item.status,jdbcType=TINYINT}
-        )
+        #{item.gender,jdbcType=TINYINT}, #{item.birth,jdbcType=DATE}, #{item.status,jdbcType=TINYINT}, 
+        #{item.type,jdbcType=TINYINT})
     </foreach>
     on duplicate key update 
     create_time=values(create_time),
@@ -313,7 +338,8 @@
     avatar=values(avatar),
     gender=values(gender),
     birth=values(birth),
-    `status`=values(`status`)
+    `status`=values(`status`),
+    `type`=values(`type`)
   </insert>
   <delete id="deleteByPrimaryKeyIn">
     <!--@mbg.generated-->
@@ -354,6 +380,9 @@
         <if test="item.status != null">
           `status` = #{item.status,jdbcType=TINYINT},
         </if>
+        <if test="item.type != null">
+          `type` = #{item.type,jdbcType=TINYINT},
+        </if>
       </set>
       where id = #{item.id,jdbcType=BIGINT}
     </foreach>
@@ -362,7 +391,7 @@
     <!--@mbg.generated-->
     insert into tb_user
     (create_time, update_time, account, password_hash, nickname, avatar, gender, birth, 
-      `status`)
+      `status`, `type`)
     values
     <foreach collection="list" item="item" separator=",">
       (
@@ -440,7 +469,16 @@
       </choose>
       <choose>
         <when test="item.status != null">
-          #{item.status,jdbcType=TINYINT}
+          #{item.status,jdbcType=TINYINT},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.type != null">
+          #{item.type,jdbcType=TINYINT}
         </when>
         <!--@ignoreSql-->
         <otherwise>
@@ -466,6 +504,7 @@
       gender,
       birth,
       `status`,
+      `type`,
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -481,6 +520,7 @@
       #{gender,jdbcType=TINYINT},
       #{birth,jdbcType=DATE},
       #{status,jdbcType=TINYINT},
+      #{type,jdbcType=TINYINT},
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -496,6 +536,7 @@
       gender = #{gender,jdbcType=TINYINT},
       birth = #{birth,jdbcType=DATE},
       `status` = #{status,jdbcType=TINYINT},
+      `type` = #{type,jdbcType=TINYINT},
     </trim>
   </insert>
   <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.backend.domain.entity.User" useGeneratedKeys="true">
@@ -532,6 +573,9 @@
       <if test="status != null">
         `status`,
       </if>
+      <if test="type != null">
+        `type`,
+      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -564,6 +608,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
       </if>
     </trim>
     on duplicate key update 
@@ -598,6 +645,9 @@
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
       </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=TINYINT},
+      </if>
     </trim>
   </insert>
 
@@ -620,6 +670,9 @@
       </if>
       <if test="status != null">
         and `status` = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="type != null">
+        and `type` = #{type,jdbcType=TINYINT}
       </if>
     </where>
     order by create_time desc

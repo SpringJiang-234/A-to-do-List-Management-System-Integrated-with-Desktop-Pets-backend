@@ -60,4 +60,10 @@ public class UserExcel extends BaseExcel {
      */
     @ExcelProperty(value = "状态")
     private String status;
+
+    /**
+     * 用户类型：1-管理员 2-普通用户
+     */
+    @ExcelProperty(value = "用户类型")
+    private String type;
 }

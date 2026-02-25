@@ -1,6 +1,6 @@
 package com.backend.domain.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import com.backend.bean.base.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -19,37 +19,42 @@ import lombok.ToString;
 @NoArgsConstructor
 public class User extends BaseEntity {
     /**
-    * 邮箱账号
-    */
+     * 邮箱账号
+     */
     private String account;
 
     /**
-    * 加密后的密码
-    */
+     * 加密后的密码
+     */
     private String passwordHash;
 
     /**
-    * 昵称
-    */
+     * 昵称
+     */
     private String nickname;
 
     /**
-    * 头像
-    */
+     * 头像
+     */
     private String avatar;
 
     /**
-    * 性别：1-男 2-女 3-未知
-    */
+     * 性别：1-男 2-女 3-未知
+     */
     private Integer gender;
 
     /**
-    * 生日
-    */
-    private LocalDate birth;
+     * 生日
+     */
+    private Date birth;
 
     /**
-    * 状态：1-正常 2-已注销
-    */
+     * 状态：1-正常 2-已注销
+     */
     private Integer status;
+
+    /**
+     * 用户类型：1-管理员 2-普通用户
+     */
+    private Integer type;
 }
