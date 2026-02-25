@@ -52,6 +52,6 @@ public class AuditLogServiceImpl implements AuditLogService {
 
     @Override
     public int batchInsert(List<AuditLog> auditLogList) {
-        return auditLogMapper.batchInsert(auditLogList);
+        return auditLogMapper.batchInsertSelectiveUseDefaultForNull(auditLogList);
     }
 }

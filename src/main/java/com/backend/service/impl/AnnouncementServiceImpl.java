@@ -57,6 +57,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public int batchInsert(List<Announcement> announcementList) {
-        return announcementMapper.batchInsert(announcementList);
+        return announcementMapper.batchInsertSelectiveUseDefaultForNull(announcementList);
     }
 }

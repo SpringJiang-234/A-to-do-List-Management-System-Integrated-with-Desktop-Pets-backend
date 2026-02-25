@@ -52,6 +52,6 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public int batchInsert(List<Tag> tagList) {
-        return tagMapper.batchInsert(tagList);
+        return tagMapper.batchInsertSelectiveUseDefaultForNull(tagList);
     }
 }

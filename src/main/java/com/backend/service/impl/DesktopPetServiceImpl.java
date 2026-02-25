@@ -52,6 +52,6 @@ public class DesktopPetServiceImpl implements DesktopPetService {
 
     @Override
     public int batchInsert(List<DesktopPet> desktopPetList) {
-        return desktopPetMapper.batchInsert(desktopPetList);
+        return desktopPetMapper.batchInsertSelectiveUseDefaultForNull(desktopPetList);
     }
 }

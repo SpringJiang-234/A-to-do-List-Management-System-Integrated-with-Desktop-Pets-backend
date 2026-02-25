@@ -52,6 +52,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int batchInsert(List<User> userList) {
-        return userMapper.batchInsert(userList);
+        return userMapper.batchInsertSelectiveUseDefaultForNull(userList);
     }
 }

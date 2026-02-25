@@ -52,6 +52,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public int batchInsert(List<Category> categoryList) {
-        return categoryMapper.batchInsert(categoryList);
+        return categoryMapper.batchInsertSelectiveUseDefaultForNull(categoryList);
     }
 }

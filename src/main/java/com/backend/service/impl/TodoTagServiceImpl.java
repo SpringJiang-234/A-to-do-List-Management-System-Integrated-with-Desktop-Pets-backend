@@ -52,6 +52,6 @@ public class TodoTagServiceImpl implements TodoTagService {
 
     @Override
     public int batchInsert(List<TodoTag> todoTagList) {
-        return todoTagMapper.batchInsert(todoTagList);
+        return todoTagMapper.batchInsertSelectiveUseDefaultForNull(todoTagList);
     }
 }

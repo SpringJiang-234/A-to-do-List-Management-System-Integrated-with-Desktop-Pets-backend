@@ -52,6 +52,6 @@ public class UserTagServiceImpl implements UserTagService {
 
     @Override
     public int batchInsert(List<UserTag> userTagList) {
-        return userTagMapper.batchInsert(userTagList);
+        return userTagMapper.batchInsertSelectiveUseDefaultForNull(userTagList);
     }
 }

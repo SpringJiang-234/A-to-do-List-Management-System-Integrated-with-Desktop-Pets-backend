@@ -52,6 +52,6 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public int batchInsert(List<Feedback> feedbackList) {
-        return feedbackMapper.batchInsert(feedbackList);
+        return feedbackMapper.batchInsertSelectiveUseDefaultForNull(feedbackList);
     }
 }
