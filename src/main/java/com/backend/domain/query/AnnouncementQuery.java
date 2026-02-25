@@ -1,6 +1,6 @@
 package com.backend.domain.query;
 
-import com.backend.bean.base.BaseEntity;
+import com.backend.bean.LocalDateTimeRange;
 import com.backend.bean.base.BaseQuery;
 import lombok.*;
 
@@ -27,4 +27,14 @@ public class AnnouncementQuery extends BaseQuery {
      * 是否置顶：1-未置顶 2-置顶
      */
     private Integer isTop;
+
+    /**
+     * 创建时间（发布时间）
+     */
+    private LocalDateTimeRange createTime;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTimeRange updateTime;
 }
