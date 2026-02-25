@@ -1,6 +1,6 @@
 package com.backend.domain.details;
 
-import com.backend.bean.base.BaseEntity;
+import com.backend.bean.base.BaseDetails;
 import lombok.*;
 
 /**
@@ -11,7 +11,17 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class DesktopPetDetails extends BaseEntity {
+public class DesktopPetDetails extends BaseDetails {
+    /**
+    * 创建时间
+    */
+    private String createTime;
+
+    /**
+    * 修改时间
+    */
+    private String updateTime;
+
     /**
     * 用户id
     */

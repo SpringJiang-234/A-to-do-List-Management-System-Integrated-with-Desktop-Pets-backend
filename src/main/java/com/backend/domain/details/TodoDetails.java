@@ -1,9 +1,7 @@
 package com.backend.domain.details;
 
-import com.backend.bean.base.BaseEntity;
+import com.backend.bean.base.BaseDetails;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 /**
  * 待办事项表
@@ -13,7 +11,17 @@ import java.time.LocalDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class TodoDetails extends BaseEntity {
+public class TodoDetails extends BaseDetails {
+    /**
+    * 创建时间
+    */
+    private String createTime;
+
+    /**
+    * 修改时间
+    */
+    private String updateTime;
+
     /**
     * 用户id
     */
@@ -42,12 +50,12 @@ public class TodoDetails extends BaseEntity {
     /**
     * 开始时间
     */
-    private LocalDateTime startTime;
+    private String startTime;
 
     /**
     * 截止时间(结束时间)
     */
-    private LocalDateTime endTime;
+    private String endTime;
 
     /**
     * 状态：1-未完成 2-完成 3-放弃
@@ -57,7 +65,7 @@ public class TodoDetails extends BaseEntity {
     /**
     * 完成/放弃时间
     */
-    private LocalDateTime finishTime;
+    private String finishTime;
 
     /**
     * 是否已删除：1-未删除 2-已删除

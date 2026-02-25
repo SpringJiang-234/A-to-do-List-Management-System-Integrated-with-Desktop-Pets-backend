@@ -1,6 +1,5 @@
 package com.backend.domain.dto;
 
-import com.backend.bean.base.BaseEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;

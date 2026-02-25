@@ -1,6 +1,6 @@
 package com.backend.domain.details;
 
-import com.backend.bean.base.BaseEntity;
+import com.backend.bean.base.BaseDetails;
 import lombok.*;
 
 /**
@@ -11,7 +11,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnnouncementDetails extends BaseEntity {
+public class AnnouncementDetails extends BaseDetails {
     /**
      * 公告标题
      */
