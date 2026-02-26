@@ -2,6 +2,7 @@ package com.backend.converter;
 
 import com.backend.bean.PageBean;
 import com.backend.domain.details.UserDetails;
+import com.backend.domain.info.UserInfo;
 import com.backend.domain.dto.UserDTO;
 import com.backend.domain.entity.User;
 import com.backend.domain.enums.UserGender;
@@ -19,6 +20,16 @@ import java.util.List;
 public interface UserConverter {
 
     User userDTO2user(UserDTO userDTO);
+
+    /**
+     * 将User对象转换为UserInfo对象
+     * 用于登录时返回用户信息
+     *
+     * @param user 源User对象，包含用户基本信息
+     * @return UserInfo对象，包含用户登录信息
+     */
+    @Mapping(source = "nickname", target = "username")
+    UserInfo user2userInfo(User user);
 
     /**
      * 将User对象转换为UserDetails对象

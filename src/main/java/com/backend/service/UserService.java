@@ -1,6 +1,8 @@
 package com.backend.service;
 
 import com.backend.bean.PageBean;
+import com.backend.domain.dto.LoginDTO;
+import com.backend.domain.dto.RegisterDTO;
 import com.backend.domain.entity.User;
 import com.backend.domain.query.UserQuery;
 
@@ -56,5 +58,25 @@ public interface UserService {
      * @return 用户列表
      */
     List<User> getAll(UserQuery userQuery);
+
+    /**
+     * 检查账号是否存在
+     * @param account 账号
+     * @return 是否存在
+     */
+    int isAccountExist(String account);
+
+    /**
+     * 注册用户
+     * @param registerDTO 注册信息
+     */
+    int register(RegisterDTO registerDTO);
+
+    /**
+     * 用户登录
+     * @param loginDTO 登录信息
+     * @return 用户信息
+     */
+    User login(LoginDTO loginDTO);
 
 }
