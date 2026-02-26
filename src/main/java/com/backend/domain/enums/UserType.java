@@ -26,7 +26,7 @@ public enum UserType implements BaseEnum {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static String getTextByCode(Integer code) {
-        return EnumUtil.getTextByCode(UserStatus.class, code);
+        return EnumUtil.getTextByCode(UserType.class, code);
     }
 
     /**
@@ -35,6 +35,6 @@ public enum UserType implements BaseEnum {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static Integer getCodeByText(String text) {
-        return EnumUtil.getCodeByText(UserStatus.class, text);
+        return EnumUtil.getCodeByText(UserType.class, text);
     }
 }

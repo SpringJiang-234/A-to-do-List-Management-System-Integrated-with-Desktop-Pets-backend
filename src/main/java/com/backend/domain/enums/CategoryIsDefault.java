@@ -26,7 +26,7 @@ public enum CategoryIsDefault implements BaseEnum {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static String getTextByCode(Integer code) {
-        return EnumUtil.getTextByCode(UserGender.class, code);
+        return EnumUtil.getTextByCode(CategoryIsDefault.class, code);
     }
 
     /**
@@ -35,7 +35,7 @@ public enum CategoryIsDefault implements BaseEnum {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static Integer getCodeByText(String text) {
-        return EnumUtil.getCodeByText(UserGender.class, text);
+        return EnumUtil.getCodeByText(CategoryIsDefault.class, text);
     }
 
 }

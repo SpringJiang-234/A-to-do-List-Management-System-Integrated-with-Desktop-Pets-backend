@@ -8,7 +8,7 @@ import lombok.Getter;
  * 优先级：1-非常低 2-低 3-中 4-高 默认值为非常低
  */
 @Getter
-public enum TodoPriority {
+public enum TodoPriority implements BaseEnum {
     VERY_LOW(1, "非常低"),
     LOW(2, "低"),
     MEDIUM(3, "中"),
@@ -28,7 +28,7 @@ public enum TodoPriority {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static String getTextByCode(Integer code) {
-        return EnumUtil.getTextByCode(UserStatus.class, code);
+        return EnumUtil.getTextByCode(TodoPriority.class, code);
     }
 
     /**
@@ -37,6 +37,6 @@ public enum TodoPriority {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static Integer getCodeByText(String text) {
-        return EnumUtil.getCodeByText(UserStatus.class, text);
+        return EnumUtil.getCodeByText(TodoPriority.class, text);
     }
 }

@@ -8,7 +8,7 @@ import lombok.Getter;
  * 状态：1-未完成 2-完成 3-放弃
  */
 @Getter
-public enum TodoStatus {
+public enum TodoStatus implements BaseEnum {
     PENDING(1, "未完成"),
     COMPLETED(2, "完成"),
     ABANDONED(3, "放弃");
@@ -27,7 +27,7 @@ public enum TodoStatus {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static String getTextByCode(Integer code) {
-        return EnumUtil.getTextByCode(UserStatus.class, code);
+        return EnumUtil.getTextByCode(TodoStatus.class, code);
     }
 
     /**
@@ -36,6 +36,6 @@ public enum TodoStatus {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static Integer getCodeByText(String text) {
-        return EnumUtil.getCodeByText(UserStatus.class, text);
+        return EnumUtil.getCodeByText(TodoStatus.class, text);
     }
 }

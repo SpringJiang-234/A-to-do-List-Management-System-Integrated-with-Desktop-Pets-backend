@@ -8,7 +8,7 @@ import lombok.Getter;
  * 是否已删除：1-未删除 2-已删除
  */
 @Getter
-public enum TodoIsDelete {
+public enum TodoIsDelete implements BaseEnum {
     NOT_DELETED(1, "未删除"),
     DELETED(2, "已删除");
 
@@ -26,7 +26,7 @@ public enum TodoIsDelete {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static String getTextByCode(Integer code) {
-        return EnumUtil.getTextByCode(UserStatus.class, code);
+        return EnumUtil.getTextByCode(TodoIsDelete.class, code);
     }
 
     /**
@@ -35,6 +35,6 @@ public enum TodoIsDelete {
      * @return 对应的枚举值，如果未找到返回null
      */
     public static Integer getCodeByText(String text) {
-        return EnumUtil.getCodeByText(UserStatus.class, text);
+        return EnumUtil.getCodeByText(TodoIsDelete.class, text);
     }
 }
