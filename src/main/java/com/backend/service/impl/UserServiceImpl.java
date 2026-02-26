@@ -54,4 +54,9 @@ public class UserServiceImpl implements UserService {
     public int batchInsert(List<User> userList) {
         return userMapper.batchInsertSelectiveUseDefaultForNull(userList);
     }
+
+    @Override
+    public List<User> getAll(UserQuery userQuery) {
+        return userMapper.selectWithCondition(userQuery);
+    }
 }

@@ -83,9 +83,9 @@ public class UserController {
 
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody UserQuery userQuery) {
-        final PageBean<User> pageBean = userService.getPage(userQuery);
+        final List<User> userList = userService.getAll(userQuery);
 
-        final List<UserExcel> list = userConverter.userList2userExcelList(pageBean.getRecords());
+        final List<UserExcel> list = userConverter.userList2userExcelList(userList);
         try {
             EasyExcelUtil.writeWithSheetsWeb(response, "user列表")
                     .writeModel(UserExcel.class, list, "user")

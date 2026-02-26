@@ -50,4 +50,11 @@ public interface UserService {
      */
     int batchInsert(List<User> userList);
 
+    /**
+     * 获取所有用户列表
+     * @param userQuery 查询参数
+     * @return 用户列表
+     */
+    List<User> getAll(UserQuery userQuery);
+
 }
