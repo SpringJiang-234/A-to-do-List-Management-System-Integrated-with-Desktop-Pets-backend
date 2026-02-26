@@ -35,6 +35,15 @@ public interface DesktopPetConverter {
     PageBean<DesktopPetVO> desktopPetPageBean2desktopPetVOPageBean(PageBean<DesktopPet> desktopPetPageBean);
 
     /**
+     * 将DesktopPet对象转换为DesktopPetVO对象
+     * 用于列表展示
+     *
+     * @param desktopPet 源DesktopPet对象，包含桌宠基本信息
+     * @return DesktopPetVO对象，包含桌宠展示信息
+     */
+    DesktopPetVO desktopPet2desktopPetVO(DesktopPet desktopPet);
+
+    /**
      * 将DesktopPet对象转换为DesktopPetExcel对象
      * 用于Excel导出桌宠信息
      *

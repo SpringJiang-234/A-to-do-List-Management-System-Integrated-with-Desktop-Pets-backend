@@ -1,7 +1,7 @@
 package com.backend.domain.query;
 
 import com.backend.bean.IntegerRange;
-import com.backend.bean.base.BaseEntity;
+import com.backend.bean.LocalDateTimeRange;
 import com.backend.bean.base.BaseQuery;
 import lombok.*;
 
@@ -28,4 +28,14 @@ public class DesktopPetQuery extends BaseQuery {
     * 成长等级
     */
     private IntegerRange level;
+
+    /**
+    * 创建时间
+    */
+    private LocalDateTimeRange createTime;
+
+    /**
+    * 更新时间
+    */
+    private LocalDateTimeRange updateTime;
 }

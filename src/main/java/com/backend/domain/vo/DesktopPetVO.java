@@ -1,7 +1,10 @@
 package com.backend.domain.vo;
 
 import com.backend.bean.base.BaseVO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 /**
  * 桌宠表
@@ -28,4 +31,16 @@ public class DesktopPetVO extends BaseVO {
     * 成长等级
     */
     private Integer level;
+
+    /**
+    * 创建时间
+    */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
+
+    /**
+    * 修改时间
+    */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime;
 }

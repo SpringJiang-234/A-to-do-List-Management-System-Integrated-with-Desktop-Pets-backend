@@ -616,6 +616,12 @@
       <if test="level != null">
         and level between #{level.start} and #{level.end}
       </if>
+      <if test="createTime != null">
+        and create_time between #{createTime.start} and #{createTime.end}
+      </if>
+      <if test="updateTime != null">
+        and update_time between #{updateTime.start} and #{updateTime.end}
+      </if>
     </where>
     order by create_time desc
   </select>
@@ -632,6 +638,12 @@
       </if>
       <if test="level != null">
         and level between #{level.start} and #{level.end}
+      </if>
+      <if test="createTime != null">
+        and create_time between #{createTime.start} and #{createTime.end}
+      </if>
+      <if test="updateTime != null">
+        and update_time between #{updateTime.start} and #{updateTime.end}
       </if>
     </where>
   </select>
