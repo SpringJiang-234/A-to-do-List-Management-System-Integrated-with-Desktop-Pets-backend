@@ -8,6 +8,7 @@ import com.backend.domain.excel.FeedbackExcel;
 import com.backend.domain.vo.FeedbackVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.List;
 
@@ -23,7 +24,18 @@ public interface FeedbackConverter {
      * @param feedback 源Feedback对象，包含反馈基本信息
      * @return FeedbackDetails对象，包含反馈详细信息
      */
+    @Mapping(source = "status", target = "status", qualifiedByName = "statusToText")
     FeedbackDetails feedback2feedbackDetails(Feedback feedback);
+
+    /**
+     * 将Feedback对象转换为FeedbackVO对象
+     * 用于转换反馈基本信息
+     *
+     * @param feedback 源Feedback对象，包含反馈基本信息
+     * @return FeedbackVO对象，包含反馈VO信息
+     */
+    @Mapping(source = "status", target = "status", qualifiedByName = "statusToText")
+    FeedbackVO feedback2feedbackVO(Feedback feedback);
 
     /**
      * 将PageBean<Feedback>分页对象转换为PageBean<FeedbackVO>分页对象
@@ -41,6 +53,7 @@ public interface FeedbackConverter {
      * @param feedback 源Feedback对象，包含反馈基本信息
      * @return FeedbackExcel对象，包含反馈Excel信息
      */
+    @Mapping(source = "status", target = "status", qualifiedByName = "statusToText")
     FeedbackExcel feedback2feedbackExcel(Feedback feedback);
 
     /**
@@ -59,6 +72,7 @@ public interface FeedbackConverter {
      * @param feedbackExcel 源FeedbackExcel对象，包含从Excel导入的反馈信息
      * @return Feedback对象，包含转换后的反馈基本信息
      */
+    @Mapping(source = "status", target = "status", qualifiedByName = "textToStatus")
     Feedback feedbackExcel2feedback(FeedbackExcel feedbackExcel);
 
     /**
@@ -69,6 +83,30 @@ public interface FeedbackConverter {
      * @return Feedback对象列表，包含转换后的反馈基本信息
      */
     List<Feedback> feedbackExcelList2feedbackList(List<FeedbackExcel> feedbackExcelList);
+
+    /**
+     * 将Integer类型的status转换为String类型的文本
+     * 用于导出Excel时显示中文
+     *
+     * @param status 处理状态的数字编码
+     * @return 处理状态的中文文本
+     */
+    @Named("statusToText")
+    default String statusToText(Integer status) {
+        return com.backend.domain.enums.FeedbackStatus.getTextByCode(status);
+    }
+
+    /**
+     * 将String类型的文本转换为Integer类型的status
+     * 用于导入Excel时解析中文
+     *
+     * @param text 处理状态的中文文本
+     * @return 处理状态的数字编码
+     */
+    @Named("textToStatus")
+    default Integer textToStatus(String text) {
+        return com.backend.domain.enums.FeedbackStatus.getCodeByText(text);
+    }
 
 }
 

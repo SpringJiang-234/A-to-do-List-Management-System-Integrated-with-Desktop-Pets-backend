@@ -519,6 +519,22 @@
       <if test="replyContent != null and replyContent != ''">
         and reply_content like concat('%', #{replyContent}, '%')
       </if>
+      <if test="createTime != null">
+        <if test="createTime.start != null">
+          and create_time &gt;= #{createTime.start}
+        </if>
+        <if test="createTime.end != null">
+          and create_time &lt;= #{createTime.end}
+        </if>
+      </if>
+      <if test="updateTime != null">
+        <if test="updateTime.start != null">
+          and update_time &gt;= #{updateTime.start}
+        </if>
+        <if test="updateTime.end != null">
+          and update_time &lt;= #{updateTime.end}
+        </if>
+      </if>
     </where>
     order by create_time desc
   </select>
@@ -541,6 +557,22 @@
       </if>
       <if test="replyContent != null and replyContent != ''">
         and reply_content like concat('%', #{replyContent}, '%')
+      </if>
+      <if test="createTime != null">
+        <if test="createTime.start != null">
+          and create_time &gt;= #{createTime.start}
+        </if>
+        <if test="createTime.end != null">
+          and create_time &lt;= #{createTime.end}
+        </if>
+      </if>
+      <if test="updateTime != null">
+        <if test="updateTime.start != null">
+          and update_time &gt;= #{updateTime.start}
+        </if>
+        <if test="updateTime.end != null">
+          and update_time &lt;= #{updateTime.end}
+        </if>
       </if>
     </where>
   </select>

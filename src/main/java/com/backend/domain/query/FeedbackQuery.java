@@ -1,6 +1,6 @@
 package com.backend.domain.query;
 
-import com.backend.bean.base.BaseEntity;
+import com.backend.bean.LocalDateTimeRange;
 import com.backend.bean.base.BaseQuery;
 import lombok.*;
 
@@ -37,4 +37,14 @@ public class FeedbackQuery extends BaseQuery {
     * 回复内容
     */
     private String replyContent;
+
+    /**
+    * 创建时间
+    */
+    private LocalDateTimeRange createTime;
+
+    /**
+    * 更新时间
+    */
+    private LocalDateTimeRange updateTime;
 }
