@@ -83,15 +83,26 @@ public class FeedbackController {
 
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody FeedbackQuery feedbackQuery) {
-        final PageBean<Feedback> pageBean = feedbackService.getPage(feedbackQuery);
+        final List<Feedback> feedbackList = feedbackService.getAll(feedbackQuery);
 
-        final List<FeedbackExcel> list = feedbackConverter.feedbackList2feedbackExcelList(pageBean.getRecords());
+        final List<FeedbackExcel> list = feedbackConverter.feedbackList2feedbackExcelList(feedbackList);
         try {
             EasyExcelUtil.writeWithSheetsWeb(response, "feedback列表")
                     .writeModel(FeedbackExcel.class, list, "feedback")
                     .finish();
         } catch (IOException e) {
             throw new GlobalException("反馈信息导出失败！");
+        }
+    }
+
+    @GetMapping("/downloadTemplate")
+    public void downloadTemplate(HttpServletResponse response) {
+        try {
+            EasyExcelUtil.writeWithSheetsWeb(response, "反馈导入模板")
+                    .writeModel(FeedbackExcel.class, null, "feedback")
+                    .finish();
+        } catch (IOException e) {
+            throw new GlobalException("反馈导入模板下载失败！");
         }
     }
 

@@ -50,4 +50,11 @@ public interface FeedbackService {
      */
     int batchInsert(List<Feedback> feedbackList);
 
+    /**
+     * 获取所有反馈数据
+     * @param feedbackQuery 查询参数
+     * @return 反馈列表
+     */
+    List<Feedback> getAll(FeedbackQuery feedbackQuery);
+
 }

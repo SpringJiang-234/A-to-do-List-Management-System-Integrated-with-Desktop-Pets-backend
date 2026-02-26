@@ -54,4 +54,9 @@ public class FeedbackServiceImpl implements FeedbackService {
     public int batchInsert(List<Feedback> feedbackList) {
         return feedbackMapper.batchInsertSelectiveUseDefaultForNull(feedbackList);
     }
+
+    @Override
+    public List<Feedback> getAll(FeedbackQuery feedbackQuery) {
+        return feedbackMapper.selectWithCondition(feedbackQuery);
+    }
 }
