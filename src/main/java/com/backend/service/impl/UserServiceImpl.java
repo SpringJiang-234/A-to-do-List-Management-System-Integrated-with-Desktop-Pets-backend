@@ -64,23 +64,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isAccountExist(String account) {
+    public int isAccountExist(String account) {
         UserQuery query = new UserQuery();
         query.setAccount(account);
         List<User> users = userMapper.selectWithCondition(query);
-        return !users.isEmpty();
+        return users.size();
     }
 
     @Override
-    public void register(RegisterDTO registerDTO) {
-        User user = new User();
-        user.setAccount(registerDTO.getAccount());
-        user.setPasswordHash(PasswordUtil.hashPassword(registerDTO.getPassword()));
-        user.setNickname(registerDTO.getUsername());
-        user.setType(2); // 默认类型 用户类型：1-管理员 2-普通用户
-        user.setStatus(2); // 默认状态 状态：1-正常 2-已注销
-        user.setGender(1); // 默认性别 性别：1-男 2-女 3-未知
-        userMapper.insertSelective(user);
+    public int register(RegisterDTO registerDTO) {
+        if (registerDTO == null || registerDTO.getAccount() == null || registerDTO.getPassword() == null) {
+            return 0;
+        }
+        
+        if (isAccountExist(registerDTO.getAccount()) > 0) {
+            return 0;
+        }
+        
+        try {
+            User user = new User();
+            user.setAccount(registerDTO.getAccount());
+            user.setPasswordHash(PasswordUtil.hashPassword(registerDTO.getPassword()));
+            user.setNickname(registerDTO.getUsername());
+            user.setType(2); // 默认类型 用户类型：1-管理员 2-普通用户
+            user.setStatus(1); // 默认状态 状态：1-正常 2-已注销
+            user.setGender(1); // 默认性别 性别：1-男 2-女 3-未知
+            return userMapper.insertSelective(user);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override

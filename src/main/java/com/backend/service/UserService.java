@@ -62,13 +62,14 @@ public interface UserService {
     /**
      * 检查账号是否存在
      * @param account 账号
-     * @return 是否存在
+     * @return 存在的账号数量
      */
     int isAccountExist(String account);
 
     /**
      * 注册用户
      * @param registerDTO 注册信息
+     * @return 注册成功的记录数
      */
     int register(RegisterDTO registerDTO);
 

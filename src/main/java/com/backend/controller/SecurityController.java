@@ -30,8 +30,8 @@ public class SecurityController {
 
     @GetMapping("/accountExist/{account}")
     public ResultBean<Void> accountExist(@PathVariable("account") String account) {
-        boolean exist = userService.isAccountExist(account);
-        if (exist) {
+        int count = userService.isAccountExist(account);
+        if (count > 0) {
             return ResultBean.error("账户已存在!", null);
         } else {
             return ResultBean.success("账户可用!", null);
@@ -40,8 +40,12 @@ public class SecurityController {
 
     @PostMapping("/register")
     public ResultBean<Void> register(@RequestBody RegisterDTO registerDTO) {
-        userService.register(registerDTO);
-        return ResultBean.success("注册成功!", null);
+        int result = userService.register(registerDTO);
+        if (result > 0) {
+            return ResultBean.success("注册成功!", null);
+        } else {
+            return ResultBean.error("注册失败，账号可能已存在!", null);
+        }
     }
 
     @PostMapping("/login")
