@@ -16,6 +16,13 @@ public interface DesktopPetService {
     PageBean<DesktopPet> getPage(DesktopPetQuery desktopPetQuery);
 
     /**
+     * 获取所有桌宠列表（不分页）
+     * @param desktopPetQuery 查询参数
+     * @return 桌宠列表
+     */
+    List<DesktopPet> getAll(DesktopPetQuery desktopPetQuery);
+
+    /**
      * 根据ID获取桌宠信息
      * @param id 桌宠ID
      * @return 桌宠信息

@@ -83,12 +83,11 @@ public class DesktopPetController {
 
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody DesktopPetQuery desktopPetQuery) {
-        final PageBean<DesktopPet> pageBean = desktopPetService.getPage(desktopPetQuery);
-
-        final List<DesktopPetExcel> list = desktopPetConverter.desktopPetList2desktopPetExcelList(pageBean.getRecords());
+        final List<DesktopPet> list = desktopPetService.getAll(desktopPetQuery);
+        final List<DesktopPetExcel> excelList = desktopPetConverter.desktopPetList2desktopPetExcelList(list);
         try {
             EasyExcelUtil.writeWithSheetsWeb(response, "desktopPet列表")
-                    .writeModel(DesktopPetExcel.class, list, "desktopPet")
+                    .writeModel(DesktopPetExcel.class, excelList, "desktopPet")
                     .finish();
         } catch (IOException e) {
             throw new GlobalException("桌宠信息导出失败！");

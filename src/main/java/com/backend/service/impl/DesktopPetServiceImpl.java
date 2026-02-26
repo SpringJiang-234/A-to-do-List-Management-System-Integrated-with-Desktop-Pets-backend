@@ -27,6 +27,10 @@ public class DesktopPetServiceImpl implements DesktopPetService {
         return PageBean.page2pageBean(page, (long) total);
     }
 
+    @Override
+    public List<DesktopPet> getAll(DesktopPetQuery desktopPetQuery) {
+        return desktopPetMapper.selectWithCondition(desktopPetQuery);
+    }
 
     @Override
     public DesktopPet getById(Long id) {
