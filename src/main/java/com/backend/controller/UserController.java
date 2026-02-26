@@ -111,4 +111,15 @@ public class UserController {
         }
         return ResultBean.success("用户信息导入成功!", null);
     }
+
+    @GetMapping("/downloadTemplate")
+    public void downloadTemplate(HttpServletResponse response) {
+        try {
+            EasyExcelUtil.writeWithSheetsWeb(response, "user导入模板")
+                    .writeModel(UserExcel.class, null, "user")
+                    .finish();
+        } catch (IOException e) {
+            throw new GlobalException("用户信息模板下载失败！");
+        }
+    }
 }
