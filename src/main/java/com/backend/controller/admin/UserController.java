@@ -1,4 +1,4 @@
-package com.backend.controller;
+package com.backend.controller.admin;
 
 import com.backend.bean.PageBean;
 import com.backend.bean.ResultBean;
