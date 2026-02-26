@@ -50,4 +50,11 @@ public interface AuditLogService {
      */
     int batchInsert(List<AuditLog> auditLogList);
 
+    /**
+     * 获取所有审计日志表列表
+     * @param auditLogQuery 查询参数
+     * @return 审计日志表列表
+     */
+    List<AuditLog> getAll(AuditLogQuery auditLogQuery);
+
 }

@@ -83,12 +83,12 @@ public class AuditLogController {
 
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody AuditLogQuery auditLogQuery) {
-        final PageBean<AuditLog> pageBean = auditLogService.getPage(auditLogQuery);
+        final List<AuditLog> list = auditLogService.getAll(auditLogQuery);
 
-        final List<AuditLogExcel> list = auditLogConverter.auditLogList2auditLogExcelList(pageBean.getRecords());
+        final List<AuditLogExcel> excelList = auditLogConverter.auditLogList2auditLogExcelList(list);
         try {
             EasyExcelUtil.writeWithSheetsWeb(response, "auditLog列表")
-                    .writeModel(AuditLogExcel.class, list, "auditLog")
+                    .writeModel(AuditLogExcel.class, excelList, "auditLog")
                     .finish();
         } catch (IOException e) {
             throw new GlobalException("审计日志表信息导出失败！");

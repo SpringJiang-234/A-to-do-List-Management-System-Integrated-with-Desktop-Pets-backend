@@ -17,6 +17,15 @@ public interface AuditLogConverter {
     AuditLog auditLogDTO2auditLog(AuditLogDTO auditLogDTO);
 
     /**
+     * 将AuditLog对象转换为AuditLogVO对象
+     * 用于转换审计日志表基本信息
+     *
+     * @param auditLog 源AuditLog对象，包含审计日志表基本信息
+     * @return AuditLogVO对象，包含转换后的审计日志表VO信息
+     */
+    AuditLogVO auditLog2auditLogVO(AuditLog auditLog);
+
+    /**
      * 将AuditLog对象转换为AuditLogDetails对象
      * 用于转换审计日志表基本信息
      *

@@ -519,6 +519,12 @@
       <if test="ipAddress != null and ipAddress != ''">
         and ip_address like concat('%', #{ipAddress}, '%')
       </if>
+      <if test="createTime != null and createTime.start != null">
+        and create_time &gt;= #{createTime.start,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTime != null and createTime.end != null">
+        and create_time &lt;= #{createTime.end,jdbcType=TIMESTAMP}
+      </if>
     </where>
     order by update_time desc
   </select>
@@ -541,6 +547,12 @@
       </if>
       <if test="ipAddress != null and ipAddress != ''">
         and ip_address like concat('%', #{ipAddress}, '%')
+      </if>
+      <if test="createTime != null and createTime.start != null">
+        and create_time &gt;= #{createTime.start,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTime != null and createTime.end != null">
+        and create_time &lt;= #{createTime.end,jdbcType=TIMESTAMP}
       </if>
     </where>
   </select>

@@ -1,6 +1,7 @@
 package com.backend.domain.query;
 
 import com.backend.bean.base.BaseQuery;
+import com.backend.bean.LocalDateTimeRange;
 import lombok.*;
 
 /**
@@ -36,4 +37,9 @@ public class AuditLogQuery extends BaseQuery {
      * IP地址
      */
     private String ipAddress;
+
+    /**
+     * 创建时间范围
+     */
+    private LocalDateTimeRange createTime;
 }

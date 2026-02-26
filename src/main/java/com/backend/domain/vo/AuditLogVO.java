@@ -3,6 +3,8 @@ package com.backend.domain.vo;
 import com.backend.bean.base.BaseVO;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 /**
  * 审计日志表
  */
@@ -36,4 +38,9 @@ public class AuditLogVO extends BaseVO {
      * IP地址
      */
     private String ipAddress;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
 }
