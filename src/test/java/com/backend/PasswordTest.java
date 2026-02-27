@@ -15,7 +15,7 @@ class PasswordTest {
      */
     @Test
     void testHashAndVerifySuccess() {
-        String rawPassword = "123456";
+        String rawPassword = "123456abc";
 
         // 1. 生成哈希密码
         String hashed = BCrypt.hashpw(rawPassword, BCrypt.gensalt());

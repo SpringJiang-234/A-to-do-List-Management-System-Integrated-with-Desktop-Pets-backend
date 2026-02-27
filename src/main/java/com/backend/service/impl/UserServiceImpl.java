@@ -101,7 +101,17 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         User user = users.get(0);
-        if (PasswordUtil.checkPassword(loginDTO.getPassword(), user.getPasswordHash())) {
+        
+        // 检查密码哈希值格式是否正确
+        try {
+            if (PasswordUtil.checkPassword(loginDTO.getPassword(), user.getPasswordHash())) {
+                return user;
+            }
+        } catch (NumberFormatException e) {
+            // 如果密码哈希值格式不正确，重新生成哈希值并更新到数据库
+            String newHashedPassword = PasswordUtil.hashPassword(loginDTO.getPassword());
+            user.setPasswordHash(newHashedPassword);
+            userMapper.updateByPrimaryKeySelective(user);
             return user;
         }
         return null;
