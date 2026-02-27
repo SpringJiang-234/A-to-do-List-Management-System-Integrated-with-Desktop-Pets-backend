@@ -31,7 +31,7 @@ public class RedisUtil {
             redisTemplate.opsForValue().set(key, value);
             return true;
         } catch (Exception e) {
-            logger.error("Redis set error, key: {}, value: {}, error: {}", key, value, e.getMessage());
+            logger.error("Redis set error, key: {}, value: {}, error: {}", key, value, e.getMessage(), e);
             return false;
         }
     }
