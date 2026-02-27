@@ -10,6 +10,8 @@ import com.backend.service.UserService;
 import com.backend.utils.RedisUtil;
 import com.backend.utils.StringUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,8 @@ import java.time.LocalDateTime;
 
 @RestController
 public class SecurityController {
+    private static final Logger logger = LoggerFactory.getLogger(SecurityController.class);
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -48,7 +52,6 @@ public class SecurityController {
         }
     }
 
-    //TODO 脑袋晕了先休息了，刚刚测试到这里
     @PostMapping("/login")
     public ResultBean<UserInfo> login(@RequestBody LoginDTO loginDTO) {
         final User user = userService.login(loginDTO);
@@ -56,8 +59,11 @@ public class SecurityController {
             final UserInfo userInfo = userConverter.user2userInfo(user);
             final String token = StringUtil.genStr(16);
             userInfo.setToken(token);
-            // 将token--user id缓存到Redis中，设置过期时间为24小时
-            redisUtil.set("token:" + token, user.getId(), 86400);
+            try {
+                redisUtil.set("token:" + token, user.getId(), 86400);
+            } catch (Exception e) {
+                logger.warn("Redis连接失败，登录功能将不使用Redis缓存，token: {}", token);
+            }
             return ResultBean.success("登录成功!", userInfo);
         } else {
             return ResultBean.error("用户名或密码错误!", null);
@@ -68,8 +74,11 @@ public class SecurityController {
     public ResultBean<Void> logout(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if (token != null) {
-            // 从Redis中删除token
-            redisUtil.delete("token:" + token);
+            try {
+                redisUtil.delete("token:" + token);
+            } catch (Exception e) {
+                logger.warn("Redis连接失败，登出功能将不使用Redis缓存，token: {}", token);
+            }
             return ResultBean.success("登出成功!", null);
         } else {
             return ResultBean.error("登出失败!", null);
