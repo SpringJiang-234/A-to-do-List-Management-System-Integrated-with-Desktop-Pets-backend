@@ -65,10 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int isAccountExist(String account) {
-        UserQuery query = new UserQuery();
-        query.setAccount(account);
-        List<User> users = userMapper.selectWithCondition(query);
-        return users.size();
+        return userMapper.countByAccount(account);
     }
 
     @Override
@@ -88,7 +85,7 @@ public class UserServiceImpl implements UserService {
             user.setNickname(registerDTO.getUsername());
             user.setType(2); // 默认类型 用户类型：1-管理员 2-普通用户
             user.setStatus(1); // 默认状态 状态：1-正常 2-已注销
-            user.setGender(1); // 默认性别 性别：1-男 2-女 3-未知
+            user.setGender(3); // 默认性别 性别：1-男 2-女 3-未知
             return userMapper.insertSelective(user);
         } catch (Exception e) {
             return 0;

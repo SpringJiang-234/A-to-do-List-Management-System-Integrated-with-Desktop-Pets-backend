@@ -702,4 +702,10 @@
       </if>
     </where>
   </select>
+
+  <select id="countByAccount" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*)
+    from tb_user
+    where account = #{account,jdbcType=VARCHAR}
+  </select>
 </mapper>
