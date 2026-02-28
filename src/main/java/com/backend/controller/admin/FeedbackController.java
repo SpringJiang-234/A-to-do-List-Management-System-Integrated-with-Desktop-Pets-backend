@@ -40,7 +40,12 @@ public class FeedbackController {
     @Autowired
     private FeedbackConverter feedbackConverter;
 
-
+    /**
+     * 获取反馈分页数据
+     *
+     * @param feedbackQuery
+     * @return
+     */
     @PostMapping("/page")
     public ResultBean<PageBean<FeedbackVO>> page(@RequestBody FeedbackQuery feedbackQuery) {
         final PageBean<Feedback> feedbackPageBean = feedbackService.getPage(feedbackQuery);
@@ -48,6 +53,12 @@ public class FeedbackController {
         return ResultBean.success(pageBean);
     }
 
+    /**
+     * 获取反馈详情：暂时没用
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/details/{id}")
     public ResultBean<FeedbackDetails> getDetails(@PathVariable("id") Long id) {
         final Feedback feedback = feedbackService.getById(id);
@@ -55,6 +66,12 @@ public class FeedbackController {
         return ResultBean.success(feedbackDetails);
     }
 
+    /**
+     * 修改反馈信息
+     *
+     * @param feedbackDTO
+     * @return
+     */
     @PostMapping("/update")
     public ResultBean<Void> update(@RequestBody FeedbackDTO feedbackDTO) {
         final Feedback feedback = feedbackConverter.feedbackDTO2feedback(feedbackDTO);
@@ -62,6 +79,12 @@ public class FeedbackController {
         return ResultBean.success("修改成功!", null);
     }
 
+    /**
+     * 添加反馈信息
+     *
+     * @param feedbackDTO
+     * @return
+     */
     @PostMapping("/insert")
     public ResultBean<Void> insert(@RequestBody FeedbackDTO feedbackDTO) {
         final Feedback feedback = feedbackConverter.feedbackDTO2feedback(feedbackDTO);
@@ -69,18 +92,36 @@ public class FeedbackController {
         return ResultBean.success("添加成功!", null);
     }
 
+    /**
+     * 删除反馈信息
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/delete/{id}")
     public ResultBean<Void> delete(@PathVariable("id") Long id) {
         feedbackService.deleteById(id);
         return ResultBean.success("删除成功!", null);
     }
 
+    /**
+     * 批量删除反馈信息
+     *
+     * @param ids
+     * @return
+     */
     @GetMapping("/batchDelete/{ids}")
     public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
         feedbackService.deleteByIds(ids);
         return ResultBean.success("批量删除成功!", null);
     }
 
+    /**
+     * 导出反馈信息
+     *
+     * @param feedbackQuery
+     * @param response
+     */
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody FeedbackQuery feedbackQuery) {
         final List<Feedback> feedbackList = feedbackService.getAll(feedbackQuery);
@@ -95,6 +136,11 @@ public class FeedbackController {
         }
     }
 
+    /**
+     * 下载反馈导入模板
+     *
+     * @param response
+     */
     @GetMapping("/downloadTemplate")
     public void downloadTemplate(HttpServletResponse response) {
         try {
@@ -106,6 +152,12 @@ public class FeedbackController {
         }
     }
 
+    /**
+     * 导入反馈信息
+     *
+     * @param file
+     * @return
+     */
     @PostMapping("/import")
     public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
         try (InputStream is = file.getInputStream()) {

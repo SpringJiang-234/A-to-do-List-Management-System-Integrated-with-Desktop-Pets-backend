@@ -40,7 +40,12 @@ public class TodoTagController {
     @Autowired
     private TodoTagConverter todoTagConverter;
 
-
+    /**
+     * 待办标签关联分页：暂时没用
+     *
+     * @param todoTagQuery
+     * @return
+     */
     @PostMapping("/page")
     public ResultBean<PageBean<TodoTagVO>> page(@RequestBody TodoTagQuery todoTagQuery) {
         final PageBean<TodoTag> todoTagPageBean = todoTagService.getPage(todoTagQuery);
@@ -48,6 +53,12 @@ public class TodoTagController {
         return ResultBean.success(pageBean);
     }
 
+    /**
+     * 待办标签关联详情：暂时没用
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/details/{id}")
     public ResultBean<TodoTagDetails> getDetails(@PathVariable("id") Long id) {
         final TodoTag todoTag = todoTagService.getById(id);
@@ -55,6 +66,12 @@ public class TodoTagController {
         return ResultBean.success(todoTagDetails);
     }
 
+    /**
+     * 待办标签关联修改：暂时没用
+     *
+     * @param todoTagDTO
+     * @return
+     */
     @PostMapping("/update")
     public ResultBean<Void> update(@RequestBody TodoTagDTO todoTagDTO) {
         final TodoTag todoTag = todoTagConverter.todoTagDTO2todoTag(todoTagDTO);
@@ -62,6 +79,12 @@ public class TodoTagController {
         return ResultBean.success("修改成功!", null);
     }
 
+    /**
+     * 待办标签关联添加：暂时没用
+     *
+     * @param todoTagDTO
+     * @return
+     */
     @PostMapping("/insert")
     public ResultBean<Void> insert(@RequestBody TodoTagDTO todoTagDTO) {
         final TodoTag todoTag = todoTagConverter.todoTagDTO2todoTag(todoTagDTO);
@@ -69,18 +92,36 @@ public class TodoTagController {
         return ResultBean.success("添加成功!", null);
     }
 
+    /**
+     * 待办标签关联删除：暂时没用
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/delete/{id}")
     public ResultBean<Void> delete(@PathVariable("id") Long id) {
         todoTagService.deleteById(id);
         return ResultBean.success("删除成功!", null);
     }
 
+    /**
+     * 批量删除待办标签关联：暂时没用
+     *
+     * @param ids
+     * @return
+     */
     @GetMapping("/batchDelete/{ids}")
     public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
         todoTagService.deleteByIds(ids);
         return ResultBean.success("批量删除成功!", null);
     }
 
+    /**
+     * 待办标签关联信息导出：暂时没用
+     *
+     * @param response
+     * @param todoTagQuery
+     */
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody TodoTagQuery todoTagQuery) {
         final PageBean<TodoTag> pageBean = todoTagService.getPage(todoTagQuery);
@@ -95,6 +136,12 @@ public class TodoTagController {
         }
     }
 
+    /**
+     * 待办标签关联信息导入：暂时没用
+     *
+     * @param file
+     * @return
+     */
     @PostMapping("/import")
     public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
         try (InputStream is = file.getInputStream()) {

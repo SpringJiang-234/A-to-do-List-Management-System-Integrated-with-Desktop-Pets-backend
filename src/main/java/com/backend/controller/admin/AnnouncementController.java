@@ -40,7 +40,12 @@ public class AnnouncementController {
     @Autowired
     private AnnouncementConverter announcementConverter;
 
-
+    /**
+     * 分页查询
+     *
+     * @param announcementQuery 查询参数
+     * @return 公告列表
+     */
     @PostMapping("/page")
     public ResultBean<PageBean<AnnouncementVO>> page(@RequestBody AnnouncementQuery announcementQuery) {
         final PageBean<Announcement> announcementPageBean = announcementService.getPage(announcementQuery);
@@ -48,6 +53,12 @@ public class AnnouncementController {
         return ResultBean.success(pageBean);
     }
 
+    /**
+     * 获取详情：暂时没用
+     *
+     * @param id 公告id
+     * @return 详情
+     */
     @GetMapping("/details/{id}")
     public ResultBean<AnnouncementDetails> getDetails(@PathVariable("id") Long id) {
         final Announcement announcement = announcementService.getById(id);
@@ -55,6 +66,12 @@ public class AnnouncementController {
         return ResultBean.success(announcementDetails);
     }
 
+    /**
+     * 修改公告
+     *
+     * @param announcementDTO 公告信息
+     * @return 修改结果
+     */
     @PostMapping("/update")
     public ResultBean<Void> update(@RequestBody AnnouncementDTO announcementDTO) {
         final Announcement announcement = announcementConverter.announcementDTO2announcement(announcementDTO);
@@ -62,6 +79,12 @@ public class AnnouncementController {
         return ResultBean.success("修改成功!", null);
     }
 
+    /**
+     * 添加公告
+     *
+     * @param announcementDTO 公告信息
+     * @return 添加结果
+     */
     @PostMapping("/insert")
     public ResultBean<Void> insert(@RequestBody AnnouncementDTO announcementDTO) {
         final Announcement announcement = announcementConverter.announcementDTO2announcement(announcementDTO);
@@ -69,18 +92,35 @@ public class AnnouncementController {
         return ResultBean.success("添加成功!", null);
     }
 
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/delete/{id}")
     public ResultBean<Void> delete(@PathVariable("id") Long id) {
         announcementService.deleteById(id);
         return ResultBean.success("删除成功!", null);
     }
 
+    /**
+     * 批量删除
+     *
+     * @param ids
+     * @return
+     */
     @GetMapping("/batchDelete/{ids}")
     public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
         announcementService.deleteByIds(ids);
         return ResultBean.success("批量删除成功!", null);
     }
 
+    /**
+     * 导出数据
+     *
+     * @param announcementQuery 查询参数
+     */
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody AnnouncementQuery announcementQuery) {
         final List<Announcement> list = announcementService.getAll(announcementQuery);
@@ -94,6 +134,9 @@ public class AnnouncementController {
         }
     }
 
+    /**
+     * 下载模板
+     */
     @GetMapping("/downloadTemplate")
     public void downloadTemplate(HttpServletResponse response) {
         try {
@@ -115,6 +158,12 @@ public class AnnouncementController {
         }
     }
 
+    /**
+     * 导入数据
+     *
+     * @param file 文件
+     * @return 导入结果
+     */
     @PostMapping("/import")
     public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
         try (InputStream is = file.getInputStream()) {

@@ -40,7 +40,12 @@ public class AuditLogController {
     @Autowired
     private AuditLogConverter auditLogConverter;
 
-
+    /**
+     * 分页查询
+     *
+     * @param auditLogQuery 查询参数
+     * @return ResultBean<PageBean<AuditLogVO>>
+     */
     @PostMapping("/page")
     public ResultBean<PageBean<AuditLogVO>> page(@RequestBody AuditLogQuery auditLogQuery) {
         final PageBean<AuditLog> auditLogPageBean = auditLogService.getPage(auditLogQuery);
@@ -48,6 +53,12 @@ public class AuditLogController {
         return ResultBean.success(pageBean);
     }
 
+    /**
+     * 获取详情：暂时没用
+     *
+     * @param id 详情参数
+     * @return ResultBean<AuditLogDetails>
+     */
     @GetMapping("/details/{id}")
     public ResultBean<AuditLogDetails> getDetails(@PathVariable("id") Long id) {
         final AuditLog auditLog = auditLogService.getById(id);
@@ -55,6 +66,12 @@ public class AuditLogController {
         return ResultBean.success(auditLogDetails);
     }
 
+    /**
+     * 修改
+     *
+     * @param auditLogDTO 修改参数
+     * @return ResultBean<Void>
+     */
     @PostMapping("/update")
     public ResultBean<Void> update(@RequestBody AuditLogDTO auditLogDTO) {
         final AuditLog auditLog = auditLogConverter.auditLogDTO2auditLog(auditLogDTO);
@@ -62,6 +79,12 @@ public class AuditLogController {
         return ResultBean.success("修改成功!", null);
     }
 
+    /**
+     * 添加
+     *
+     * @param auditLogDTO 添加参数
+     * @return ResultBean<Void>
+     */
     @PostMapping("/insert")
     public ResultBean<Void> insert(@RequestBody AuditLogDTO auditLogDTO) {
         final AuditLog auditLog = auditLogConverter.auditLogDTO2auditLog(auditLogDTO);
@@ -69,18 +92,36 @@ public class AuditLogController {
         return ResultBean.success("添加成功!", null);
     }
 
+    /**
+     * 删除
+     *
+     * @param id 删除参数
+     * @return ResultBean<Void>
+     */
     @GetMapping("/delete/{id}")
     public ResultBean<Void> delete(@PathVariable("id") Long id) {
         auditLogService.deleteById(id);
         return ResultBean.success("删除成功!", null);
     }
 
+    /**
+     * 批量删除
+     *
+     * @param ids 批量删除参数
+     * @return ResultBean<Void>
+     */
     @GetMapping("/batchDelete/{ids}")
     public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
         auditLogService.deleteByIds(ids);
         return ResultBean.success("批量删除成功!", null);
     }
 
+    /**
+     * 导出
+     *
+     * @param response 响应
+     * @param auditLogQuery 查询参数
+     */
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody AuditLogQuery auditLogQuery) {
         final List<AuditLog> list = auditLogService.getAll(auditLogQuery);
@@ -95,6 +136,12 @@ public class AuditLogController {
         }
     }
 
+    /**
+     * 导入
+     *
+     * @param file 文件
+     * @return ResultBean<Void>
+     */
     @PostMapping("/import")
     public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
         try (InputStream is = file.getInputStream()) {

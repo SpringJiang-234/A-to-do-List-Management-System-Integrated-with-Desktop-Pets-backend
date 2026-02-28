@@ -40,7 +40,12 @@ public class TagController {
     @Autowired
     private TagConverter tagConverter;
 
-
+    /**
+     * 获取标签分页数据：暂时没用
+     *
+     * @param tagQuery
+     * @return
+     */
     @PostMapping("/page")
     public ResultBean<PageBean<TagVO>> page(@RequestBody TagQuery tagQuery) {
         final PageBean<Tag> tagPageBean = tagService.getPage(tagQuery);
@@ -48,6 +53,12 @@ public class TagController {
         return ResultBean.success(pageBean);
     }
 
+    /**
+     * 获取标签详情：暂时没用
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/details/{id}")
     public ResultBean<TagDetails> getDetails(@PathVariable("id") Long id) {
         final Tag tag = tagService.getById(id);
@@ -55,6 +66,12 @@ public class TagController {
         return ResultBean.success(tagDetails);
     }
 
+    /**
+     * 修改标签信息：暂时没用
+     *
+     * @param tagDTO
+     * @return
+     */
     @PostMapping("/update")
     public ResultBean<Void> update(@RequestBody TagDTO tagDTO) {
         final Tag tag = tagConverter.tagDTO2tag(tagDTO);
@@ -62,6 +79,12 @@ public class TagController {
         return ResultBean.success("修改成功!", null);
     }
 
+    /**
+     * 添加标签信息：暂时没用
+     *
+     * @param tagDTO
+     * @return
+     */
     @PostMapping("/insert")
     public ResultBean<Void> insert(@RequestBody TagDTO tagDTO) {
         final Tag tag = tagConverter.tagDTO2tag(tagDTO);
@@ -69,18 +92,36 @@ public class TagController {
         return ResultBean.success("添加成功!", null);
     }
 
+    /**
+     * 删除标签信息：暂时没用
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/delete/{id}")
     public ResultBean<Void> delete(@PathVariable("id") Long id) {
         tagService.deleteById(id);
         return ResultBean.success("删除成功!", null);
     }
 
+    /**
+     * 批量删除标签信息：暂时没用
+     *
+     * @param ids
+     * @return
+     */
     @GetMapping("/batchDelete/{ids}")
     public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
         tagService.deleteByIds(ids);
         return ResultBean.success("批量删除成功!", null);
     }
 
+    /**
+     * 导出标签信息：暂时没用
+     *
+     * @param tagQuery
+     * @param response
+     */
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody TagQuery tagQuery) {
         final PageBean<Tag> pageBean = tagService.getPage(tagQuery);
@@ -95,6 +136,12 @@ public class TagController {
         }
     }
 
+    /**
+     * 导入标签信息：暂时没用
+     *
+     * @param file
+     * @return
+     */
     @PostMapping("/import")
     public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
         try (InputStream is = file.getInputStream()) {

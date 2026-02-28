@@ -40,7 +40,12 @@ public class UserTagController {
     @Autowired
     private UserTagConverter userTagConverter;
 
-
+    /**
+     * 用户标签关联分页：暂时没用
+     *
+     * @param userTagQuery
+     * @return
+     */
     @PostMapping("/page")
     public ResultBean<PageBean<UserTagVO>> page(@RequestBody UserTagQuery userTagQuery) {
         final PageBean<UserTag> userTagPageBean = userTagService.getPage(userTagQuery);
@@ -48,6 +53,12 @@ public class UserTagController {
         return ResultBean.success(pageBean);
     }
 
+    /**
+     * 用户标签关联详情：暂时没用
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/details/{id}")
     public ResultBean<UserTagDetails> getDetails(@PathVariable("id") Long id) {
         final UserTag userTag = userTagService.getById(id);
@@ -55,6 +66,12 @@ public class UserTagController {
         return ResultBean.success(userTagDetails);
     }
 
+    /**
+     * 修改用户标签关联：暂时没用
+     *
+     * @param userTagDTO
+     * @return
+     */
     @PostMapping("/update")
     public ResultBean<Void> update(@RequestBody UserTagDTO userTagDTO) {
         final UserTag userTag = userTagConverter.userTagDTO2userTag(userTagDTO);
@@ -62,6 +79,12 @@ public class UserTagController {
         return ResultBean.success("修改成功!", null);
     }
 
+    /**
+     * 添加用户标签关联：暂时没用
+     *
+     * @param userTagDTO
+     * @return
+     */
     @PostMapping("/insert")
     public ResultBean<Void> insert(@RequestBody UserTagDTO userTagDTO) {
         final UserTag userTag = userTagConverter.userTagDTO2userTag(userTagDTO);
@@ -69,18 +92,36 @@ public class UserTagController {
         return ResultBean.success("添加成功!", null);
     }
 
+    /**
+     * 删除用户标签关联：暂时没用
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/delete/{id}")
     public ResultBean<Void> delete(@PathVariable("id") Long id) {
         userTagService.deleteById(id);
         return ResultBean.success("删除成功!", null);
     }
 
+    /**
+     * 批量删除用户标签关联：暂时没用
+     *
+     * @param ids
+     * @return
+     */
     @GetMapping("/batchDelete/{ids}")
     public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
         userTagService.deleteByIds(ids);
         return ResultBean.success("批量删除成功!", null);
     }
 
+    /**
+     * 导出用户标签关联列表：暂时没用
+     *
+     * @param response
+     * @param userTagQuery
+     */
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody UserTagQuery userTagQuery) {
         final PageBean<UserTag> pageBean = userTagService.getPage(userTagQuery);
@@ -95,6 +136,12 @@ public class UserTagController {
         }
     }
 
+    /**
+     * 导入用户标签关联列表：暂时没用
+     *
+     * @param file
+     * @return
+     */
     @PostMapping("/import")
     public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
         try (InputStream is = file.getInputStream()) {

@@ -40,7 +40,12 @@ public class DesktopPetController {
     @Autowired
     private DesktopPetConverter desktopPetConverter;
 
-
+    /**
+     * 获取桌宠分页数据
+     *
+     * @param desktopPetQuery
+     * @return
+     */
     @PostMapping("/page")
     public ResultBean<PageBean<DesktopPetVO>> page(@RequestBody DesktopPetQuery desktopPetQuery) {
         final PageBean<DesktopPet> desktopPetPageBean = desktopPetService.getPage(desktopPetQuery);
@@ -48,6 +53,12 @@ public class DesktopPetController {
         return ResultBean.success(pageBean);
     }
 
+    /**
+     * 获取桌宠详情：要用
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/details/{id}")
     public ResultBean<DesktopPetDetails> getDetails(@PathVariable("id") Long id) {
         final DesktopPet desktopPet = desktopPetService.getById(id);
@@ -55,6 +66,12 @@ public class DesktopPetController {
         return ResultBean.success(desktopPetDetails);
     }
 
+    /**
+     * 修改桌宠：要用
+     *
+     * @param desktopPetDTO
+     * @return
+     */
     @PostMapping("/update")
     public ResultBean<Void> update(@RequestBody DesktopPetDTO desktopPetDTO) {
         final DesktopPet desktopPet = desktopPetConverter.desktopPetDTO2desktopPet(desktopPetDTO);
@@ -62,6 +79,12 @@ public class DesktopPetController {
         return ResultBean.success("修改成功!", null);
     }
 
+    /**
+     * 添加桌宠：暂时没用
+     *
+     * @param desktopPetDTO
+     * @return
+     */
     @PostMapping("/insert")
     public ResultBean<Void> insert(@RequestBody DesktopPetDTO desktopPetDTO) {
         final DesktopPet desktopPet = desktopPetConverter.desktopPetDTO2desktopPet(desktopPetDTO);
@@ -69,18 +92,36 @@ public class DesktopPetController {
         return ResultBean.success("添加成功!", null);
     }
 
+    /**
+     * 删除桌宠：暂时没用
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/delete/{id}")
     public ResultBean<Void> delete(@PathVariable("id") Long id) {
         desktopPetService.deleteById(id);
         return ResultBean.success("删除成功!", null);
     }
 
+    /**
+     * 批量删除桌宠：暂时没用
+     *
+     * @param ids
+     * @return
+     */
     @GetMapping("/batchDelete/{ids}")
     public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
         desktopPetService.deleteByIds(ids);
         return ResultBean.success("批量删除成功!", null);
     }
 
+    /**
+     * 导出桌宠数据
+     *
+     * @param response
+     * @param desktopPetQuery
+     */
     @PostMapping("/export")
     public void exportData(HttpServletResponse response, @RequestBody DesktopPetQuery desktopPetQuery) {
         final List<DesktopPet> list = desktopPetService.getAll(desktopPetQuery);
@@ -94,6 +135,12 @@ public class DesktopPetController {
         }
     }
 
+    /**
+     * 导入桌宠数据：暂时没用
+     *
+     * @param file
+     * @return
+     */
     @PostMapping("/import")
     public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
         try (InputStream is = file.getInputStream()) {

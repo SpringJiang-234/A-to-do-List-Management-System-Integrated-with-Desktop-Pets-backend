@@ -32,6 +32,12 @@ public class SecurityController {
     @Autowired
     private RedisUtil redisUtil;
 
+    /**
+     * 检测账户是否已存在
+     *
+     * @param account 账户
+     * @return 账户是否已存在
+     */
     @GetMapping("/accountExist/{account}")
     public ResultBean<Void> accountExist(@PathVariable("account") String account) {
         int count = userService.isAccountExist(account);
@@ -42,6 +48,12 @@ public class SecurityController {
         }
     }
 
+    /**
+     * 注册
+     *
+     * @param registerDTO 注册信息
+     * @return 注册结果
+     */
     @PostMapping("/register")
     public ResultBean<Void> register(@RequestBody RegisterDTO registerDTO) {
         int result = userService.register(registerDTO);
@@ -52,6 +64,12 @@ public class SecurityController {
         }
     }
 
+    /**
+     * 登录
+     *
+     * @param loginDTO 登录信息
+     * @return 登录结果
+     */
     @PostMapping("/login")
     public ResultBean<UserInfo> login(@RequestBody LoginDTO loginDTO) {
         final User user = userService.login(loginDTO);
@@ -70,6 +88,12 @@ public class SecurityController {
         }
     }
 
+    /**
+     * 登出
+     *
+     * @param request 请求
+     * @return 登出结果
+     */
     @GetMapping("/logout")
     public ResultBean<Void> logout(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
