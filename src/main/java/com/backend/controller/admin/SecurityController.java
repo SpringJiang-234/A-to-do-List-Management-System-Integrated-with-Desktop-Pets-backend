@@ -69,7 +69,7 @@ public class SecurityController {
      */
     @PostMapping("/login")
     public ResultBean<UserInfo> login(@RequestBody LoginDTO loginDTO) {
-        final User user = userService.login(loginDTO);
+        final User user = userService.adminLogin(loginDTO);
         if (user != null) {
             final UserInfo userInfo = userConverter.user2userInfo(user);
             final String token = StringUtil.genStr(16);

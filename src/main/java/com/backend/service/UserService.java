@@ -80,4 +80,11 @@ public interface UserService {
      */
     User login(LoginDTO loginDTO);
 
+    /**
+     * 管理员登录
+     * @param loginDTO 登录信息
+     * @return 用户信息
+     */
+    User adminLogin(LoginDTO loginDTO);
+
 }
