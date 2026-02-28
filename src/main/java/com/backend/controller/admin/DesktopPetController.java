@@ -33,7 +33,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/desktopPet")
+@RequestMapping("/admin/desktopPet")
 public class DesktopPetController {
     @Autowired
     private DesktopPetService desktopPetService;

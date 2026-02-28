@@ -33,7 +33,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/admin/category")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

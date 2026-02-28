@@ -33,7 +33,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/tag")
+@RequestMapping("/admin/tag")
 public class TagController {
     @Autowired
     private TagService tagService;

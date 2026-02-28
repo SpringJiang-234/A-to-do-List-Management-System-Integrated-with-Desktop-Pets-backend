@@ -33,7 +33,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/auditLog")
+@RequestMapping("/admin/auditLog")
 public class AuditLogController {
     @Autowired
     private AuditLogService auditLogService;

@@ -33,7 +33,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/feedback")
+@RequestMapping("/admin/feedback")
 public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;

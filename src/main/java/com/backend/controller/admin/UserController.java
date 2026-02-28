@@ -33,7 +33,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 public class UserController {
     @Autowired
     private UserService userService;

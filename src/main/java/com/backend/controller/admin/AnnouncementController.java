@@ -33,7 +33,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/announcement")
+@RequestMapping("/admin/announcement")
 public class AnnouncementController {
     @Autowired
     private AnnouncementService announcementService;

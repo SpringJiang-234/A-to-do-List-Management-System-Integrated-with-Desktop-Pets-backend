@@ -33,7 +33,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/todoTag")
+@RequestMapping("/admin/todoTag")
 public class TodoTagController {
     @Autowired
     private TodoTagService todoTagService;
