@@ -1,11 +1,11 @@
-package com.backend.controller.admin;
+package com.backend.controller.client;
 
 import com.backend.bean.ResultBean;
 import com.backend.converter.UserConverter;
-import com.backend.domain.info.UserInfo;
 import com.backend.domain.dto.LoginDTO;
 import com.backend.domain.dto.RegisterDTO;
 import com.backend.domain.entity.User;
+import com.backend.domain.info.UserInfo;
 import com.backend.service.UserService;
 import com.backend.utils.RedisUtil;
 import com.backend.utils.StringUtil;
@@ -15,12 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-
 @RestController
-@RequestMapping("/admin/security")
-public class SecurityController {
-    private static final Logger logger = LoggerFactory.getLogger(SecurityController.class);
+@RequestMapping("/client/security")
+public class ClientSecurityController {
+    private static final Logger logger = LoggerFactory.getLogger(ClientSecurityController.class);
 
     @Autowired
     private UserService userService;
@@ -69,7 +67,7 @@ public class SecurityController {
      */
     @PostMapping("/login")
     public ResultBean<UserInfo> login(@RequestBody LoginDTO loginDTO) {
-        final User user = userService.adminLogin(loginDTO);
+        final User user = userService.login(loginDTO);
         if (user != null) {
             final UserInfo userInfo = userConverter.user2userInfo(user);
             final String token = StringUtil.genStr(16);

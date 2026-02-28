@@ -38,6 +38,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insertOrUpdate(User user) {
+        // 如果密码不为空，对密码进行加密处理
+        if (user.getPasswordHash() != null && !user.getPasswordHash().isEmpty()) {
+            user.setPasswordHash(PasswordUtil.hashPassword(user.getPasswordHash()));
+        }
         return userMapper.insertOrUpdateSelective(user);
     }
 
