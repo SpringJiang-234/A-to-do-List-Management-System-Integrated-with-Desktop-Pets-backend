@@ -19,7 +19,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
         @ComponentScan.Filter(type = org.springframework.context.annotation.FilterType.ANNOTATION,
             classes = {org.springframework.stereotype.Controller.class,
                       org.springframework.web.bind.annotation.RestController.class,
-                      org.springframework.context.annotation.Configuration.class})
+                      org.springframework.context.annotation.Configuration.class,
+                      org.springframework.stereotype.Component.class,
+                      org.springframework.stereotype.Service.class,
+                      org.springframework.stereotype.Repository.class})
     })
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class WebMvcConfig implements WebMvcConfigurer {
