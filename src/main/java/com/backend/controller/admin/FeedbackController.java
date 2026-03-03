@@ -54,7 +54,7 @@ public class FeedbackController {
     }
 
     /**
-     * 获取反馈详情：暂时没用
+     * 获取反馈详情
      *
      * @param id
      * @return

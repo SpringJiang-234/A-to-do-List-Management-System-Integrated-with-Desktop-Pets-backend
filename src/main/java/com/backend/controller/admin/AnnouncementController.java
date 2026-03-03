@@ -54,7 +54,7 @@ public class AnnouncementController {
     }
 
     /**
-     * 获取详情：暂时没用
+     * 获取详情
      *
      * @param id 公告id
      * @return 详情
