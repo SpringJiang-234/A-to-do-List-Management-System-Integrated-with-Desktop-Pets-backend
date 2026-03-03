@@ -171,4 +171,28 @@ public class UserController {
             throw new GlobalException("用户信息模板下载失败！");
         }
     }
+
+    /**
+     * 注销用户
+     *
+     * @param id 用户ID
+     * @return 注销结果
+     */
+    @GetMapping("/cancel/{id}")
+    public ResultBean<Void> cancel(@PathVariable("id") Long id) {
+        userService.cancelById(id);
+        return ResultBean.success("注销成功!", null);
+    }
+
+    /**
+     * 批量注销用户
+     *
+     * @param ids 用户ID列表
+     * @return 批量注销结果
+     */
+    @GetMapping("/batchCancel/{ids}")
+    public ResultBean<Void> batchCancel(@PathVariable("ids") String ids) {
+        userService.cancelByIds(ids);
+        return ResultBean.success("批量注销成功!", null);
+    }
 }

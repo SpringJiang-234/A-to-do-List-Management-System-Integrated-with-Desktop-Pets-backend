@@ -150,4 +150,26 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public int cancelById(Long id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        if (user == null) {
+            return 0;
+        }
+        user.setStatus(2);
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int cancelByIds(String ids) {
+        final String[] split = ids.split(",");
+        int count = 0;
+        for (String idStr : split) {
+            Long id = Long.parseLong(idStr.trim());
+            count += cancelById(id);
+        }
+        return count;
+    }
 }

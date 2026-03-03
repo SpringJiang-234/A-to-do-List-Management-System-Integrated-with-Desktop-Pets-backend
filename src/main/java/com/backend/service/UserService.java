@@ -87,4 +87,17 @@ public interface UserService {
      */
     User adminLogin(LoginDTO loginDTO);
 
+    /**
+     * 注销用户
+     * @param id 用户ID
+     * @return 注销成功的记录数
+     */
+    int cancelById(Long id);
+
+    /**
+     * 批量注销用户
+     * @param ids 用户ID列表
+     * @return 注销成功的记录数
+     */
+    int cancelByIds(String ids);
 }
