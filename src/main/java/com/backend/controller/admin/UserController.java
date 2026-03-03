@@ -54,7 +54,7 @@ public class UserController {
     }
 
     /**
-     * 获取用户详情：要用
+     * 获取用户详情
      *
      * @param id 用户ID
      * @return 用户详情
@@ -98,11 +98,11 @@ public class UserController {
      * @param id 用户ID
      * @return 删除结果
      */
-    @GetMapping("/delete/{id}")
-    public ResultBean<Void> delete(@PathVariable("id") Long id) {
-        userService.deleteById(id);
-        return ResultBean.success("删除成功!", null);
-    }
+//    @GetMapping("/delete/{id}")
+//    public ResultBean<Void> delete(@PathVariable("id") Long id) {
+//        userService.deleteById(id);
+//        return ResultBean.success("删除成功!", null);
+//    }
 
     /**
      * 批量删除用户
@@ -110,11 +110,11 @@ public class UserController {
      * @param ids 用户ID列表
      * @return 批量删除结果
      */
-    @GetMapping("/batchDelete/{ids}")
-    public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
-        userService.deleteByIds(ids);
-        return ResultBean.success("批量删除成功!", null);
-    }
+//    @GetMapping("/batchDelete/{ids}")
+//    public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
+//        userService.deleteByIds(ids);
+//        return ResultBean.success("批量删除成功!", null);
+//    }
 
     /**
      * 导出用户数据
