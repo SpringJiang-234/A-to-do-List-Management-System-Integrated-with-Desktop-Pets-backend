@@ -158,4 +158,26 @@ public class TodoController {
         }
         return ResultBean.success("待办事项信息导入成功!", null);
     }
+
+    /**
+     * 获取待办总数
+     *
+     * @return 待办总数
+     */
+    @GetMapping("/total")
+    public ResultBean<Integer> getTotalTodos() {
+        final int total = todoService.countTotalTodos();
+        return ResultBean.success(total);
+    }
+
+    /**
+     * 获取近七天待办数新增趋势
+     *
+     * @return 近七天每天的新待办数
+     */
+    @GetMapping("/trend")
+    public ResultBean<java.util.List<java.util.Map<String, Object>>> getNewTodosTrend() {
+        final java.util.List<java.util.Map<String, Object>> trend = todoService.getNewTodosTrend();
+        return ResultBean.success(trend);
+    }
 }

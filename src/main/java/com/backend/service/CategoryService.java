@@ -50,4 +50,16 @@ public interface CategoryService {
      */
     int batchInsert(List<Category> categoryList);
 
+    /**
+     * 获取分类总数
+     * @return 分类总数
+     */
+    int countTotalCategories();
+
+    /**
+     * 获取近七天分类数新增趋势
+     * @return 近七天每天的新分类数
+     */
+    java.util.List<java.util.Map<String, Object>> getNewCategoriesTrend();
+
 }

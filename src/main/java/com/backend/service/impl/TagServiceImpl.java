@@ -54,4 +54,33 @@ public class TagServiceImpl implements TagService {
     public int batchInsert(List<Tag> tagList) {
         return tagMapper.batchInsertSelectiveUseDefaultForNull(tagList);
     }
+
+    @Override
+    public int countTotalTags() {
+        return tagMapper.countTotalTags();
+    }
+
+    @Override
+    public java.util.List<java.util.Map<String, Object>> getNewTagsTrend() {
+        // 生成近七天的日期列表
+        java.util.List<java.util.Map<String, Object>> result = new java.util.ArrayList<>();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        
+        // 循环获取近七天的日期，每个日期查询新标签总数
+        for (int i = 6; i >= 0; i--) {
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, -i);
+            String dateStr = sdf.format(calendar.getTime());
+            
+            // 调用mapper方法获取当天的新增标签数
+            int count = tagMapper.countNewTagsByDate(dateStr);
+            
+            java.util.Map<String, Object> dayData = new java.util.HashMap<>();
+            dayData.put("date", dateStr);
+            dayData.put("count", count);
+            result.add(dayData);
+        }
+        
+        return result;
+    }
 }

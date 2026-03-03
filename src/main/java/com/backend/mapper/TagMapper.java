@@ -41,4 +41,17 @@ public interface TagMapper {
     List<Tag> selectWithCondition(TagQuery tagQuery);
 
     int countByCondition(TagQuery tagQuery);
+
+    /**
+     * 获取标签总数
+     * @return 标签总数
+     */
+    int countTotalTags();
+
+    /**
+     * 获取某天的新增标签数
+     * @param date 日期（格式：YYYY-MM-DD）
+     * @return 新增标签数
+     */
+    int countNewTagsByDate(@Param("date") String date);
 }

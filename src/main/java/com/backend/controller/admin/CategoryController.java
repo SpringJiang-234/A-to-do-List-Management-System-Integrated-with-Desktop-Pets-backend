@@ -111,4 +111,26 @@ public class CategoryController {
         }
         return ResultBean.success("类别信息导入成功!", null);
     }
+
+    /**
+     * 获取分类总数
+     *
+     * @return 分类总数
+     */
+    @GetMapping("/total")
+    public ResultBean<Integer> getTotalCategories() {
+        final int total = categoryService.countTotalCategories();
+        return ResultBean.success(total);
+    }
+
+    /**
+     * 获取近七天分类数新增趋势
+     *
+     * @return 近七天每天的新分类数
+     */
+    @GetMapping("/trend")
+    public ResultBean<java.util.List<java.util.Map<String, Object>>> getNewCategoriesTrend() {
+        final java.util.List<java.util.Map<String, Object>> trend = categoryService.getNewCategoriesTrend();
+        return ResultBean.success(trend);
+    }
 }

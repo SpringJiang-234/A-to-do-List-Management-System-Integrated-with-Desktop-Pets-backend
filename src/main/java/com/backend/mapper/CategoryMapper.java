@@ -41,4 +41,17 @@ public interface CategoryMapper {
     List<Category> selectWithCondition(CategoryQuery CategoryQuery);
 
     int countByCondition(CategoryQuery CategoryQuery);
+
+    /**
+     * 获取分类总数
+     * @return 分类总数
+     */
+    int countTotalCategories();
+
+    /**
+     * 获取某天的新增分类数
+     * @param date 日期（格式：YYYY-MM-DD）
+     * @return 新增分类数
+     */
+    int countNewCategoriesByDate(@Param("date") String date);
 }

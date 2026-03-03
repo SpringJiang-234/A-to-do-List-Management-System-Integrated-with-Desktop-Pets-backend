@@ -880,4 +880,15 @@
       </if>
     </where>
   </select>
+
+  <select id="countTotalTodos" resultType="java.lang.Integer">
+    select count(*)
+    from tb_todo
+  </select>
+
+  <select id="countNewTodosByDate" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*)
+    from tb_todo
+    where DATE_FORMAT(create_time, '%Y-%m-%d') = #{date}
+  </select>
 </mapper>

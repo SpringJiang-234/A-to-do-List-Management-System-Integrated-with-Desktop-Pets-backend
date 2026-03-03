@@ -158,4 +158,26 @@ public class TagController {
         }
         return ResultBean.success("标签信息导入成功!", null);
     }
+
+    /**
+     * 获取标签总数
+     *
+     * @return 标签总数
+     */
+    @GetMapping("/total")
+    public ResultBean<Integer> getTotalTags() {
+        final int total = tagService.countTotalTags();
+        return ResultBean.success(total);
+    }
+
+    /**
+     * 获取近七天标签数新增趋势
+     *
+     * @return 近七天每天的新标签数
+     */
+    @GetMapping("/trend")
+    public ResultBean<java.util.List<java.util.Map<String, Object>>> getNewTagsTrend() {
+        final java.util.List<java.util.Map<String, Object>> trend = tagService.getNewTagsTrend();
+        return ResultBean.success(trend);
+    }
 }

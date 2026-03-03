@@ -41,4 +41,17 @@ public interface TodoMapper {
     List<Todo> selectWithCondition(TodoQuery todoQuery);
 
     int countByCondition(TodoQuery todoQuery);
+
+    /**
+     * 获取待办总数
+     * @return 待办总数
+     */
+    int countTotalTodos();
+
+    /**
+     * 获取某天的新增待办数
+     * @param date 日期（格式：YYYY-MM-DD）
+     * @return 新增待办数
+     */
+    int countNewTodosByDate(@Param("date") String date);
 }

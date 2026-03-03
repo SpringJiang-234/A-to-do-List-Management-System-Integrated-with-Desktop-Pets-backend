@@ -478,4 +478,15 @@
       </if>
     </where>
   </select>
+
+  <select id="countTotalTags" resultType="java.lang.Integer">
+    select count(*)
+    from tb_tag
+  </select>
+
+  <select id="countNewTagsByDate" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*)
+    from tb_tag
+    where DATE_FORMAT(create_time, '%Y-%m-%d') = #{date}
+  </select>
 </mapper>

@@ -50,4 +50,16 @@ public interface TagService {
      */
     int batchInsert(List<Tag> tagList);
 
+    /**
+     * 获取标签总数
+     * @return 标签总数
+     */
+    int countTotalTags();
+
+    /**
+     * 获取近七天标签数新增趋势
+     * @return 近七天每天的新标签数
+     */
+    java.util.List<java.util.Map<String, Object>> getNewTagsTrend();
+
 }

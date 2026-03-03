@@ -54,4 +54,33 @@ public class CategoryServiceImpl implements CategoryService {
     public int batchInsert(List<Category> categoryList) {
         return categoryMapper.batchInsertSelectiveUseDefaultForNull(categoryList);
     }
+
+    @Override
+    public int countTotalCategories() {
+        return categoryMapper.countTotalCategories();
+    }
+
+    @Override
+    public java.util.List<java.util.Map<String, Object>> getNewCategoriesTrend() {
+        // 生成近七天的日期列表
+        java.util.List<java.util.Map<String, Object>> result = new java.util.ArrayList<>();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        
+        // 循环获取近七天的日期，每个日期查询新分类总数
+        for (int i = 6; i >= 0; i--) {
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, -i);
+            String dateStr = sdf.format(calendar.getTime());
+            
+            // 调用mapper方法获取当天的新增分类数
+            int count = categoryMapper.countNewCategoriesByDate(dateStr);
+            
+            java.util.Map<String, Object> dayData = new java.util.HashMap<>();
+            dayData.put("date", dateStr);
+            dayData.put("count", count);
+            result.add(dayData);
+        }
+        
+        return result;
+    }
 }

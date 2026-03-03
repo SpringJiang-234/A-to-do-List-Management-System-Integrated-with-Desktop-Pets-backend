@@ -484,4 +484,15 @@
       </if>
     </where>
   </select>
+
+  <select id="countTotalCategories" resultType="java.lang.Integer">
+    select count(*)
+    from tb_category
+  </select>
+
+  <select id="countNewCategoriesByDate" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*)
+    from tb_category
+    where DATE_FORMAT(create_time, '%Y-%m-%d') = #{date}
+  </select>
 </mapper>

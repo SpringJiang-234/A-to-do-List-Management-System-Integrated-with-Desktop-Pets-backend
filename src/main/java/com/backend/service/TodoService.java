@@ -50,4 +50,16 @@ public interface TodoService {
      */
     int batchInsert(List<Todo> todoList);
 
+    /**
+     * 获取待办总数
+     * @return 待办总数
+     */
+    int countTotalTodos();
+
+    /**
+     * 获取近七天待办数新增趋势
+     * @return 近七天每天的新待办数
+     */
+    java.util.List<java.util.Map<String, Object>> getNewTodosTrend();
+
 }
