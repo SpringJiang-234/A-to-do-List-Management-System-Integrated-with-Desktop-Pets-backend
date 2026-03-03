@@ -708,4 +708,15 @@
     from tb_user
     where account = #{account,jdbcType=VARCHAR}
   </select>
+
+  <select id="countTotalUsers" resultType="java.lang.Integer">
+    select count(*)
+    from tb_user
+  </select>
+
+  <select id="countNewUsersByDate" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*)
+    from tb_user
+    where DATE_FORMAT(create_time, '%Y-%m-%d') = #{date}
+  </select>
 </mapper>

@@ -172,4 +172,33 @@ public class UserServiceImpl implements UserService {
         }
         return count;
     }
+
+    @Override
+    public int countTotalUsers() {
+        return userMapper.countTotalUsers();
+    }
+
+    @Override
+    public java.util.List<java.util.Map<String, Object>> getNewUsersTrend() {
+        // 生成近七天的日期列表
+        java.util.List<java.util.Map<String, Object>> result = new java.util.ArrayList<>();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        
+        // 循环获取近七天的日期，每个日期查询新用户总数
+        for (int i = 6; i >= 0; i--) {
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, -i);
+            String dateStr = sdf.format(calendar.getTime());
+            
+            // 调用mapper方法获取当天的新增用户数
+            int count = userMapper.countNewUsersByDate(dateStr);
+            
+            java.util.Map<String, Object> dayData = new java.util.HashMap<>();
+            dayData.put("date", dateStr);
+            dayData.put("count", count);
+            result.add(dayData);
+        }
+        
+        return result;
+    }
 }

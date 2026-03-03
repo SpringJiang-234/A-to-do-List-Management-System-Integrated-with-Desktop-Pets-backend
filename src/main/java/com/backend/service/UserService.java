@@ -100,4 +100,16 @@ public interface UserService {
      * @return 注销成功的记录数
      */
     int cancelByIds(String ids);
+
+    /**
+     * 获取用户总数
+     * @return 用户总数
+     */
+    int countTotalUsers();
+
+    /**
+     * 获取近七天用户数新增趋势
+     * @return 近七天每天的新用户数
+     */
+    java.util.List<java.util.Map<String, Object>> getNewUsersTrend();
 }

@@ -195,4 +195,26 @@ public class UserController {
         userService.cancelByIds(ids);
         return ResultBean.success("批量注销成功!", null);
     }
+
+    /**
+     * 获取用户总数
+     *
+     * @return 用户总数
+     */
+    @GetMapping("/total")
+    public ResultBean<Integer> getTotalUsers() {
+        final int total = userService.countTotalUsers();
+        return ResultBean.success(total);
+    }
+
+    /**
+     * 获取近七天用户数新增趋势
+     *
+     * @return 近七天每天的新用户数
+     */
+    @GetMapping("/trend")
+    public ResultBean<java.util.List<java.util.Map<String, Object>>> getNewUsersTrend() {
+        final java.util.List<java.util.Map<String, Object>> trend = userService.getNewUsersTrend();
+        return ResultBean.success(trend);
+    }
 }

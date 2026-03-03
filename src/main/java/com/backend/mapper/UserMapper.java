@@ -42,4 +42,17 @@ public interface UserMapper {
     int countByCondition(UserQuery userQuery);
 
     int countByAccount(String account);
+
+    /**
+     * 获取用户总数
+     * @return 用户总数
+     */
+    int countTotalUsers();
+
+    /**
+     * 获取某天的新增用户数
+     * @param date 日期（格式：YYYY-MM-DD）
+     * @return 新增用户数
+     */
+    int countNewUsersByDate(@Param("date") String date);
 }
