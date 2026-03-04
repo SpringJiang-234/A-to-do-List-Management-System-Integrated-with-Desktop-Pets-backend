@@ -29,7 +29,21 @@ public interface UserConverter {
      * @return UserInfo对象，包含用户登录信息
      */
     @Mapping(source = "nickname", target = "username")
+    @Mapping(source = "avatar", target = "avatar")
     UserInfo user2userInfo(User user);
+
+    /**
+     * 将User对象转换为UserVO对象
+     * 用于转换用户基本信息
+     *
+     * @param user 源User对象，包含用户基本信息
+     * @return UserVO对象，包含用户VO信息
+     */
+    @Mapping(source = "type", target = "type", qualifiedByName = "typeToText")
+    @Mapping(source = "status", target = "status", qualifiedByName = "statusToText")
+    @Mapping(source = "gender", target = "gender", qualifiedByName = "genderToText")
+    @Mapping(source = "avatar", target = "avatar")
+    UserVO user2userVO(User user);
 
     /**
      * 将User对象转换为UserDetails对象
@@ -41,6 +55,7 @@ public interface UserConverter {
     @Mapping(source = "type", target = "type", qualifiedByName = "typeToText")
     @Mapping(source = "status", target = "status", qualifiedByName = "statusToText")
     @Mapping(source = "gender", target = "gender", qualifiedByName = "genderToText")
+    @Mapping(source = "avatar", target = "avatar")
     UserDetails user2userDetails(User user);
 
     /**
@@ -53,18 +68,6 @@ public interface UserConverter {
     PageBean<UserVO> userPageBean2userVOPageBean(PageBean<User> userPageBean);
 
     /**
-     * 将User对象转换为UserVO对象
-     * 用于转换用户基本信息
-     *
-     * @param user 源User对象，包含用户基本信息
-     * @return UserVO对象，包含用户VO信息
-     */
-    @Mapping(source = "type", target = "type", qualifiedByName = "typeToText")
-    @Mapping(source = "status", target = "status", qualifiedByName = "statusToText")
-    @Mapping(source = "gender", target = "gender", qualifiedByName = "genderToText")
-    UserVO user2userVO(User user);
-
-    /**
      * 将User对象转换为UserExcel对象
      * 用于Excel导出用户信息
      *
@@ -74,6 +77,7 @@ public interface UserConverter {
     @Mapping(source = "type", target = "type", qualifiedByName = "typeToText")
     @Mapping(source = "status", target = "status", qualifiedByName = "statusToText")
     @Mapping(source = "gender", target = "gender", qualifiedByName = "genderToText")
+    @Mapping(source = "avatar", target = "avatar")
     UserExcel user2userExcel(User user);
 
     /**

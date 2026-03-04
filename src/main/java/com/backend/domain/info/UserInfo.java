@@ -9,4 +9,5 @@ public class UserInfo {
     private String account;
     private String role;
     private String token;
+    private String avatar;
 }
