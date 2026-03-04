@@ -41,7 +41,7 @@ public class AuditLogAspect {
     /**
      * 定义切点：拦截admin控制器的所有方法，除了查询相关的方法
      */
-    @Pointcut("execution(* com.backend.controller.admin.*Controller.*(..)) && !execution(* com.backend.controller.admin.*Controller.*page*(..)) && !execution(* com.backend.controller.admin.*Controller.*get*(..)) && !execution(* com.backend.controller.admin.*Controller.*export*(..))")
+    @Pointcut("execution(* com.backend.controller.admin.*Controller.*(..)) && !execution(* com.backend.controller.admin.*Controller.*page*(..)) && !execution(* com.backend.controller.admin.*Controller.*get*(..)) && !execution(* com.backend.controller.admin.*Controller.*export*(..)) && !execution(* com.backend.controller.admin.*Controller.login(..)) && !execution(* com.backend.controller.admin.*Controller.logout(..))")
     public void auditLogPointcut() {
     }
 
