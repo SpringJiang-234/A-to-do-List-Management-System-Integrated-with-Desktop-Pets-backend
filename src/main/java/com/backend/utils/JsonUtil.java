@@ -46,7 +46,7 @@ public class JsonUtil {
 
     //饿汉模式
     @Getter
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     /** Json序列化和反序列化转换器 */
     static {

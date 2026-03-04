@@ -1,10 +1,12 @@
 package com.backend.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -26,6 +28,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     })
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private AuthInterceptor authInterceptor;
 
     /**
      * 配置静态资源处理
@@ -62,5 +67,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @org.springframework.context.annotation.Bean
     public StandardServletMultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
+    }
+
+    /**
+     * 配置拦截器
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 注册权限验证拦截器
+        registry.addInterceptor(authInterceptor)
+                .addPathPatterns("/admin/**", "/client/**", "/common/**")
+                .excludePathPatterns("/admin/security/login", "/admin/security/register", "/admin/security/accountExist")
+                .excludePathPatterns("/client/security/login", "/client/security/register", "/client/security/accountExist");
     }
 }
