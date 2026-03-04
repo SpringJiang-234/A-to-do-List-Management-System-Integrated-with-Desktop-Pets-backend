@@ -1,4 +1,4 @@
-package com.backend.controller;
+package com.backend.controller.admin;
 
 import com.backend.service.StatisticsService;
 import com.backend.bean.ResultBean;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/statistics")
+@RequestMapping("/admin/statistics")
 public class StatisticsController {
 
     @Autowired
