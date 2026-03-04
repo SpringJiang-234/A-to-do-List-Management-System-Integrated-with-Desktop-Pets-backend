@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -80,4 +81,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/admin/security/login", "/admin/security/register", "/admin/security/accountExist")
                 .excludePathPatterns("/client/security/login", "/client/security/register", "/client/security/accountExist");
     }
+
+    /**
+     * 配置CORS跨域请求
+     */
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOrigins("http://localhost:8848")
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                .allowedHeaders("*").allowCredentials(true).maxAge(3600);
+//    }
 }
