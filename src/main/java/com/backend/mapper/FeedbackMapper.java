@@ -2,8 +2,8 @@ package com.backend.mapper;
 
 import com.backend.domain.entity.Feedback;
 import java.util.List;
+import java.util.Map;
 
-import com.backend.domain.entity.Feedback;
 import com.backend.domain.query.FeedbackQuery;
 import org.apache.ibatis.annotations.Param;
 
@@ -41,4 +41,18 @@ public interface FeedbackMapper {
     List<Feedback> selectWithCondition(FeedbackQuery feedbackQuery);
 
     int countByCondition(FeedbackQuery feedbackQuery);
+
+    /**
+     * 获取反馈状态分布
+     * @return 反馈状态分布列表
+     */
+    List<Map<String, Object>> getFeedbackStatusDistribution();
+
+    /**
+     * 获取每日反馈提交量
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @return 每日反馈提交量列表
+     */
+    List<Map<String, Object>> getDailyFeedbackSubmission(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }

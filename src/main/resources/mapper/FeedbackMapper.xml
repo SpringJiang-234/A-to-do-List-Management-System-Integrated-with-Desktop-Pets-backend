@@ -576,4 +576,22 @@
       </if>
     </where>
   </select>
+
+  <select id="getFeedbackStatusDistribution" resultType="java.util.Map">
+    select
+      `status` as status,
+      count(*) as count
+    from tb_feedback
+    group by `status`
+  </select>
+
+  <select id="getDailyFeedbackSubmission" resultType="java.util.Map">
+    select
+      DATE_FORMAT(create_time, '%Y-%m-%d') as date,
+      count(*) as count
+    from tb_feedback
+    where DATE_FORMAT(create_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+    group by DATE_FORMAT(create_time, '%Y-%m-%d')
+    order by date
+  </select>
 </mapper>

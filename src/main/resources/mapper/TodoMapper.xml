@@ -891,4 +891,82 @@
     from tb_todo
     where DATE_FORMAT(create_time, '%Y-%m-%d') = #{date}
   </select>
+
+  <select id="getTodoStatusDistribution" resultType="java.util.Map">
+    select
+      `status` as status,
+      count(*) as count
+    from tb_todo
+    where is_delete = 1
+    group by `status`
+  </select>
+
+  <select id="getTodoPriorityDistribution" resultType="java.util.Map">
+    select
+      priority,
+      count(*) as count
+    from tb_todo
+    where is_delete = 1
+    group by priority
+  </select>
+
+  <select id="getDailyNewTodos" resultType="java.util.Map">
+    select
+      DATE_FORMAT(create_time, '%Y-%m-%d') as date,
+      count(*) as count
+    from tb_todo
+    where is_delete = 1
+    and DATE_FORMAT(create_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+    group by DATE_FORMAT(create_time, '%Y-%m-%d')
+    order by date
+  </select>
+
+  <select id="getTodoDeadlineWarning" resultType="java.util.Map">
+    select
+      DATE(end_time) as deadline,
+      count(*) as count
+    from tb_todo
+    where is_delete = 1
+    and status = 1
+    and end_time between now() and date_add(now(), interval #{days} day)
+    group by DATE(end_time)
+    order by deadline
+  </select>
+
+  <select id="getTodoCategoryDistribution" resultType="java.util.Map">
+    select
+      c.id as categoryId,
+      c.name as categoryName,
+      count(t.id) as count
+    from tb_todo t
+    left join tb_category c on t.category_id = c.id
+    where t.is_delete = 1
+    group by c.id, c.name
+  </select>
+
+  <select id="getTodoTagFrequency" resultType="java.util.Map">
+    select
+      t.id as tagId,
+      t.name as tagName,
+      count(tt.todo_id) as frequency
+    from tb_tag t
+    left join tb_todo_tag tt on t.id = tt.tag_id
+    left join tb_todo todo on tt.todo_id = todo.id
+    where todo.is_delete = 1
+    group by t.id, t.name
+    order by frequency desc
+  </select>
+
+  <select id="getTodoCompletionRateTrend" resultType="java.util.Map">
+    select
+      DATE_FORMAT(create_time, '%Y-%m-%d') as date,
+      count(*) as total,
+      sum(case when status = 2 then 1 else 0 end) as completed,
+      sum(case when status = 2 then 1 else 0 end) / count(*) * 100 as completionRate
+    from tb_todo
+    where is_delete = 1
+    and DATE_FORMAT(create_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+    group by DATE_FORMAT(create_time, '%Y-%m-%d')
+    order by date
+  </select>
 </mapper>

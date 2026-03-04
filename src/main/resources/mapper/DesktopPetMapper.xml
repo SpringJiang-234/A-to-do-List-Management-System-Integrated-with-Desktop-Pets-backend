@@ -647,4 +647,53 @@
       </if>
     </where>
   </select>
+
+  <select id="getPetLevelDistribution" resultType="java.util.Map">
+    select
+      floor(level / 10) * 10 + 1 as levelRangeStart,
+      floor(level / 10) * 10 + 10 as levelRangeEnd,
+      count(*) as count
+    from tb_desktop_pet
+    group by floor(level / 10)
+    order by levelRangeStart
+  </select>
+
+  <select id="getPetEnergyDistribution" resultType="java.util.Map">
+    select
+      energy,
+      count(*) as count
+    from tb_desktop_pet
+    group by energy
+    order by energy
+  </select>
+
+  <select id="getPetMoodDistribution" resultType="java.util.Map">
+    select
+      mood,
+      count(*) as count
+    from tb_desktop_pet
+    group by mood
+    order by mood
+  </select>
+
+  <select id="getPetIntimacyDistribution" resultType="java.util.Map">
+    select
+      intimacy,
+      count(*) as count
+    from tb_desktop_pet
+    group by intimacy
+    order by intimacy
+  </select>
+
+  <select id="getTopLevelPets" resultType="java.util.Map">
+    select
+      p.id as petId,
+      p.nickname as petNickname,
+      p.level as petLevel,
+      u.nickname as userNickname
+    from tb_desktop_pet p
+    left join tb_user u on p.user_id = u.id
+    order by p.level desc
+    limit #{limit}
+  </select>
 </mapper>

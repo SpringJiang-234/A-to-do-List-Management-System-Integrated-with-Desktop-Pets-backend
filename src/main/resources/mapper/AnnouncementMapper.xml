@@ -444,4 +444,12 @@
       </if>
     </where>
   </select>
+
+  <select id="getAnnouncementTopRatio" resultType="java.util.Map">
+    select
+      is_top as isTop,
+      count(*) as count
+    from tb_announcement
+    group by is_top
+  </select>
 </mapper>

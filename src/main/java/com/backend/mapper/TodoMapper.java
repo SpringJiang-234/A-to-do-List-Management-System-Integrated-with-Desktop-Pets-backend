@@ -2,8 +2,8 @@ package com.backend.mapper;
 
 import com.backend.domain.entity.Todo;
 import java.util.List;
+import java.util.Map;
 
-import com.backend.domain.entity.Todo;
 import com.backend.domain.query.TodoQuery;
 import org.apache.ibatis.annotations.Param;
 
@@ -54,4 +54,51 @@ public interface TodoMapper {
      * @return 新增待办数
      */
     int countNewTodosByDate(@Param("date") String date);
+
+    /**
+     * 获取待办状态分布
+     * @return 待办状态分布列表
+     */
+    List<Map<String, Object>> getTodoStatusDistribution();
+
+    /**
+     * 获取待办优先级分布
+     * @return 优先级分布列表
+     */
+    List<Map<String, Object>> getTodoPriorityDistribution();
+
+    /**
+     * 获取指定时间范围内的每日新增待办数
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @return 每日新增待办数列表
+     */
+    List<Map<String, Object>> getDailyNewTodos(@Param("startDate") String startDate, @Param("endDate") String endDate);
+
+    /**
+     * 获取待办截止时间预警
+     * @param days 天数
+     * @return 截止时间预警列表
+     */
+    List<Map<String, Object>> getTodoDeadlineWarning(@Param("days") int days);
+
+    /**
+     * 获取待办类别分布
+     * @return 类别分布列表
+     */
+    List<Map<String, Object>> getTodoCategoryDistribution();
+
+    /**
+     * 获取待办标签使用频率
+     * @return 标签使用频率列表
+     */
+    List<Map<String, Object>> getTodoTagFrequency();
+
+    /**
+     * 获取待办完成率随时间趋势
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @return 完成率趋势列表
+     */
+    List<Map<String, Object>> getTodoCompletionRateTrend(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }

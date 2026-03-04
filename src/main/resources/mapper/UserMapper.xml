@@ -719,4 +719,57 @@
     from tb_user
     where DATE_FORMAT(create_time, '%Y-%m-%d') = #{date}
   </select>
+
+  <select id="getUserTypeDistribution" resultType="java.util.Map">
+    select
+      `type` as type,
+      count(*) as count
+    from tb_user
+    group by `type`
+  </select>
+
+  <select id="getUserStatusDistribution" resultType="java.util.Map">
+    select
+      `status` as status,
+      count(*) as count
+    from tb_user
+    group by `status`
+  </select>
+
+  <select id="getUserGenderDistribution" resultType="java.util.Map">
+    select
+      gender,
+      count(*) as count
+    from tb_user
+    group by gender
+  </select>
+
+  <select id="getUserBirthMonthDistribution" resultType="java.util.Map">
+    select
+      MONTH(birth) as month,
+      count(*) as count
+    from tb_user
+    where birth is not null
+    group by MONTH(birth)
+    order by month
+  </select>
+
+  <select id="getUserRegistrationHeatmap" resultType="java.util.Map">
+    select
+      DATE_FORMAT(create_time, '%Y-%m-%d') as date,
+      count(*) as count
+    from tb_user
+    where DATE_FORMAT(create_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+    group by DATE_FORMAT(create_time, '%Y-%m-%d')
+  </select>
+
+  <select id="getDailyNewUsers" resultType="java.util.Map">
+    select
+      DATE_FORMAT(create_time, '%Y-%m-%d') as date,
+      count(*) as count
+    from tb_user
+    where DATE_FORMAT(create_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+    group by DATE_FORMAT(create_time, '%Y-%m-%d')
+    order by date
+  </select>
 </mapper>

@@ -1,10 +1,9 @@
 package com.backend.mapper;
 
 import com.backend.domain.entity.Announcement;
-
 import java.util.List;
+import java.util.Map;
 
-import com.backend.domain.entity.Announcement;
 import com.backend.domain.query.AnnouncementQuery;
 import org.apache.ibatis.annotations.Param;
 
@@ -42,4 +41,10 @@ public interface AnnouncementMapper {
     List<Announcement> selectWithCondition(AnnouncementQuery announcementQuery);
 
     int countByCondition(AnnouncementQuery announcementQuery);
+
+    /**
+     * 获取公告置顶比例
+     * @return 公告置顶比例列表
+     */
+    List<Map<String, Object>> getAnnouncementTopRatio();
 }

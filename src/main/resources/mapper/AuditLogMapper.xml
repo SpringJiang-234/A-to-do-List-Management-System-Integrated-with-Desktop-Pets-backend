@@ -556,4 +556,52 @@
       </if>
     </where>
   </select>
+
+  <select id="getOperationFrequencyTrend" resultType="java.util.Map">
+    select
+      case
+        when #{interval} = 'hour' then DATE_FORMAT(create_time, '%Y-%m-%d %H:00:00')
+        when #{interval} = 'day' then DATE_FORMAT(create_time, '%Y-%m-%d')
+        when #{interval} = 'week' then DATE_FORMAT(create_time, '%Y-%u')
+        else DATE_FORMAT(create_time, '%Y-%m-%d')
+      end as time,
+      count(*) as count
+    from tb_audit_log
+    where DATE_FORMAT(create_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+    group by time
+    order by time
+  </select>
+
+  <select id="getOperationTypeDistribution" resultType="java.util.Map">
+    select
+      operation,
+      count(*) as count
+    from tb_audit_log
+    where DATE_FORMAT(create_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+    group by operation
+    order by count desc
+  </select>
+
+  <select id="getPopularModules" resultType="java.util.Map">
+    select
+      module,
+      count(*) as count
+    from tb_audit_log
+    where DATE_FORMAT(create_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+    group by module
+    order by count desc
+    limit #{limit}
+  </select>
+
+  <select id="getUserActivityRank" resultType="java.util.Map">
+    select
+      user_id as userId,
+      username,
+      count(*) as operationCount
+    from tb_audit_log
+    where DATE_FORMAT(create_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+    group by user_id, username
+    order by operationCount desc
+    limit #{limit}
+  </select>
 </mapper>
