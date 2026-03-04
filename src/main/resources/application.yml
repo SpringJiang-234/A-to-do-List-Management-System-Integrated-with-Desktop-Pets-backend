@@ -116,3 +116,10 @@ logging:
     com.backend.mapper: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+
+# minio配置
+minio:
+  url: http://127.0.0.1:9000
+  username: minioadmin
+  password: minioadmin
+  bucketName: img
