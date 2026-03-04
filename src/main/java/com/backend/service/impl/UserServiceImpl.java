@@ -7,6 +7,7 @@ import com.backend.bean.PageBean;
 import com.backend.domain.dto.LoginDTO;
 import com.backend.domain.dto.RegisterDTO;
 import com.backend.domain.entity.User;
+import com.backend.domain.entity.DesktopPet;
 import com.backend.domain.query.UserQuery;
 import com.backend.service.UserService;
 import com.backend.utils.PasswordUtil;
@@ -19,6 +20,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+    
+    @Autowired
+    private com.backend.mapper.DesktopPetMapper desktopPetMapper;
 
     @Override
     public PageBean<User> getPage(UserQuery userQuery) {
@@ -37,12 +41,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertOrUpdate(User user) {
         // 如果密码不为空，对密码进行加密处理
         if (user.getPasswordHash() != null && !user.getPasswordHash().isEmpty()) {
             user.setPasswordHash(PasswordUtil.hashPassword(user.getPasswordHash()));
         }
-        return userMapper.insertOrUpdateSelective(user);
+        int result = userMapper.insertOrUpdateSelective(user);
+        
+        // 如果是新增用户，且插入成功
+        if (result > 0 && user.getId() != null) {
+            // 为该用户创建桌宠
+            DesktopPet desktopPet = new DesktopPet();
+            desktopPet.setUserId(user.getId());
+            desktopPet.setNickname("桌宠");
+            desktopPetMapper.insertSelective(desktopPet);
+        }
+        return result;
     }
 
     @Override
@@ -73,6 +88,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int register(RegisterDTO registerDTO) {
         if (registerDTO == null || registerDTO.getAccount() == null || registerDTO.getPassword() == null) {
             return 0;
@@ -90,7 +106,22 @@ public class UserServiceImpl implements UserService {
             user.setType(2); // 默认类型 用户类型：1-管理员 2-普通用户
             user.setStatus(1); // 默认状态 状态：1-正常 2-已注销
             user.setGender(3); // 默认性别 性别：1-男 2-女 3-未知
-            return userMapper.insertSelective(user);
+            int result = userMapper.insertSelective(user);
+            
+            // 如果注册成功，为用户创建桌宠
+            if (result > 0 && user.getId() != null) {
+                DesktopPet desktopPet = new DesktopPet();
+                desktopPet.setUserId(user.getId());
+                desktopPet.setNickname("桌宠");
+                desktopPet.setEnergy(0);
+                desktopPet.setMood(60);
+                desktopPet.setIntimacy(0);
+                desktopPet.setExp(0);
+                desktopPet.setLevel(1);
+                desktopPetMapper.insertSelective(desktopPet);
+            }
+            
+            return result;
         } catch (Exception e) {
             return 0;
         }
