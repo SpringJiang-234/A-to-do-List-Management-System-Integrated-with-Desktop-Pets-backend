@@ -46,6 +46,11 @@ public class AuthInterceptor implements HandlerInterceptor {
         // 获取token
         String token = request.getHeader("Authorization");
         logger.info("Authorization token: {}", token);
+        // 移除Bearer前缀
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+            logger.info("移除Bearer前缀后的token: {}", token);
+        }
         if (token == null || token.isEmpty()) {
             logger.warn("Token为空，拒绝访问: {}", requestURI);
             sendError(response, "未登录或token已过期");
