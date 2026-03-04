@@ -11,6 +11,7 @@ import com.backend.domain.query.UserQuery;
 import com.backend.domain.vo.UserVO;
 import com.backend.ex.GlobalException;
 import com.backend.service.UserService;
+import com.backend.utils.MinioUtil;
 import com.backend.utils.excel.EasyExcelListener;
 import com.backend.utils.excel.EasyExcelUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,6 +40,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserConverter userConverter;
+    @Autowired
+    private MinioUtil minioUtil;
 
     /**
      * 获取用户分页数据
@@ -216,5 +219,38 @@ public class UserController {
     public ResultBean<java.util.List<java.util.Map<String, Object>>> getNewUsersTrend() {
         final java.util.List<java.util.Map<String, Object>> trend = userService.getNewUsersTrend();
         return ResultBean.success(trend);
+    }
+
+    /**
+     * 上传用户头像
+     *
+     * @param file 头像文件
+     * @return 头像文件URL
+     */
+    @PostMapping("/uploadAvatar")
+    public ResultBean<String> uploadAvatar(@RequestPart("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            throw new GlobalException("请选择要上传的文件");
+        }
+        
+        // 上传文件到MinIO，指定文件夹为avatars
+        String avatarUrl = minioUtil.putObject(file, "avatars", null);
+        
+        if (avatarUrl == null) {
+            throw new GlobalException("头像上传失败");
+        }
+        
+        return ResultBean.success(avatarUrl);
+    }
+
+    /**
+     * 获取用户头像
+     *
+     * @param filename 头像文件名
+     * @param response 响应对象
+     */
+    @GetMapping("/avatar/{filename}")
+    public void getAvatar(@PathVariable("filename") String filename, HttpServletResponse response) {
+        minioUtil.getObject("avatars/" + filename, response);
     }
 }
