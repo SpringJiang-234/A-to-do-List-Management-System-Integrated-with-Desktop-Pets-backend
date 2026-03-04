@@ -120,6 +120,6 @@ logging:
 # minio配置
 minio:
   url: http://127.0.0.1:9005
-  username: minioadmin
-  password: minioadmin
+  username: root
+  password: 12345678
   bucketName: img
