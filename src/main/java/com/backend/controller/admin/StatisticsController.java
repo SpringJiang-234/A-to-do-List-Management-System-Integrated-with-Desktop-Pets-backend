@@ -45,7 +45,7 @@ public class StatisticsController {
 
     /**
      * 获取用户类型分布
-     * @return 用户类型分布数据
+     * @return 用户类型分布数据 类型：1-管理员 2-普通用户
      */
     @GetMapping("/user/type-distribution")
     public ResultBean<List<Map<String, Object>>> getUserTypeDistribution() {
@@ -54,7 +54,7 @@ public class StatisticsController {
 
     /**
      * 获取用户状态分布
-     * @return 用户状态分布数据
+     * @return 用户状态分布数据 状态：1-正常 2-已注销
      */
     @GetMapping("/user/status-distribution")
     public ResultBean<List<Map<String, Object>>> getUserStatusDistribution() {
@@ -63,7 +63,7 @@ public class StatisticsController {
 
     /**
      * 获取用户性别分布
-     * @return 用户性别分布数据
+     * @return 用户性别分布数据 性别：1-男 2-女 3-未知
      */
     @GetMapping("/user/gender-distribution")
     public ResultBean<List<Map<String, Object>>> getUserGenderDistribution() {
