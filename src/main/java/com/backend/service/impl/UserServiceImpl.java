@@ -44,8 +44,16 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public int insertOrUpdate(User user) {
         // 如果密码不为空，对密码进行加密处理
+        // 新增用户时，密码是明文，需要加密
+        // 编辑用户时，如果密码字段不为空，说明用户修改了密码，也需要加密
         if (user.getPasswordHash() != null && !user.getPasswordHash().isEmpty()) {
-            user.setPasswordHash(PasswordUtil.hashPassword(user.getPasswordHash()));
+            // 检查是否已经是BCrypt哈希格式（以$2a$或$2b$开头，且长度为60）
+            boolean isBcryptHash = (user.getPasswordHash().startsWith("$2a$") || user.getPasswordHash().startsWith("$2b$")) 
+                && user.getPasswordHash().length() == 60;
+            
+            if (!isBcryptHash) {
+                user.setPasswordHash(PasswordUtil.hashPassword(user.getPasswordHash()));
+            }
         }
         int result = userMapper.insertOrUpdateSelective(user);
         
