@@ -650,8 +650,8 @@
 
   <select id="getPetLevelDistribution" resultType="java.util.Map">
     select
-      floor((level - 1) / 10) * 10 + 1  as levelRangeStart,
-      floor((level - 1) / 10) * 10 + 10 as levelRangeEnd,
+      floor((COALESCE(level, 1) - 1) / 10) * 10 + 1  as levelRangeStart,
+      floor((COALESCE(level, 1) - 1) / 10) * 10 + 10 as levelRangeEnd,
       count(*) as count
     from tb_desktop_pet
     group by levelRangeStart, levelRangeEnd
