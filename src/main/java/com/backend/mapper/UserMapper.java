@@ -96,4 +96,6 @@ public interface UserMapper {
      * @return 每日新增用户数列表
      */
     List<Map<String, Object>> getDailyNewUsers(@Param("startDate") String startDate, @Param("endDate") String endDate);
+
+    List<Map<String, Object>> getDailyTotalUsers(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }

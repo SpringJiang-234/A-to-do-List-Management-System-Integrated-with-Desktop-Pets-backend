@@ -62,6 +62,10 @@ public class StatisticsServiceImpl implements StatisticsService {
         return userMapper.getDailyNewUsers(startDate, endDate);
     }
 
+    public List<Map<String, Object>> getDailyTotalUsers(String startDate, String endDate) {
+        return userMapper.getDailyTotalUsers(startDate, endDate);
+    }
+
     // 待办事项分析相关方法
     public int getTotalTodos() {
         return todoMapper.countTotalTodos();

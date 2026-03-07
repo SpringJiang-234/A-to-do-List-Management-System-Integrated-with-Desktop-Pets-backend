@@ -103,6 +103,12 @@ public class StatisticsController {
         return ResultBean.success(statisticsService.getDailyNewUsers(startDate, endDate));
     }
 
+    @GetMapping("/user/daily-total")
+    public ResultBean<List<Map<String, Object>>> getDailyTotalUsers(
+            @RequestParam String startDate, @RequestParam String endDate) {
+        return ResultBean.success(statisticsService.getDailyTotalUsers(startDate, endDate));
+    }
+
     // 待办事项分析相关接口
     
     /**

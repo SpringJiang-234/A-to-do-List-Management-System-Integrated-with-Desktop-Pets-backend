@@ -13,6 +13,7 @@ public interface StatisticsService {
     List<Map<String, Object>> getUserBirthMonthDistribution();
     List<Map<String, Object>> getUserRegistrationHeatmap(String startDate, String endDate);
     List<Map<String, Object>> getDailyNewUsers(String startDate, String endDate);
+    List<Map<String, Object>> getDailyTotalUsers(String startDate, String endDate);
 
     // 待办事项分析相关方法
     int getTotalTodos();
