@@ -151,6 +151,8 @@ public class UserController {
                 @Override
                 protected void exec(List<UserExcel> list) {
                     final List<User> userList = userConverter.userExcelList2userList(list);
+                    // 强制设置所有导入的用户为普通用户
+                    userList.forEach(user -> user.setType(2));
                     userService.batchInsert(userList);
                 }
             };
