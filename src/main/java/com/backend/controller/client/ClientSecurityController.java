@@ -94,6 +94,9 @@ public class ClientSecurityController {
         String token = request.getHeader("Authorization");
         if (token != null) {
             try {
+                if (token.startsWith("Bearer ")) {
+                    token = token.substring(7);
+                }
                 redisUtil.delete("token:" + token);
             } catch (Exception e) {
                 logger.warn("Redis连接失败，登出功能将不使用Redis缓存，token: {}", token);
