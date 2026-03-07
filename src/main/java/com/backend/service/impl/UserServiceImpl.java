@@ -129,56 +129,90 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(LoginDTO loginDTO) {
-        UserQuery query = new UserQuery();
-        query.setAccount(loginDTO.getAccount());
-        List<User> users = userMapper.selectWithCondition(query);
-        if (users.isEmpty()) {
+        System.out.println("========== login 开始 ==========");
+        System.out.println("登录账号: " + loginDTO.getAccount());
+        System.out.println("登录密码: " + loginDTO.getPassword());
+        
+        User user = userMapper.selectByAccount(loginDTO.getAccount());
+        
+        if (user == null) {
+            System.out.println("用户不存在");
             return null;
         }
-        User user = users.get(0);
+        
+        System.out.println("找到用户: " + user.getAccount());
+        System.out.println("用户ID: " + user.getId());
+        System.out.println("用户类型: " + user.getType());
+        System.out.println("用户状态: " + user.getStatus());
+        System.out.println("密码哈希: " + user.getPasswordHash());
         
         // 检查密码哈希值格式是否正确
         try {
-            if (PasswordUtil.checkPassword(loginDTO.getPassword(), user.getPasswordHash())) {
+            boolean passwordMatch = PasswordUtil.checkPassword(loginDTO.getPassword(), user.getPasswordHash());
+            System.out.println("密码验证结果: " + passwordMatch);
+            if (passwordMatch) {
+                System.out.println("登录成功");
                 return user;
             }
         } catch (NumberFormatException e) {
+            System.out.println("密码哈希格式异常: " + e.getMessage());
             // 如果密码哈希值格式不正确，重新生成哈希值并更新到数据库
             String newHashedPassword = PasswordUtil.hashPassword(loginDTO.getPassword());
             user.setPasswordHash(newHashedPassword);
             userMapper.updateByPrimaryKeySelective(user);
+            System.out.println("已更新密码哈希");
             return user;
         }
+        
+        System.out.println("密码验证失败");
         return null;
     }
 
     @Override
     public User adminLogin(LoginDTO loginDTO) {
-        UserQuery query = new UserQuery();
-        query.setAccount(loginDTO.getAccount());
-        List<User> users = userMapper.selectWithCondition(query);
-        if (users.isEmpty()) {
+        System.out.println("========== adminLogin 开始 ==========");
+        System.out.println("登录账号: " + loginDTO.getAccount());
+        System.out.println("登录密码: " + loginDTO.getPassword());
+        
+        User user = userMapper.selectByAccount(loginDTO.getAccount());
+        
+        if (user == null) {
+            System.out.println("用户不存在");
             return null;
         }
-        User user = users.get(0);
+        
+        System.out.println("找到用户: " + user.getAccount());
+        System.out.println("用户ID: " + user.getId());
+        System.out.println("用户类型: " + user.getType());
+        System.out.println("用户状态: " + user.getStatus());
+        System.out.println("密码哈希: " + user.getPasswordHash());
         
         // 检查用户类型是否为管理员（type=1）
         if (user.getType() != 1) {
+            System.out.println("用户类型不是管理员，拒绝登录");
             return null;
         }
+        System.out.println("用户类型验证通过");
         
         // 检查密码哈希值格式是否正确
         try {
-            if (PasswordUtil.checkPassword(loginDTO.getPassword(), user.getPasswordHash())) {
+            boolean passwordMatch = PasswordUtil.checkPassword(loginDTO.getPassword(), user.getPasswordHash());
+            System.out.println("密码验证结果: " + passwordMatch);
+            if (passwordMatch) {
+                System.out.println("登录成功");
                 return user;
             }
         } catch (NumberFormatException e) {
+            System.out.println("密码哈希格式异常: " + e.getMessage());
             // 如果密码哈希值格式不正确，重新生成哈希值并更新到数据库
             String newHashedPassword = PasswordUtil.hashPassword(loginDTO.getPassword());
             user.setPasswordHash(newHashedPassword);
             userMapper.updateByPrimaryKeySelective(user);
+            System.out.println("已更新密码哈希");
             return user;
         }
+        
+        System.out.println("密码验证失败");
         return null;
     }
 

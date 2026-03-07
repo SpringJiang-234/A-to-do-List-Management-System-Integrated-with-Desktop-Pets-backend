@@ -40,6 +40,8 @@ public interface UserMapper {
 
     List<User> selectWithCondition(UserQuery userQuery);
 
+    User selectByAccount(String account);
+
     int countByCondition(UserQuery userQuery);
 
     int countByAccount(String account);
