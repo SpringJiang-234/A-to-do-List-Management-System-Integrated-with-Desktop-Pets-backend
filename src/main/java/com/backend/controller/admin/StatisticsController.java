@@ -166,7 +166,7 @@ public class StatisticsController {
 
     /**
      * 获取待办类别分布
-     * @return 待办类别分布数据
+     * @return 待办类别分布数据（仅限系统类别）
      */
     @GetMapping("/todo/category-distribution")
     public ResultBean<List<Map<String, Object>>> getTodoCategoryDistribution() {
@@ -264,39 +264,39 @@ public class StatisticsController {
      * @param endDate 结束日期，格式为YYYY-MM-DD
      * @return 操作类型分布数据
      */
-    @GetMapping("/audit/operation-type-distribution")
-    public ResultBean<List<Map<String, Object>>> getOperationTypeDistribution(
-            @RequestParam String startDate, @RequestParam String endDate) {
-        return ResultBean.success(statisticsService.getOperationTypeDistribution(startDate, endDate));
-    }
-
-    /**
-     * 获取热门操作模块
-     * @param startDate 开始日期，格式为YYYY-MM-DD
-     * @param endDate 结束日期，格式为YYYY-MM-DD
-     * @param limit 限制数量，默认10
-     * @return 热门操作模块数据
-     */
-    @GetMapping("/audit/popular-modules")
-    public ResultBean<List<Map<String, Object>>> getPopularModules(
-            @RequestParam String startDate, @RequestParam String endDate, 
-            @RequestParam(defaultValue = "10") int limit) {
-        return ResultBean.success(statisticsService.getPopularModules(startDate, endDate, limit));
-    }
-
-    /**
-     * 获取用户活跃度排行
-     * @param startDate 开始日期，格式为YYYY-MM-DD
-     * @param endDate 结束日期，格式为YYYY-MM-DD
-     * @param limit 限制数量，默认10
-     * @return 用户活跃度排行数据
-     */
-    @GetMapping("/audit/user-activity-rank")
-    public ResultBean<List<Map<String, Object>>> getUserActivityRank(
-            @RequestParam String startDate, @RequestParam String endDate, 
-            @RequestParam(defaultValue = "10") int limit) {
-        return ResultBean.success(statisticsService.getUserActivityRank(startDate, endDate, limit));
-    }
+//    @GetMapping("/audit/operation-type-distribution")
+//    public ResultBean<List<Map<String, Object>>> getOperationTypeDistribution(
+//            @RequestParam String startDate, @RequestParam String endDate) {
+//        return ResultBean.success(statisticsService.getOperationTypeDistribution(startDate, endDate));
+//    }
+//
+//    /**
+//     * 获取热门操作模块
+//     * @param startDate 开始日期，格式为YYYY-MM-DD
+//     * @param endDate 结束日期，格式为YYYY-MM-DD
+//     * @param limit 限制数量，默认10
+//     * @return 热门操作模块数据
+//     */
+//    @GetMapping("/audit/popular-modules")
+//    public ResultBean<List<Map<String, Object>>> getPopularModules(
+//            @RequestParam String startDate, @RequestParam String endDate,
+//            @RequestParam(defaultValue = "10") int limit) {
+//        return ResultBean.success(statisticsService.getPopularModules(startDate, endDate, limit));
+//    }
+//
+//    /**
+//     * 获取用户活跃度排行
+//     * @param startDate 开始日期，格式为YYYY-MM-DD
+//     * @param endDate 结束日期，格式为YYYY-MM-DD
+//     * @param limit 限制数量，默认10
+//     * @return 用户活跃度排行数据
+//     */
+//    @GetMapping("/audit/user-activity-rank")
+//    public ResultBean<List<Map<String, Object>>> getUserActivityRank(
+//            @RequestParam String startDate, @RequestParam String endDate,
+//            @RequestParam(defaultValue = "10") int limit) {
+//        return ResultBean.success(statisticsService.getUserActivityRank(startDate, endDate, limit));
+//    }
 
     // 反馈分析相关接口
     
@@ -340,9 +340,9 @@ public class StatisticsController {
      * @param endDate 结束日期，格式为YYYY-MM-DD
      * @return 系统健康度仪表盘数据
      */
-    @GetMapping("/dashboard/system-health")
-    public ResultBean<Map<String, Object>> getSystemHealthDashboard(
-            @RequestParam String startDate, @RequestParam String endDate) {
-        return ResultBean.success(statisticsService.getSystemHealthDashboard(startDate, endDate));
-    }
+//    @GetMapping("/dashboard/system-health")
+//    public ResultBean<Map<String, Object>> getSystemHealthDashboard(
+//            @RequestParam String startDate, @RequestParam String endDate) {
+//        return ResultBean.success(statisticsService.getSystemHealthDashboard(startDate, endDate));
+//    }
 }

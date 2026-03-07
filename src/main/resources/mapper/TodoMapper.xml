@@ -940,7 +940,7 @@
       count(t.id) as count
     from tb_todo t
     left join tb_category c on t.category_id = c.id
-    where t.is_delete = 1
+    where t.is_delete = 1 and c.is_default = 1
     group by c.id, c.name
   </select>
 
