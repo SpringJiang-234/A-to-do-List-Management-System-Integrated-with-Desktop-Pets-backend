@@ -85,12 +85,12 @@ public class AdminFeedbackController {
      * @param feedbackDTO
      * @return
      */
-    @PostMapping("/insert")
-    public ResultBean<Void> insert(@RequestBody FeedbackDTO feedbackDTO) {
-        final Feedback feedback = feedbackConverter.feedbackDTO2feedback(feedbackDTO);
-        feedbackService.insertOrUpdate(feedback);
-        return ResultBean.success("添加成功!", null);
-    }
+    // @PostMapping("/insert")
+    // public ResultBean<Void> insert(@RequestBody FeedbackDTO feedbackDTO) {
+    //     final Feedback feedback = feedbackConverter.feedbackDTO2feedback(feedbackDTO);
+    //     feedbackService.insertOrUpdate(feedback);
+    //     return ResultBean.success("添加成功!", null);
+    // }
 
     /**
      * 删除反馈信息
@@ -98,11 +98,11 @@ public class AdminFeedbackController {
      * @param id
      * @return
      */
-    @GetMapping("/delete/{id}")
-    public ResultBean<Void> delete(@PathVariable("id") Long id) {
-        feedbackService.deleteById(id);
-        return ResultBean.success("删除成功!", null);
-    }
+    // @GetMapping("/delete/{id}")
+    // public ResultBean<Void> delete(@PathVariable("id") Long id) {
+    //     feedbackService.deleteById(id);
+    //     return ResultBean.success("删除成功!", null);
+    // }
 
     /**
      * 批量删除反馈信息
@@ -110,11 +110,11 @@ public class AdminFeedbackController {
      * @param ids
      * @return
      */
-    @GetMapping("/batchDelete/{ids}")
-    public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
-        feedbackService.deleteByIds(ids);
-        return ResultBean.success("批量删除成功!", null);
-    }
+    // @GetMapping("/batchDelete/{ids}")
+    // public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
+    //     feedbackService.deleteByIds(ids);
+    //     return ResultBean.success("批量删除成功!", null);
+    // }
 
     /**
      * 导出反馈信息
@@ -141,16 +141,16 @@ public class AdminFeedbackController {
      *
      * @param response
      */
-    @GetMapping("/downloadTemplate")
-    public void downloadTemplate(HttpServletResponse response) {
-        try {
-            EasyExcelUtil.writeWithSheetsWeb(response, "反馈导入模板")
-                    .writeModel(FeedbackExcel.class, null, "feedback")
-                    .finish();
-        } catch (IOException e) {
-            throw new GlobalException("反馈导入模板下载失败！");
-        }
-    }
+    // @GetMapping("/downloadTemplate")
+    // public void downloadTemplate(HttpServletResponse response) {
+    //     try {
+    //         EasyExcelUtil.writeWithSheetsWeb(response, "反馈导入模板")
+    //                 .writeModel(FeedbackExcel.class, null, "feedback")
+    //                 .finish();
+    //     } catch (IOException e) {
+    //         throw new GlobalException("反馈导入模板下载失败！");
+    //     }
+    // }
 
     /**
      * 导入反馈信息
@@ -158,20 +158,22 @@ public class AdminFeedbackController {
      * @param file
      * @return
      */
-    @PostMapping("/import")
-    public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
-        try (InputStream is = file.getInputStream()) {
-            final EasyExcelListener<FeedbackExcel> listener = new EasyExcelListener<FeedbackExcel>() {
-                @Override
-                protected void exec(List<FeedbackExcel> list) {
-                    final List<Feedback> feedbackList = feedbackConverter.feedbackExcelList2feedbackList(list);
-                    feedbackService.batchInsert(feedbackList);
-                }
-            };
-            EasyExcelUtil.asyncReadModel(is, listener, FeedbackExcel.class);
-        } catch (IOException e) {
-            throw new GlobalException("反馈信息导入失败！");
-        }
-        return ResultBean.success("反馈信息导入成功!", null);
-    }
+    // @PostMapping("/import")
+    // public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
+    //     try (InputStream is = file.getInputStream()) {
+    //         final EasyExcelListener<FeedbackExcel> listener = new EasyExcelListener<FeedbackExcel>() {
+    //             @Override
+    //             protected void exec(List<FeedbackExcel> list) {
+    //                 final List<Feedback> feedbackList = feedbackConverter.feedbackExcelList2feedbackList(list);
+    //                 feedbackService.batchInsert(feedbackList);
+    //             }
+    //         };
+    //         EasyExcelUtil.asyncReadModel(is, listener, FeedbackExcel.class);
+    //     } catch (IOException e) {
+    //         throw new GlobalException("反馈信息导入失败！");
+    //     }
+    //     return ResultBean.success("反馈信息导入成功!", null);
+    // }
+
+
 }

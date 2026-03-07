@@ -40,97 +40,143 @@ public class AdminCategoryController {
     @Autowired
     private CategoryConverter categoryConverter;
 
+    /**
+     * 分页查询
+     *
+     * @param categoryQuery 查询参数
+     * @return 分类列表
+     */
+    // @PostMapping("/page")
+    // public ResultBean<PageBean<CategoryVO>> page(@RequestBody CategoryQuery categoryQuery) {
+    //     final PageBean<Category> categoryPageBean = categoryService.getPage(categoryQuery);
+    //     final PageBean<CategoryVO> pageBean = categoryConverter.categoryPageBean2categoryVOPageBean(categoryPageBean);
+    //     return ResultBean.success(pageBean);
+    // }
 
-    @PostMapping("/page")
-    public ResultBean<PageBean<CategoryVO>> page(@RequestBody CategoryQuery categoryQuery) {
-        final PageBean<Category> categoryPageBean = categoryService.getPage(categoryQuery);
-        final PageBean<CategoryVO> pageBean = categoryConverter.categoryPageBean2categoryVOPageBean(categoryPageBean);
-        return ResultBean.success(pageBean);
-    }
+    /**
+     * 获取详情
+     *
+     * @param id 分类id
+     * @return 详情
+     */
+    // @GetMapping("/details/{id}")
+    // public ResultBean<CategoryDetails> getDetails(@PathVariable("id") Long id) {
+    //     final Category category = categoryService.getById(id);
+    //     final CategoryDetails categoryDetails = categoryConverter.category2categoryDetails(category);
+    //     return ResultBean.success(categoryDetails);
+    // }
 
-    @GetMapping("/details/{id}")
-    public ResultBean<CategoryDetails> getDetails(@PathVariable("id") Long id) {
-        final Category category = categoryService.getById(id);
-        final CategoryDetails categoryDetails = categoryConverter.category2categoryDetails(category);
-        return ResultBean.success(categoryDetails);
-    }
+    /**
+     * 修改分类
+     *
+     * @param categoryDTO 分类信息
+     * @return 修改结果
+     */
+    // @PostMapping("/update")
+    // public ResultBean<Void> update(@RequestBody CategoryDTO categoryDTO) {
+    //     final Category category = categoryConverter.categoryDTO2category(categoryDTO);
+    //     categoryService.insertOrUpdate(category);
+    //     return ResultBean.success("修改成功!", null);
+    // }
 
-    @PostMapping("/update")
-    public ResultBean<Void> update(@RequestBody CategoryDTO categoryDTO) {
-        final Category category = categoryConverter.categoryDTO2category(categoryDTO);
-        categoryService.insertOrUpdate(category);
-        return ResultBean.success("修改成功!", null);
-    }
+    /**
+     * 添加分类
+     *
+     * @param categoryDTO 分类信息
+     * @return 添加结果
+     */
+    // @PostMapping("/insert")
+    // public ResultBean<Void> insert(@RequestBody CategoryDTO categoryDTO) {
+    //     final Category category = categoryConverter.categoryDTO2category(categoryDTO);
+    //     categoryService.insertOrUpdate(category);
+    //     return ResultBean.success("添加成功!", null);
+    // }
 
-    @PostMapping("/insert")
-    public ResultBean<Void> insert(@RequestBody CategoryDTO categoryDTO) {
-        final Category category = categoryConverter.categoryDTO2category(categoryDTO);
-        categoryService.insertOrUpdate(category);
-        return ResultBean.success("添加成功!", null);
-    }
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     */
+    // @GetMapping("/delete/{id}")
+    // public ResultBean<Void> delete(@PathVariable("id") Long id) {
+    //     categoryService.deleteById(id);
+    //     return ResultBean.success("删除成功!", null);
+    // }
 
-    @GetMapping("/delete/{id}")
-    public ResultBean<Void> delete(@PathVariable("id") Long id) {
-        categoryService.deleteById(id);
-        return ResultBean.success("删除成功!", null);
-    }
+    /**
+     * 批量删除
+     *
+     * @param ids
+     * @return
+     */
+    // @GetMapping("/batchDelete/{ids}")
+    // public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
+    //     categoryService.deleteByIds(ids);
+    //     return ResultBean.success("批量删除成功!", null);
+    // }
 
-    @GetMapping("/batchDelete/{ids}")
-    public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
-        categoryService.deleteByIds(ids);
-        return ResultBean.success("批量删除成功!", null);
-    }
+    /**
+     * 导出数据
+     *
+     * @param categoryQuery 查询参数
+     */
+    // @PostMapping("/export")
+    // public void exportData(HttpServletResponse response, @RequestBody CategoryQuery categoryQuery) {
+    //     final PageBean<Category> pageBean = categoryService.getPage(categoryQuery);
+    //
+    //     final List<CategoryExcel> list = categoryConverter.categoryList2categoryExcelList(pageBean.getRecords());
+    //     try {
+    //         EasyExcelUtil.writeWithSheetsWeb(response, "category列表")
+    //                 .writeModel(CategoryExcel.class, list, "category")
+    //                 .finish();
+    //     } catch (IOException e) {
+    //         throw new GlobalException("类别信息导出失败！");
+    //     }
+    // }
 
-    @PostMapping("/export")
-    public void exportData(HttpServletResponse response, @RequestBody CategoryQuery categoryQuery) {
-        final PageBean<Category> pageBean = categoryService.getPage(categoryQuery);
-
-        final List<CategoryExcel> list = categoryConverter.categoryList2categoryExcelList(pageBean.getRecords());
-        try {
-            EasyExcelUtil.writeWithSheetsWeb(response, "category列表")
-                    .writeModel(CategoryExcel.class, list, "category")
-                    .finish();
-        } catch (IOException e) {
-            throw new GlobalException("类别信息导出失败！");
-        }
-    }
-
-    @PostMapping("/import")
-    public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
-        try (InputStream is = file.getInputStream()) {
-            final EasyExcelListener<CategoryExcel> listener = new EasyExcelListener<CategoryExcel>() {
-                @Override
-                protected void exec(List<CategoryExcel> list) {
-                    final List<Category> categoryList = categoryConverter.categoryExcelList2categoryList(list);
-                    categoryService.batchInsert(categoryList);
-                }
-            };
-            EasyExcelUtil.asyncReadModel(is, listener, CategoryExcel.class);
-        } catch (IOException e) {
-            throw new GlobalException("类别信息导入失败！");
-        }
-        return ResultBean.success("类别信息导入成功!", null);
-    }
+    /**
+     * 导入数据
+     *
+     * @param file 文件
+     * @return 导入结果
+     */
+    // @PostMapping("/import")
+    // public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
+    //     try (InputStream is = file.getInputStream()) {
+    //         final EasyExcelListener<CategoryExcel> listener = new EasyExcelListener<CategoryExcel>() {
+    //             @Override
+    //             protected void exec(List<CategoryExcel> list) {
+    //                 final List<Category> categoryList = categoryConverter.categoryExcelList2categoryList(list);
+    //                 categoryService.batchInsert(categoryList);
+    //             }
+    //         };
+    //         EasyExcelUtil.asyncReadModel(is, listener, CategoryExcel.class);
+    //     } catch (IOException e) {
+    //         throw new GlobalException("类别信息导入失败！");
+    //     }
+    //     return ResultBean.success("类别信息导入成功!", null);
+    // }
 
     /**
      * 获取分类总数
      *
      * @return 分类总数
      */
-    @GetMapping("/total")
-    public ResultBean<Integer> getTotalCategories() {
-        final int total = categoryService.countTotalCategories();
-        return ResultBean.success(total);
-    }
+    // @GetMapping("/total")
+    // public ResultBean<Integer> getTotalCategories() {
+    //     final int total = categoryService.countTotalCategories();
+    //     return ResultBean.success(total);
+    // }
 
     /**
      * 获取近七天分类数新增趋势
      *
      * @return 近七天每天的新分类数
      */
-    @GetMapping("/trend")
-    public ResultBean<java.util.List<java.util.Map<String, Object>>> getNewCategoriesTrend() {
-        final java.util.List<java.util.Map<String, Object>> trend = categoryService.getNewCategoriesTrend();
-        return ResultBean.success(trend);
-    }
+    // @GetMapping("/trend")
+    // public ResultBean<java.util.List<java.util.Map<String, Object>>> getNewCategoriesTrend() {
+    //     final java.util.List<java.util.Map<String, Object>> trend = categoryService.getNewCategoriesTrend();
+    //     return ResultBean.success(trend);
+    // }
 }

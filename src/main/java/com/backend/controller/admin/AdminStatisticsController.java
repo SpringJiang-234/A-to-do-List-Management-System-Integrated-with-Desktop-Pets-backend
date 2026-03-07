@@ -38,19 +38,19 @@ public class AdminStatisticsController {
      * @param date 日期，格式为YYYY-MM-DD
      * @return 新增用户数
      */
-    @GetMapping("/user/new-by-date")
-    public ResultBean<Integer> getNewUsersByDate(@RequestParam String date) {
-        return ResultBean.success(statisticsService.getNewUsersByDate(date));
-    }
+    // @GetMapping("/user/new-by-date")
+    // public ResultBean<Integer> getNewUsersByDate(@RequestParam String date) {
+    //     return ResultBean.success(statisticsService.getNewUsersByDate(date));
+    // }
 
     /**
      * 获取用户类型分布
      * @return 用户类型分布数据 类型：1-管理员 2-普通用户
      */
-    @GetMapping("/user/type-distribution")
-    public ResultBean<List<Map<String, Object>>> getUserTypeDistribution() {
-        return ResultBean.success(statisticsService.getUserTypeDistribution());
-    }
+    // @GetMapping("/user/type-distribution")
+    // public ResultBean<List<Map<String, Object>>> getUserTypeDistribution() {
+    //     return ResultBean.success(statisticsService.getUserTypeDistribution());
+    // }
 
     /**
      * 获取用户状态分布
@@ -249,7 +249,7 @@ public class AdminStatisticsController {
     }
 
     // 审计日志分析相关接口
-    
+
     /**
      * 获取操作频率趋势
      * @param startDate 开始日期，格式为YYYY-MM-DD
@@ -257,12 +257,12 @@ public class AdminStatisticsController {
      * @param interval 时间间隔，默认day
      * @return 操作频率趋势数据
      */
-    @GetMapping("/audit/operation-frequency")
-    public ResultBean<List<Map<String, Object>>> getOperationFrequencyTrend(
-            @RequestParam String startDate, @RequestParam String endDate, 
-            @RequestParam(defaultValue = "day") String interval) {
-        return ResultBean.success(statisticsService.getOperationFrequencyTrend(startDate, endDate, interval));
-    }
+    // @GetMapping("/audit/operation-frequency")
+    // public ResultBean<List<Map<String, Object>>> getOperationFrequencyTrend(
+    //         @RequestParam String startDate, @RequestParam String endDate,
+    //         @RequestParam(defaultValue = "day") String interval) {
+    //     return ResultBean.success(statisticsService.getOperationFrequencyTrend(startDate, endDate, interval));
+    // }
 
     /**
      * 获取操作类型分布

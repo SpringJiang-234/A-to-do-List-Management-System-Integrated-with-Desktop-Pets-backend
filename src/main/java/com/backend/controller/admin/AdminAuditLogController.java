@@ -59,12 +59,12 @@ public class AdminAuditLogController {
      * @param id 详情参数
      * @return ResultBean<AuditLogDetails>
      */
-    @GetMapping("/details/{id}")
-    public ResultBean<AuditLogDetails> getDetails(@PathVariable("id") Long id) {
-        final AuditLog auditLog = auditLogService.getById(id);
-        final AuditLogDetails auditLogDetails = auditLogConverter.auditLog2auditLogDetails(auditLog);
-        return ResultBean.success(auditLogDetails);
-    }
+    // @GetMapping("/details/{id}")
+    // public ResultBean<AuditLogDetails> getDetails(@PathVariable("id") Long id) {
+    //     final AuditLog auditLog = auditLogService.getById(id);
+    //     final AuditLogDetails auditLogDetails = auditLogConverter.auditLog2auditLogDetails(auditLog);
+    //     return ResultBean.success(auditLogDetails);
+    // }
 
     /**
      * 修改
@@ -72,12 +72,12 @@ public class AdminAuditLogController {
      * @param auditLogDTO 修改参数
      * @return ResultBean<Void>
      */
-    @PostMapping("/update")
-    public ResultBean<Void> update(@RequestBody AuditLogDTO auditLogDTO) {
-        final AuditLog auditLog = auditLogConverter.auditLogDTO2auditLog(auditLogDTO);
-        auditLogService.insertOrUpdate(auditLog);
-        return ResultBean.success("修改成功!", null);
-    }
+    // @PostMapping("/update")
+    // public ResultBean<Void> update(@RequestBody AuditLogDTO auditLogDTO) {
+    //     final AuditLog auditLog = auditLogConverter.auditLogDTO2auditLog(auditLogDTO);
+    //     auditLogService.insertOrUpdate(auditLog);
+    //     return ResultBean.success("修改成功!", null);
+    // }
 
     /**
      * 添加
@@ -85,12 +85,12 @@ public class AdminAuditLogController {
      * @param auditLogDTO 添加参数
      * @return ResultBean<Void>
      */
-    @PostMapping("/insert")
-    public ResultBean<Void> insert(@RequestBody AuditLogDTO auditLogDTO) {
-        final AuditLog auditLog = auditLogConverter.auditLogDTO2auditLog(auditLogDTO);
-        auditLogService.insertOrUpdate(auditLog);
-        return ResultBean.success("添加成功!", null);
-    }
+    // @PostMapping("/insert")
+    // public ResultBean<Void> insert(@RequestBody AuditLogDTO auditLogDTO) {
+    //     final AuditLog auditLog = auditLogConverter.auditLogDTO2auditLog(auditLogDTO);
+    //     auditLogService.insertOrUpdate(auditLog);
+    //     return ResultBean.success("添加成功!", null);
+    // }
 
     /**
      * 删除
@@ -98,11 +98,11 @@ public class AdminAuditLogController {
      * @param id 删除参数
      * @return ResultBean<Void>
      */
-    @GetMapping("/delete/{id}")
-    public ResultBean<Void> delete(@PathVariable("id") Long id) {
-        auditLogService.deleteById(id);
-        return ResultBean.success("删除成功!", null);
-    }
+    // @GetMapping("/delete/{id}")
+    // public ResultBean<Void> delete(@PathVariable("id") Long id) {
+    //     auditLogService.deleteById(id);
+    //     return ResultBean.success("删除成功!", null);
+    // }
 
     /**
      * 批量删除
@@ -110,11 +110,11 @@ public class AdminAuditLogController {
      * @param ids 批量删除参数
      * @return ResultBean<Void>
      */
-    @GetMapping("/batchDelete/{ids}")
-    public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
-        auditLogService.deleteByIds(ids);
-        return ResultBean.success("批量删除成功!", null);
-    }
+    // @GetMapping("/batchDelete/{ids}")
+    // public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
+    //     auditLogService.deleteByIds(ids);
+    //     return ResultBean.success("批量删除成功!", null);
+    // }
 
     /**
      * 导出
@@ -142,20 +142,22 @@ public class AdminAuditLogController {
      * @param file 文件
      * @return ResultBean<Void>
      */
-    @PostMapping("/import")
-    public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
-        try (InputStream is = file.getInputStream()) {
-            final EasyExcelListener<AuditLogExcel> listener = new EasyExcelListener<AuditLogExcel>() {
-                @Override
-                protected void exec(List<AuditLogExcel> list) {
-                    final List<AuditLog> auditLogList = auditLogConverter.auditLogExcelList2auditLogList(list);
-                    auditLogService.batchInsert(auditLogList);
-                }
-            };
-            EasyExcelUtil.asyncReadModel(is, listener, AuditLogExcel.class);
-        } catch (IOException e) {
-            throw new GlobalException("审计日志表信息导入失败！");
-        }
-        return ResultBean.success("审计日志表信息导入成功!", null);
-    }
+    // @PostMapping("/import")
+    // public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
+    //     try (InputStream is = file.getInputStream()) {
+    //         final EasyExcelListener<AuditLogExcel> listener = new EasyExcelListener<AuditLogExcel>() {
+    //             @Override
+    //             protected void exec(List<AuditLogExcel> list) {
+    //                 final List<AuditLog> auditLogList = auditLogConverter.auditLogExcelList2auditLogList(list);
+    //                 auditLogService.batchInsert(auditLogList);
+    //             }
+    //         };
+    //         EasyExcelUtil.asyncReadModel(is, listener, AuditLogExcel.class);
+    //     } catch (IOException e) {
+    //         throw new GlobalException("审计日志表信息导入失败！");
+    //     }
+    //     return ResultBean.success("审计日志表信息导入成功!", null);
+    // }
+
+
 }

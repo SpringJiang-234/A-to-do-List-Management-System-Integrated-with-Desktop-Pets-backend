@@ -46,12 +46,12 @@ public class AdminTodoController {
      * @param todoQuery 查询参数
      * @return 待办事项列表
      */
-    @PostMapping("/page")
-    public ResultBean<PageBean<TodoVO>> page(@RequestBody TodoQuery todoQuery) {
-        final PageBean<Todo> todoPageBean = todoService.getPage(todoQuery);
-        final PageBean<TodoVO> pageBean = todoConverter.todoPageBean2todoVOPageBean(todoPageBean);
-        return ResultBean.success(pageBean);
-    }
+    // @PostMapping("/page")
+    // public ResultBean<PageBean<TodoVO>> page(@RequestBody TodoQuery todoQuery) {
+    //     final PageBean<Todo> todoPageBean = todoService.getPage(todoQuery);
+    //     final PageBean<TodoVO> pageBean = todoConverter.todoPageBean2todoVOPageBean(todoPageBean);
+    //     return ResultBean.success(pageBean);
+    // }
 
     /**
      * 获取待办事项详情：暂时没用
@@ -59,12 +59,12 @@ public class AdminTodoController {
      * @param id 待办事项id
      * @return 待办事项详情
      */
-    @GetMapping("/details/{id}")
-    public ResultBean<TodoDetails> getDetails(@PathVariable("id") Long id) {
-        final Todo todo = todoService.getById(id);
-        final TodoDetails todoDetails = todoConverter.todo2todoDetails(todo);
-        return ResultBean.success(todoDetails);
-    }
+    // @GetMapping("/details/{id}")
+    // public ResultBean<TodoDetails> getDetails(@PathVariable("id") Long id) {
+    //     final Todo todo = todoService.getById(id);
+    //     final TodoDetails todoDetails = todoConverter.todo2todoDetails(todo);
+    //     return ResultBean.success(todoDetails);
+    // }
 
     /**
      * 修改待办事项：暂时没用
@@ -72,12 +72,12 @@ public class AdminTodoController {
      * @param todoDTO 待办事项信息
      * @return 修改结果
      */
-    @PostMapping("/update")
-    public ResultBean<Void> update(@RequestBody TodoDTO todoDTO) {
-        final Todo todo = todoConverter.todoDTO2todo(todoDTO);
-        todoService.insertOrUpdate(todo);
-        return ResultBean.success("修改成功!", null);
-    }
+    // @PostMapping("/update")
+    // public ResultBean<Void> update(@RequestBody TodoDTO todoDTO) {
+    //     final Todo todo = todoConverter.todoDTO2todo(todoDTO);
+    //     todoService.insertOrUpdate(todo);
+    //     return ResultBean.success("修改成功!", null);
+    // }
 
     /**
      * 添加待办事项：暂时没用
@@ -85,12 +85,12 @@ public class AdminTodoController {
      * @param todoDTO 待办事项信息
      * @return 添加结果
      */
-    @PostMapping("/insert")
-    public ResultBean<Void> insert(@RequestBody TodoDTO todoDTO) {
-        final Todo todo = todoConverter.todoDTO2todo(todoDTO);
-        todoService.insertOrUpdate(todo);
-        return ResultBean.success("添加成功!", null);
-    }
+    // @PostMapping("/insert")
+    // public ResultBean<Void> insert(@RequestBody TodoDTO todoDTO) {
+    //     final Todo todo = todoConverter.todoDTO2todo(todoDTO);
+    //     todoService.insertOrUpdate(todo);
+    //     return ResultBean.success("添加成功!", null);
+    // }
 
     /**
      * 删除待办事项：暂时没用
@@ -98,11 +98,11 @@ public class AdminTodoController {
      * @param id 待办事项id
      * @return 删除结果
      */
-    @GetMapping("/delete/{id}")
-    public ResultBean<Void> delete(@PathVariable("id") Long id) {
-        todoService.deleteById(id);
-        return ResultBean.success("删除成功!", null);
-    }
+    // @GetMapping("/delete/{id}")
+    // public ResultBean<Void> delete(@PathVariable("id") Long id) {
+    //     todoService.deleteById(id);
+    //     return ResultBean.success("删除成功!", null);
+    // }
 
     /**
      * 批量删除待办事项：暂时没用
@@ -110,11 +110,11 @@ public class AdminTodoController {
      * @param ids 待办事项id列表
      * @return 批量删除结果
      */
-    @GetMapping("/batchDelete/{ids}")
-    public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
-        todoService.deleteByIds(ids);
-        return ResultBean.success("批量删除成功!", null);
-    }
+    // @GetMapping("/batchDelete/{ids}")
+    // public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
+    //     todoService.deleteByIds(ids);
+    //     return ResultBean.success("批量删除成功!", null);
+    // }
 
     /**
      * 导出待办事项列表：暂时没用
@@ -122,19 +122,19 @@ public class AdminTodoController {
      * @param response 响应对象
      * @param todoQuery 查询参数
      */
-    @PostMapping("/export")
-    public void exportData(HttpServletResponse response, @RequestBody TodoQuery todoQuery) {
-        final PageBean<Todo> pageBean = todoService.getPage(todoQuery);
-
-        final List<TodoExcel> list = todoConverter.todoList2todoExcelList(pageBean.getRecords());
-        try {
-            EasyExcelUtil.writeWithSheetsWeb(response, "todo列表")
-                    .writeModel(TodoExcel.class, list, "todo")
-                    .finish();
-        } catch (IOException e) {
-            throw new GlobalException("待办事项信息导出失败！");
-        }
-    }
+    // @PostMapping("/export")
+    // public void exportData(HttpServletResponse response, @RequestBody TodoQuery todoQuery) {
+    //     final PageBean<Todo> pageBean = todoService.getPage(todoQuery);
+    //
+    //     final List<TodoExcel> list = todoConverter.todoList2todoExcelList(pageBean.getRecords());
+    //     try {
+    //         EasyExcelUtil.writeWithSheetsWeb(response, "todo列表")
+    //                 .writeModel(TodoExcel.class, list, "todo")
+    //                 .finish();
+    //     } catch (IOException e) {
+    //         throw new GlobalException("待办事项信息导出失败！");
+    //     }
+    // }
 
     /**
      * 导入待办事项列表：暂时没用
@@ -142,22 +142,22 @@ public class AdminTodoController {
      * @param file 文件
      * @return 导入结果
      */
-    @PostMapping("/import")
-    public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
-        try (InputStream is = file.getInputStream()) {
-            final EasyExcelListener<TodoExcel> listener = new EasyExcelListener<TodoExcel>() {
-                @Override
-                protected void exec(List<TodoExcel> list) {
-                    final List<Todo> todoList = todoConverter.todoExcelList2todoList(list);
-                    todoService.batchInsert(todoList);
-                }
-            };
-            EasyExcelUtil.asyncReadModel(is, listener, TodoExcel.class);
-        } catch (IOException e) {
-            throw new GlobalException("待办事项信息导入失败！");
-        }
-        return ResultBean.success("待办事项信息导入成功!", null);
-    }
+    // @PostMapping("/import")
+    // public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
+    //     try (InputStream is = file.getInputStream()) {
+    //         final EasyExcelListener<TodoExcel> listener = new EasyExcelListener<TodoExcel>() {
+    //             @Override
+    //             protected void exec(List<TodoExcel> list) {
+    //                 final List<Todo> todoList = todoConverter.todoExcelList2todoList(list);
+    //                 todoService.batchInsert(todoList);
+    //             }
+    //         };
+    //         EasyExcelUtil.asyncReadModel(is, listener, TodoExcel.class);
+    //     } catch (IOException e) {
+    //         throw new GlobalException("待办事项信息导入失败！");
+    //     }
+    //     return ResultBean.success("待办事项信息导入成功!", null);
+    // }
 
     /**
      * 获取待办总数
@@ -175,9 +175,9 @@ public class AdminTodoController {
      *
      * @return 近七天每天的新待办数
      */
-    @GetMapping("/trend")
-    public ResultBean<java.util.List<java.util.Map<String, Object>>> getNewTodosTrend() {
-        final java.util.List<java.util.Map<String, Object>> trend = todoService.getNewTodosTrend();
-        return ResultBean.success(trend);
-    }
+    // @GetMapping("/trend")
+    // public ResultBean<java.util.List<java.util.Map<String, Object>>> getNewTodosTrend() {
+    //     final java.util.List<java.util.Map<String, Object>> trend = todoService.getNewTodosTrend();
+    //     return ResultBean.success(trend);
+    // }
 }

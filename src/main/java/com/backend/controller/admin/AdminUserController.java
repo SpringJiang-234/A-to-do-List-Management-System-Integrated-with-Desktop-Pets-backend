@@ -251,8 +251,9 @@ public class AdminUserController {
      * @param filename 头像文件名
      * @param response 响应对象
      */
-    @GetMapping("/avatar/{filename}")
-    public void getAvatar(@PathVariable("filename") String filename, HttpServletResponse response) {
-        minioUtil.getObject("avatars/" + filename, response);
-    }
+    // @GetMapping("/avatar/{filename}")
+    // public void getAvatar(@PathVariable("filename") String filename, HttpServletResponse response) {
+    //     minioUtil.getObject("avatars/" + filename, response);
+    // }
+
 }

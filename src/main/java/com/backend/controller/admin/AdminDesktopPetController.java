@@ -85,12 +85,12 @@ public class AdminDesktopPetController {
      * @param desktopPetDTO
      * @return
      */
-    @PostMapping("/insert")
-    public ResultBean<Void> insert(@RequestBody DesktopPetDTO desktopPetDTO) {
-        final DesktopPet desktopPet = desktopPetConverter.desktopPetDTO2desktopPet(desktopPetDTO);
-        desktopPetService.insertOrUpdate(desktopPet);
-        return ResultBean.success("添加成功!", null);
-    }
+    // @PostMapping("/insert")
+    // public ResultBean<Void> insert(@RequestBody DesktopPetDTO desktopPetDTO) {
+    //     final DesktopPet desktopPet = desktopPetConverter.desktopPetDTO2desktopPet(desktopPetDTO);
+    //     desktopPetService.insertOrUpdate(desktopPet);
+    //     return ResultBean.success("添加成功!", null);
+    // }
 
     /**
      * 删除桌宠：暂时没用
@@ -98,11 +98,11 @@ public class AdminDesktopPetController {
      * @param id
      * @return
      */
-    @GetMapping("/delete/{id}")
-    public ResultBean<Void> delete(@PathVariable("id") Long id) {
-        desktopPetService.deleteById(id);
-        return ResultBean.success("删除成功!", null);
-    }
+    // @GetMapping("/delete/{id}")
+    // public ResultBean<Void> delete(@PathVariable("id") Long id) {
+    //     desktopPetService.deleteById(id);
+    //     return ResultBean.success("删除成功!", null);
+    // }
 
     /**
      * 批量删除桌宠：暂时没用
@@ -110,11 +110,11 @@ public class AdminDesktopPetController {
      * @param ids
      * @return
      */
-    @GetMapping("/batchDelete/{ids}")
-    public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
-        desktopPetService.deleteByIds(ids);
-        return ResultBean.success("批量删除成功!", null);
-    }
+    // @GetMapping("/batchDelete/{ids}")
+    // public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
+    //     desktopPetService.deleteByIds(ids);
+    //     return ResultBean.success("批量删除成功!", null);
+    // }
 
     /**
      * 导出桌宠数据
@@ -141,20 +141,22 @@ public class AdminDesktopPetController {
      * @param file
      * @return
      */
-    @PostMapping("/import")
-    public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
-        try (InputStream is = file.getInputStream()) {
-            final EasyExcelListener<DesktopPetExcel> listener = new EasyExcelListener<DesktopPetExcel>() {
-                @Override
-                protected void exec(List<DesktopPetExcel> list) {
-                    final List<DesktopPet> desktopPetList = desktopPetConverter.desktopPetExcelList2desktopPetList(list);
-                    desktopPetService.batchInsert(desktopPetList);
-                }
-            };
-            EasyExcelUtil.asyncReadModel(is, listener, DesktopPetExcel.class);
-        } catch (IOException e) {
-            throw new GlobalException("桌宠信息导入失败！");
-        }
-        return ResultBean.success("桌宠信息导入成功!", null);
-    }
+    // @PostMapping("/import")
+    // public ResultBean<Void> importData(@RequestPart(value = "file", required = true) MultipartFile file) {
+    //     try (InputStream is = file.getInputStream()) {
+    //         final EasyExcelListener<DesktopPetExcel> listener = new EasyExcelListener<DesktopPetExcel>() {
+    //             @Override
+    //             protected void exec(List<DesktopPetExcel> list) {
+    //                 final List<DesktopPet> desktopPetList = desktopPetConverter.desktopPetExcelList2desktopPetList(list);
+    //                 desktopPetService.batchInsert(desktopPetList);
+    //             }
+    //         };
+    //         EasyExcelUtil.asyncReadModel(is, listener, DesktopPetExcel.class);
+    //     } catch (IOException e) {
+    //         throw new GlobalException("桌宠信息导入失败！");
+    //     }
+    //     return ResultBean.success("桌宠信息导入成功!", null);
+    // }
+
+
 }

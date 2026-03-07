@@ -33,15 +33,15 @@ public class AdminSecurityController {
      * @param account 账户
      * @return 账户是否已存在
      */
-    @GetMapping("/accountExist/{account}")
-    public ResultBean<Void> accountExist(@PathVariable("account") String account) {
-        int count = userService.isAccountExist(account);
-        if (count > 0) {
-            return ResultBean.error("账户已存在!", null);
-        } else {
-            return ResultBean.success("账户可用!", null);
-        }
-    }
+    // @GetMapping("/accountExist/{account}")
+    // public ResultBean<Void> accountExist(@PathVariable("account") String account) {
+    //     int count = userService.isAccountExist(account);
+    //     if (count > 0) {
+    //         return ResultBean.error("账户已存在!", null);
+    //     } else {
+    //         return ResultBean.success("账户可用!", null);
+    //     }
+    // }
 
     /**
      * 注册
