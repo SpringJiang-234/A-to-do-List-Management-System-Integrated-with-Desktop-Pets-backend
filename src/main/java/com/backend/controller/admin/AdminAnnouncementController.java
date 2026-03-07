@@ -34,7 +34,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/announcement")
-public class AnnouncementController {
+public class AdminAnnouncementController {
     @Autowired
     private AnnouncementService announcementService;
     @Autowired

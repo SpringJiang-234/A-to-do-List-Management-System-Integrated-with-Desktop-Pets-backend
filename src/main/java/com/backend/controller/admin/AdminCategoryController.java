@@ -34,7 +34,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/category")
-public class CategoryController {
+public class AdminCategoryController {
     @Autowired
     private CategoryService categoryService;
     @Autowired

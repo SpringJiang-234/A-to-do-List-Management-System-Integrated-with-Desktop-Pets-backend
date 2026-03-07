@@ -34,7 +34,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/tag")
-public class TagController {
+public class AdminTagController {
     @Autowired
     private TagService tagService;
     @Autowired

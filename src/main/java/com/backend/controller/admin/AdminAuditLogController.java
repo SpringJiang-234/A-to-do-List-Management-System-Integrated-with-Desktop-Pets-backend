@@ -34,7 +34,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/auditLog")
-public class AuditLogController {
+public class AdminAuditLogController {
     @Autowired
     private AuditLogService auditLogService;
     @Autowired
