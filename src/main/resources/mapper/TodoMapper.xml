@@ -820,10 +820,10 @@
         and priority = #{priority,jdbcType=TINYINT}
       </if>
       <if test="startTime != null">
-        and start_time between #{startTime.start} and #{startTime.end}
+        and end_time &gt;= #{startTime.start}
       </if>
       <if test="endTime != null">
-        and end_time between #{endTime.start} and #{endTime.end}
+        and start_time &lt;= #{endTime.end}
       </if>
       <if test="status != null">
         and status = #{status,jdbcType=TINYINT}
