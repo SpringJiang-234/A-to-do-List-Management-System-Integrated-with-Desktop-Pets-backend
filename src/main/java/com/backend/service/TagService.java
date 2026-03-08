@@ -16,6 +16,13 @@ public interface TagService {
     PageBean<Tag> getPage(TagQuery tagQuery);
 
     /**
+     * 获取用户的所有标签列表
+     * @param userId 用户ID
+     * @return 标签列表
+     */
+    List<Tag> getListByUserId(Long userId);
+
+    /**
      * 根据ID获取标签信息
      * @param id 标签ID
      * @return 标签信息

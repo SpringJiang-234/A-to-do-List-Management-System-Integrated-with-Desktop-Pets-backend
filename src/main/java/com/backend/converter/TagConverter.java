@@ -26,6 +26,15 @@ public interface TagConverter {
     TagDetails tag2tagDetails(Tag tag);
 
     /**
+     * 将Tag列表转换为TagVO列表
+     * 用于转换标签列表
+     *
+     * @param tagList 源Tag对象列表
+     * @return TagVO对象列表
+     */
+    List<TagVO> tagList2tagVOList(List<Tag> tagList);
+
+    /**
      * 将PageBean<Tag>分页对象转换为PageBean<TagVO>分页对象
      * 用于分页数据的类型转换，保持分页结构不变
      *

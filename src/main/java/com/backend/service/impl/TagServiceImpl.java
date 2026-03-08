@@ -27,6 +27,13 @@ public class TagServiceImpl implements TagService {
         return PageBean.page2pageBean(page, (long) total);
     }
 
+    @Override
+    public List<Tag> getListByUserId(Long userId) {
+        TagQuery tagQuery = new TagQuery();
+        tagQuery.setUserId(userId);
+        return tagMapper.selectWithCondition(tagQuery);
+    }
+
 
     @Override
     public Tag getById(Long id) {

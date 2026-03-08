@@ -4,6 +4,7 @@ import com.backend.bean.ResultBean;
 import com.backend.converter.TagConverter;
 import com.backend.domain.dto.TagDTO;
 import com.backend.domain.entity.Tag;
+import com.backend.domain.query.ClientTagQuery;
 import com.backend.domain.vo.TagVO;
 import com.backend.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,15 @@ public class ClientTagController {
     /**
      * 获取标签列表
      *
+     * @param clientTagQuery 查询参数
      * @return 标签列表
      */
-    @GetMapping("/list")
-    public ResultBean<List<TagVO>> list() {
-        return null;
+    @PostMapping("/list")
+    public ResultBean<List<TagVO>> list(@RequestBody ClientTagQuery clientTagQuery) {
+        // TODO 在这一层查询条件过滤到只剩id了，之后看要不要修改
+        List<Tag> tagList = tagService.getListByUserId(clientTagQuery.getUserId());
+        List<TagVO> tagVOList = tagConverter.tagList2tagVOList(tagList);
+        return ResultBean.success(tagVOList);
     }
 
     /**
