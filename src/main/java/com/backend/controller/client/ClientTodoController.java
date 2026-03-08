@@ -248,6 +248,21 @@ public class ClientTodoController {
     }
 
     /**
+     * 取消完成待办事项
+     *
+     * @param id 待办事项id
+     * @return 取消完成结果
+     */
+    @GetMapping("/cancel-complete/{id}")
+    public ResultBean<Void> cancelComplete(@PathVariable("id") Long id) {
+        final Todo todo = todoService.getById(id);
+        todo.setStatus(1);
+        todo.setFinishTime(null);
+        todoService.insertOrUpdate(todo);
+        return ResultBean.success("取消完成成功!", null);
+    }    
+
+    /**
      * 放弃待办事项
      *
      * @param id 待办事项id
