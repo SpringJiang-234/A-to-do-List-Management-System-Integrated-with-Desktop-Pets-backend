@@ -5,14 +5,14 @@ import com.backend.utils.EnumUtil;
 import lombok.Getter;
 
 /**
- * 优先级：1-非常低 2-低 3-中 4-高 默认值为非常低
+ * 优先级：4-重要且紧急，3-重要不紧急，2-不重要但紧急，1-不重要不紧急，默认为不重要不紧急
  */
 @Getter
 public enum TodoPriority implements BaseEnum {
-    VERY_LOW(1, "非常低"),
-    LOW(2, "低"),
-    MEDIUM(3, "中"),
-    HIGH(4, "高");
+    NOT_IMPORTANT_NOT_URGENT(1, "不重要不紧急"),
+    NOT_IMPORTANT_URGENT(2, "不重要但紧急"),
+    IMPORTANT_NOT_URGENT(3, "重要不紧急"),
+    IMPORTANT_URGENT(4, "重要且紧急");
 
     private final Integer code;
     private final String text;
