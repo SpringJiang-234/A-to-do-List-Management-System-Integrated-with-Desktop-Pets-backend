@@ -7,6 +7,9 @@ import java.util.List;
 /**
  * 客户端待办事项查询条件
  */
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 public class ClientTodoQuery extends TodoQuery {
     /**
