@@ -104,6 +104,7 @@ public class ClientTodoController {
         clientTodoDetails.setEndTime(todo.getEndTime() != null ? todo.getEndTime().toString() : null);
         clientTodoDetails.setStatus(String.valueOf(todo.getStatus()));
         clientTodoDetails.setIsTop(String.valueOf(todo.getIsTop()));
+        clientTodoDetails.setPriority(todo.getPriority());
         
         if (todo.getCategoryId() != null) {
             final Category category = categoryService.getById(todo.getCategoryId());

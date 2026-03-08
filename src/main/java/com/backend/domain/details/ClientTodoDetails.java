@@ -55,6 +55,11 @@ public class ClientTodoDetails extends BaseDetails {
     private String categoryName;
 
     /**
+    * 优先级：1-非常低 2-低 3-中 4-高
+    */
+    private Integer priority;
+
+    /**
     * 标签列表
      */
     private List<TagDetails> tags;
