@@ -2,6 +2,7 @@ package com.backend.converter;
 
 import com.backend.bean.PageBean;
 import com.backend.domain.details.TodoDetails;
+import com.backend.domain.dto.ClientTodoDTO;
 import com.backend.domain.dto.TodoDTO;
 import com.backend.domain.entity.Todo;
 import com.backend.domain.excel.TodoExcel;
@@ -15,6 +16,8 @@ import java.util.List;
 public interface TodoConverter {
 
     Todo todoDTO2todo(TodoDTO todoDTO);
+
+    Todo clientTodoDTO2todo(ClientTodoDTO clientTodoDTO);
 
     /**
      * 将Todo对象转换为TodoDetails对象
