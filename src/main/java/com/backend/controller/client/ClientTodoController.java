@@ -4,16 +4,20 @@ import com.backend.bean.PageBean;
 import com.backend.bean.ResultBean;
 import com.backend.converter.TodoConverter;
 import com.backend.domain.dto.ClientTodoDTO;
-import com.backend.domain.dto.TodoDTO;
+import com.backend.domain.details.ClientTodoDetails;
+import com.backend.domain.details.TagDetails;
+import com.backend.domain.entity.Category;
+import com.backend.domain.entity.Tag;
 import com.backend.domain.entity.Todo;
 import com.backend.domain.entity.TodoTag;
 import com.backend.domain.query.ClientTodoQuery;
-import com.backend.domain.query.TodoQuery;
 import com.backend.domain.query.TodoTagQuery;
 import com.backend.domain.vo.ClientTodoVO;
-import com.backend.domain.vo.TodoVO;
+import com.backend.service.CategoryService;
+import com.backend.service.TagService;
 import com.backend.service.TodoService;
 import com.backend.service.TodoTagService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +34,7 @@ import java.util.stream.Collectors;
 /**
  * 待办事项控制层
  */
+@Slf4j
 @RestController
 @RequestMapping("/client/todo")
 public class ClientTodoController {
@@ -39,6 +44,10 @@ public class ClientTodoController {
     private TodoConverter todoConverter;
     @Autowired
     private TodoTagService todoTagService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private TagService tagService;
 
     /**
      * 获取待办事项列表
@@ -81,9 +90,55 @@ public class ClientTodoController {
      * @return 待办事项详情
      */
     @GetMapping("/details/{id}")
-    public ResultBean<Todo> getDetails(@PathVariable("id") Long id) {
+    public ResultBean<ClientTodoDetails> getDetails(@PathVariable("id") Long id) {
+        log.info("getDetails方法被调用，id: {}", id);
         final Todo todo = todoService.getById(id);
-        return ResultBean.success(todo);
+        final ClientTodoDetails clientTodoDetails = new ClientTodoDetails();
+        
+        clientTodoDetails.setId(todo.getId());
+        clientTodoDetails.setUserId(todo.getUserId());
+        clientTodoDetails.setTitle(todo.getTitle());
+        clientTodoDetails.setContent(todo.getContent());
+        clientTodoDetails.setStartTime(todo.getStartTime() != null ? todo.getStartTime().toString() : null);
+        clientTodoDetails.setEndTime(todo.getEndTime() != null ? todo.getEndTime().toString() : null);
+        clientTodoDetails.setStatus(String.valueOf(todo.getStatus()));
+        clientTodoDetails.setIsTop(String.valueOf(todo.getIsTop()));
+        
+        if (todo.getCategoryId() != null) {
+            final Category category = categoryService.getById(todo.getCategoryId());
+            if (category != null) {
+                clientTodoDetails.setCategoryName(category.getName());
+            }
+        }
+        
+        final TodoTagQuery todoTagQuery = new TodoTagQuery();
+        todoTagQuery.setTodoId(id);
+        final com.backend.bean.PageBean<TodoTag> todoTagPageBean = todoTagService.getPage(todoTagQuery);
+        final List<TodoTag> todoTags = todoTagPageBean.getRecords();
+        
+        if (!todoTags.isEmpty()) {
+            final List<Long> tagIds = todoTags.stream()
+                    .map(TodoTag::getTagId)
+                    .collect(Collectors.toList());
+            
+            final List<TagDetails> tagDetailsList = new ArrayList<>();
+            for (Long tagId : tagIds) {
+                final Tag tag = tagService.getById(tagId);
+                if (tag != null) {
+                    final TagDetails tagDetails = new TagDetails();
+                    tagDetails.setId(tag.getId());
+                    tagDetails.setUserId(tag.getUserId());
+                    tagDetails.setName(tag.getName());
+                    tagDetails.setColor(tag.getColor());
+                    tagDetails.setSortOrder(tag.getSortOrder());
+                    tagDetailsList.add(tagDetails);
+                }
+            }
+            clientTodoDetails.setTags(tagDetailsList);
+        }
+        
+        log.info("getDetails方法执行完成，返回结果: {}", clientTodoDetails);
+        return ResultBean.success(clientTodoDetails);
     }
 
     /**
