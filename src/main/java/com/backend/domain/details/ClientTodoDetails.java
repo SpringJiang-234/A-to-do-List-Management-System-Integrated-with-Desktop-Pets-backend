@@ -55,8 +55,8 @@ public class ClientTodoDetails extends BaseDetails {
     private String categoryName;
 
     /**
-    * 优先级：1-非常低 2-低 3-中 4-高
-    */
+     * 优先级：4-重要且紧急，3-重要不紧急，2-不重要但紧急，1-不重要不紧急
+     */
     private Integer priority;
 
     /**

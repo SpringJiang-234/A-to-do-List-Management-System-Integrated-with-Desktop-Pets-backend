@@ -34,8 +34,8 @@ public class TodoQuery extends BaseQuery {
     private Long categoryId;
 
     /**
-    * 优先级：1-非常低 2-低 3-中 4-高 默认值为非常低
-    */
+     * 优先级：4-重要且紧急，3-重要不紧急，2-不重要但紧急，1-不重要不紧急，默认为不重要不紧急
+     */
     private Integer priority;
 
     /**
