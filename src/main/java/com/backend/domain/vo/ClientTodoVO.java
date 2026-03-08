@@ -48,4 +48,9 @@ public class ClientTodoVO extends BaseVO {
     * 是否置顶：1-未置顶 2-置顶
     */
     private Integer isTop;
+
+    /**
+     * 优先级：4-重要且紧急，3-重要不紧急，2-不重要但紧急，1-不重要不紧急
+     */
+    private Integer priority;
 }
