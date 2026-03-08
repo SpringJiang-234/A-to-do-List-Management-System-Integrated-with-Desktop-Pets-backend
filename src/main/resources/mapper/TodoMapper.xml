@@ -30,6 +30,7 @@
     <include refid="Base_Column_List" />
     from tb_todo
     where id = #{id,jdbcType=BIGINT}
+    and is_delete = 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--@mbg.generated-->
@@ -804,6 +805,14 @@
     <include refid="Base_Column_List"/>
     from tb_todo
     <where>
+      <choose>
+        <when test="isDelete != null">
+          and is_delete = #{isDelete,jdbcType=TINYINT}
+        </when>
+        <otherwise>
+          and is_delete = 1
+        </otherwise>
+      </choose>
       <if test="userId != null">
         and user_id = #{userId,jdbcType=BIGINT}
       </if>
@@ -831,9 +840,6 @@
       <if test="finishTime != null">
         and finish_time between #{finishTime.start} and #{finishTime.end}
       </if>
-      <if test="isDelete != null">
-        and is_delete = #{isDelete,jdbcType=TINYINT}
-      </if>
       <if test="isTop != null">
         and is_top = #{isTop,jdbcType=TINYINT}
       </if>
@@ -845,6 +851,14 @@
     select count(*)
     from tb_todo
     <where>
+      <choose>
+        <when test="isDelete != null">
+          and is_delete = #{isDelete,jdbcType=TINYINT}
+        </when>
+        <otherwise>
+          and is_delete = 1
+        </otherwise>
+      </choose>
       <if test="userId != null">
         and user_id = #{userId,jdbcType=BIGINT}
       </if>
@@ -871,9 +885,6 @@
       </if>
       <if test="finishTime != null">
         and finish_time between #{finishTime.start} and #{finishTime.end}
-      </if>
-      <if test="isDelete != null">
-        and is_delete = #{isDelete,jdbcType=TINYINT}
       </if>
       <if test="isTop != null">
         and is_top = #{isTop,jdbcType=TINYINT}
