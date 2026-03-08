@@ -229,7 +229,7 @@ public class ClientTodoController {
             todoTagService.deleteByIds(ids);
         }
         
-        todoService.deleteById(id);
+        todoService.softDeleteById(id);
         return ResultBean.success("删除成功!", null);
     }
 

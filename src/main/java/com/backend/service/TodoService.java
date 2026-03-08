@@ -44,6 +44,13 @@ public interface TodoService {
     int deleteById(Long id);
 
     /**
+     * 软删除待办事项（将is_delete设置为2）
+     * @param id 待办事项ID
+     * @return 更新成功的记录数
+     */
+    int softDeleteById(Long id);
+
+    /**
      * 批量删除待办事项
      * @param ids 待办事项ID列表
      * @return 删除成功的记录数

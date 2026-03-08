@@ -52,6 +52,14 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    public int softDeleteById(Long id) {
+        final Todo todo = new Todo();
+        todo.setId(id);
+        todo.setIsDelete(2);
+        return todoMapper.updateByPrimaryKeySelective(todo);
+    }
+
+    @Override
      @Transactional(rollbackFor = Exception.class)
     public int deleteByIds(String ids) {
         final String[] split = ids.split(",");
