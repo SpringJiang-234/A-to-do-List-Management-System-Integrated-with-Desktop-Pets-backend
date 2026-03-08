@@ -26,6 +26,15 @@ public interface CategoryConverter {
     CategoryDetails category2categoryDetails(Category category);
 
     /**
+     * 将Category列表转换为CategoryVO列表
+     * 用于转换类别列表
+     *
+     * @param categoryList 源Category对象列表
+     * @return CategoryVO对象列表
+     */
+    List<CategoryVO> categoryList2categoryVOList(List<Category> categoryList);
+
+    /**
      * 将PageBean<Category>分页对象转换为PageBean<CategoryVO>分页对象
      * 用于分页数据的类型转换，保持分页结构不变
      *

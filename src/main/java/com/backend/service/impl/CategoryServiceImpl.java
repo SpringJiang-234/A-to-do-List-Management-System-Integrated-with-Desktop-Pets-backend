@@ -27,6 +27,13 @@ public class CategoryServiceImpl implements CategoryService {
         return PageBean.page2pageBean(page, (long) total);
     }
 
+    @Override
+    public List<Category> getListByUserId(Long userId) {
+        CategoryQuery categoryQuery = new CategoryQuery();
+        categoryQuery.setUserId(userId);
+        return categoryMapper.selectWithCondition(categoryQuery);
+    }
+
 
     @Override
     public Category getById(Long id) {

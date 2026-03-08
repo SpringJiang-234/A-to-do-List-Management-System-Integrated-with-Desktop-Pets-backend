@@ -16,6 +16,13 @@ public interface CategoryService {
     PageBean<Category> getPage(CategoryQuery categoryQuery);
 
     /**
+     * 获取用户的所有类别列表
+     * @param userId 用户ID
+     * @return 类别列表
+     */
+    List<Category> getListByUserId(Long userId);
+
+    /**
      * 根据ID获取类别信息
      * @param id 类别ID
      * @return 类别信息

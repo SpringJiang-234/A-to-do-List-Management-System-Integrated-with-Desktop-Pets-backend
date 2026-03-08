@@ -4,6 +4,7 @@ import com.backend.bean.ResultBean;
 import com.backend.converter.CategoryConverter;
 import com.backend.domain.dto.CategoryDTO;
 import com.backend.domain.entity.Category;
+import com.backend.domain.query.ClientCategoryQuery;
 import com.backend.domain.vo.CategoryVO;
 import com.backend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,15 @@ public class ClientCategoryController {
     /**
      * 获取分类列表
      *
+     * @param clientCategoryQuery 查询参数
      * @return 分类列表
      */
-    @GetMapping("/list")
-    public ResultBean<List<CategoryVO>> list() {
-        return null;
+    @PostMapping("/list")
+    public ResultBean<List<CategoryVO>> list(@RequestBody ClientCategoryQuery clientCategoryQuery) {
+        // TODO 在这一层查询条件过滤到只剩id了，之后看要不要修改
+        List<Category> categoryList = categoryService.getListByUserId(clientCategoryQuery.getUserId());
+        List<CategoryVO> categoryVOList = categoryConverter.categoryList2categoryVOList(categoryList);
+        return ResultBean.success(categoryVOList);
     }
 
     /**
