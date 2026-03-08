@@ -7,11 +7,13 @@ import com.backend.domain.entity.Todo;
 import com.backend.domain.query.TodoQuery;
 import com.backend.mapper.TodoMapper;
 import com.backend.service.TodoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
+@Slf4j
 @Service
 public class TodoServiceImpl implements TodoService {
     @Autowired
@@ -25,6 +27,12 @@ public class TodoServiceImpl implements TodoService {
         todoMapper.selectWithCondition(todoQuery);
         final int total = todoMapper.countByCondition(todoQuery);
         return PageBean.page2pageBean(page, (long) total);
+    }
+
+    @Override
+    public List<Todo> getList(TodoQuery todoQuery) {
+        log.info("查询待办事项列表，查询条件：{}", todoQuery);
+        return todoMapper.selectWithCondition(todoQuery);
     }
 
 

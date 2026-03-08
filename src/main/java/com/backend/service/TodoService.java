@@ -16,6 +16,13 @@ public interface TodoService {
     PageBean<Todo> getPage(TodoQuery todoQuery);
 
     /**
+     * 获取待办事项列表（不分页）
+     * @param todoQuery 查询参数
+     * @return 待办事项列表
+     */
+    List<Todo> getList(TodoQuery todoQuery);
+
+    /**
      * 根据ID获取待办事项信息
      * @param id 待办事项ID
      * @return 待办事项信息

@@ -48,6 +48,15 @@ public interface TodoConverter {
     ClientTodoVO todo2clientTodoVO(Todo todo);
 
     /**
+     * 将Todo列表转换为ClientTodoVO列表
+     * 用于客户端待办事项列表展示
+     *
+     * @param todoList 源Todo对象列表
+     * @return ClientTodoVO对象列表
+     */
+    List<ClientTodoVO> todoList2clientTodoVOList(List<Todo> todoList);
+
+    /**
      * 将PageBean<Todo>分页对象转换为PageBean<ClientTodoVO>分页对象
      * 用于分页数据的类型转换，保持分页结构不变
      *

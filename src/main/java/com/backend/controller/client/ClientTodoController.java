@@ -56,14 +56,13 @@ public class ClientTodoController {
      * @return 待办事项列表
      */
     @PostMapping("/list")
-    public ResultBean<PageBean<ClientTodoVO>> list(@RequestBody ClientTodoQuery clientTodoQuery) {
-        // TODO 底层实现还是分页，要写一个真正的list
-        final PageBean<Todo> todoPageBean = todoService.getPage(clientTodoQuery);
+    public ResultBean<List<ClientTodoVO>> list(@RequestBody ClientTodoQuery clientTodoQuery) {
+        final List<Todo> todoList = todoService.getList(clientTodoQuery);
         
         final List<Long> tagIdList = clientTodoQuery.getTagIdList();
         if (tagIdList != null && !tagIdList.isEmpty()) {
             final List<Todo> filteredTodos = new ArrayList<>();
-            for (Todo todo : todoPageBean.getRecords()) {
+            for (Todo todo : todoList) {
                 final TodoTagQuery todoTagQuery = new TodoTagQuery();
                 todoTagQuery.setTodoId(todo.getId());
                 final com.backend.bean.PageBean<TodoTag> todoTagPageBean = todoTagService.getPage(todoTagQuery);
@@ -77,11 +76,12 @@ public class ClientTodoController {
                     filteredTodos.add(todo);
                 }
             }
-            todoPageBean.setRecords(filteredTodos);
+            final List<ClientTodoVO> clientTodoVOList = todoConverter.todoList2clientTodoVOList(filteredTodos);
+            return ResultBean.success(clientTodoVOList);
         }
         
-        final PageBean<ClientTodoVO> pageBean = todoConverter.todoPageBean2clientTodoVOPageBean(todoPageBean);
-        return ResultBean.success(pageBean);
+        final List<ClientTodoVO> clientTodoVOList = todoConverter.todoList2clientTodoVOList(todoList);
+        return ResultBean.success(clientTodoVOList);
     }
 
     /**
