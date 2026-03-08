@@ -4,10 +4,13 @@ import com.backend.bean.PageBean;
 import com.backend.bean.ResultBean;
 import com.backend.converter.TodoConverter;
 import com.backend.domain.dto.ClientTodoDTO;
+import com.backend.domain.dto.TodoDTO;
 import com.backend.domain.entity.Todo;
 import com.backend.domain.entity.TodoTag;
 import com.backend.domain.query.ClientTodoQuery;
+import com.backend.domain.query.TodoQuery;
 import com.backend.domain.query.TodoTagQuery;
+import com.backend.domain.vo.ClientTodoVO;
 import com.backend.domain.vo.TodoVO;
 import com.backend.service.TodoService;
 import com.backend.service.TodoTagService;
@@ -44,7 +47,7 @@ public class ClientTodoController {
      * @return 待办事项列表
      */
     @PostMapping("/list")
-    public ResultBean<PageBean<TodoVO>> list(@RequestBody ClientTodoQuery clientTodoQuery) {
+    public ResultBean<PageBean<ClientTodoVO>> list(@RequestBody ClientTodoQuery clientTodoQuery) {
         final PageBean<Todo> todoPageBean = todoService.getPage(clientTodoQuery);
         
         final List<Long> tagIdList = clientTodoQuery.getTagIdList();
@@ -67,7 +70,7 @@ public class ClientTodoController {
             todoPageBean.setRecords(filteredTodos);
         }
         
-        final PageBean<TodoVO> pageBean = todoConverter.todoPageBean2todoVOPageBean(todoPageBean);
+        final PageBean<ClientTodoVO> pageBean = todoConverter.todoPageBean2clientTodoVOPageBean(todoPageBean);
         return ResultBean.success(pageBean);
     }
 

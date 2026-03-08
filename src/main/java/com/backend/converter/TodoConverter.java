@@ -6,6 +6,7 @@ import com.backend.domain.dto.ClientTodoDTO;
 import com.backend.domain.dto.TodoDTO;
 import com.backend.domain.entity.Todo;
 import com.backend.domain.excel.TodoExcel;
+import com.backend.domain.vo.ClientTodoVO;
 import com.backend.domain.vo.TodoVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -36,6 +37,24 @@ public interface TodoConverter {
      * @return TodoVO分页对象，包含转换后的待办事项VO对象的分页数据
      */
     PageBean<TodoVO> todoPageBean2todoVOPageBean(PageBean<Todo> todoPageBean);
+
+    /**
+     * 将Todo对象转换为ClientTodoVO对象
+     * 用于客户端待办事项信息展示
+     *
+     * @param todo 源Todo对象，包含待办事项基本信息
+     * @return ClientTodoVO对象，包含待办事项完整信息
+     */
+    ClientTodoVO todo2clientTodoVO(Todo todo);
+
+    /**
+     * 将PageBean<Todo>分页对象转换为PageBean<ClientTodoVO>分页对象
+     * 用于分页数据的类型转换，保持分页结构不变
+     *
+     * @param todoPageBean 源Todo分页对象，包含待办事项信息的分页数据
+     * @return ClientTodoVO分页对象，包含转换后的待办事项VO对象的分页数据
+     */
+    PageBean<ClientTodoVO> todoPageBean2clientTodoVOPageBean(PageBean<Todo> todoPageBean);
 
     /**
      * 将Todo对象转换为TodoExcel对象
