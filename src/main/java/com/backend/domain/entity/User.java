@@ -1,6 +1,6 @@
 package com.backend.domain.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.backend.bean.base.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -46,7 +46,7 @@ public class User extends BaseEntity {
     /**
      * 生日
      */
-    private Date birth;
+    private LocalDate birth;
 
     /**
      * 状态：1-正常 2-已注销

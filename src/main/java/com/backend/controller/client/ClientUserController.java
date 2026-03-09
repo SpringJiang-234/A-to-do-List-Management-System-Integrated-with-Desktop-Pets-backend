@@ -90,9 +90,16 @@ public class ClientUserController {
         
         Long userId = Long.valueOf(userIdObj.toString());
         
-        final User user = userConverter.userDTO2user(userDTO);
-        user.setId(userId);
-        int result = userService.insertOrUpdate(user);
+        User existingUser = userService.getById(userId);
+        if (existingUser == null) {
+            return ResultBean.error("用户不存在", null);
+        }
+        
+        existingUser.setNickname(userDTO.getNickname());
+        existingUser.setGender(userDTO.getGender());
+        existingUser.setBirth(userDTO.getBirth());
+        
+        int result = userService.insertOrUpdate(existingUser);
         if (result > 0) {
             return ResultBean.success("修改成功!", null);
         } else {
