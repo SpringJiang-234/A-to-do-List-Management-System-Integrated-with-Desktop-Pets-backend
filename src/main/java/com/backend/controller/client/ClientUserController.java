@@ -73,8 +73,31 @@ public class ClientUserController {
      * @return 修改结果
      */
     @PostMapping("/update")
-    public ResultBean<Void> update(@RequestBody UserDTO userDTO) {
-        return null;
+    public ResultBean<Void> update(@RequestBody UserDTO userDTO, HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (token == null) {
+            return ResultBean.error("未登录", null);
+        }
+        
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        
+        Object userIdObj = redisUtil.get("token:" + token);
+        if (userIdObj == null) {
+            return ResultBean.error("登录已过期，请重新登录", null);
+        }
+        
+        Long userId = Long.valueOf(userIdObj.toString());
+        
+        final User user = userConverter.userDTO2user(userDTO);
+        user.setId(userId);
+        int result = userService.insertOrUpdate(user);
+        if (result > 0) {
+            return ResultBean.success("修改成功!", null);
+        } else {
+            return ResultBean.error("修改失败", null);
+        }
     }
 
     /**
