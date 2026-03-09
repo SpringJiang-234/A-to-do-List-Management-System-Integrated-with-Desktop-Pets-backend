@@ -96,9 +96,21 @@ public class ClientUserController {
             return ResultBean.error("用户不存在", null);
         }
         
-        existingUser.setNickname(userDTO.getNickname());
-        existingUser.setGender(userDTO.getGender());
-        existingUser.setBirth(userDTO.getBirth());
+        if (userDTO.getNickname() != null) {
+            existingUser.setNickname(userDTO.getNickname());
+        }
+        
+        if (userDTO.getGender() != null) {
+            existingUser.setGender(userDTO.getGender());
+        }
+        
+        if (userDTO.getBirth() != null) {
+            existingUser.setBirth(userDTO.getBirth());
+        }
+        
+        if (userDTO.getAvatar() != null) {
+            existingUser.setAvatar(userDTO.getAvatar());
+        }
         
         if (userDTO.getPasswordHash() != null && !userDTO.getPasswordHash().isEmpty()) {
             String hashedPassword = PasswordUtil.hashPassword(userDTO.getPasswordHash());
