@@ -67,4 +67,9 @@ public class TodoQuery extends BaseQuery {
     * 是否置顶：1-未置顶 2-置顶
     */
     private Integer isTop;
+
+    /**
+     * 标签ID
+     */
+    private Long tagId;
 }

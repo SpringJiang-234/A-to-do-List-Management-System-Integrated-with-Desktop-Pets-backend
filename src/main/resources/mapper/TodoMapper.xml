@@ -843,6 +843,9 @@
       <if test="isTop != null">
         and is_top = #{isTop,jdbcType=TINYINT}
       </if>
+      <if test="tagId != null">
+        and id in (select todo_id from tb_todo_tag where tag_id = #{tagId,jdbcType=BIGINT})
+      </if>
     </where>
     order by create_time desc
   </select>

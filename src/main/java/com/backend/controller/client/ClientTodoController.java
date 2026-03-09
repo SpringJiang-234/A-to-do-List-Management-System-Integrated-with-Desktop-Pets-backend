@@ -11,6 +11,7 @@ import com.backend.domain.entity.Tag;
 import com.backend.domain.entity.Todo;
 import com.backend.domain.entity.TodoTag;
 import com.backend.domain.query.ClientTodoQuery;
+import com.backend.domain.query.TodoQuery;
 import com.backend.domain.query.TodoTagQuery;
 import com.backend.domain.vo.ClientTodoVO;
 import com.backend.service.CategoryService;
@@ -83,6 +84,19 @@ public class ClientTodoController {
             return ResultBean.success(clientTodoVOList);
         }
         
+        final List<ClientTodoVO> clientTodoVOList = todoConverter.todoList2clientTodoVOList(todoList);
+        return ResultBean.success(clientTodoVOList);
+    }
+
+    /**
+     * 获取分类/标签页面待办事项列表
+     *
+     * @param todoQuery 查询参数
+     * @return 待办事项列表
+     */
+    @PostMapping("/list-by-category-or-tag")
+    public ResultBean<List<ClientTodoVO>> listByCategoryOrTag(@RequestBody TodoQuery todoQuery) {
+        final List<Todo> todoList = todoService.getList(todoQuery);
         final List<ClientTodoVO> clientTodoVOList = todoConverter.todoList2clientTodoVOList(todoList);
         return ResultBean.success(clientTodoVOList);
     }
