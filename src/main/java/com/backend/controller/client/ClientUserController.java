@@ -7,6 +7,7 @@ import com.backend.domain.entity.User;
 import com.backend.domain.info.UserInfo;
 import com.backend.service.UserService;
 import com.backend.utils.MinioUtil;
+import com.backend.utils.PasswordUtil;
 import com.backend.utils.RedisUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,11 @@ public class ClientUserController {
         existingUser.setNickname(userDTO.getNickname());
         existingUser.setGender(userDTO.getGender());
         existingUser.setBirth(userDTO.getBirth());
+        
+        if (userDTO.getPasswordHash() != null && !userDTO.getPasswordHash().isEmpty()) {
+            String hashedPassword = PasswordUtil.hashPassword(userDTO.getPasswordHash());
+            existingUser.setPasswordHash(hashedPassword);
+        }
         
         int result = userService.insertOrUpdate(existingUser);
         if (result > 0) {
