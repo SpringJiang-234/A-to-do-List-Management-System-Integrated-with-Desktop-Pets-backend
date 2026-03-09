@@ -3,7 +3,8 @@ package com.backend.controller.client;
 import com.backend.bean.ResultBean;
 import com.backend.converter.AnnouncementConverter;
 import com.backend.domain.entity.Announcement;
-import com.backend.domain.vo.AnnouncementVO;
+import com.backend.domain.query.AnnouncementQuery;
+import com.backend.domain.vo.ClientAnnouncementVO;
 import com.backend.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +33,10 @@ public class ClientAnnouncementController {
      * @return 公告列表
      */
     @GetMapping("/list")
-    public ResultBean<List<AnnouncementVO>> list() {
-        return null;
+    public ResultBean<List<ClientAnnouncementVO>> list() {
+        final List<Announcement> announcementList = announcementService.getAll(new AnnouncementQuery());
+        final List<ClientAnnouncementVO> announcementVOList = announcementConverter.announcementList2clientAnnouncementVOList(announcementList);
+        return ResultBean.success(announcementVOList);
     }
 
     /**
@@ -44,6 +47,7 @@ public class ClientAnnouncementController {
      */
     @GetMapping("/details/{id}")
     public ResultBean<Announcement> getDetails(@PathVariable("id") Long id) {
-        return null;
+        final Announcement announcement = announcementService.getById(id);
+        return ResultBean.success(announcement);
     }
 }

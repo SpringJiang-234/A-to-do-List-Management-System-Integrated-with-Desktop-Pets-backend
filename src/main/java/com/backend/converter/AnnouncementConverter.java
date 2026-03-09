@@ -7,6 +7,7 @@ import com.backend.domain.entity.Announcement;
 import com.backend.domain.enums.AnnouncementIsTop;
 import com.backend.domain.excel.AnnouncementExcel;
 import com.backend.domain.vo.AnnouncementVO;
+import com.backend.domain.vo.ClientAnnouncementVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -46,6 +47,25 @@ public interface AnnouncementConverter {
      */
     @Mapping(source = "isTop", target = "isTop", qualifiedByName = "isTopToText")
     AnnouncementVO announcement2announcementVO(Announcement announcement);
+
+    /**
+     * 将Announcement对象转换为ClientAnnouncementVO对象
+     * 用于客户端公告列表展示
+     *
+     * @param announcement 源Announcement对象，包含公告基本信息
+     * @return ClientAnnouncementVO对象，包含客户端公告展示信息
+     */
+    @Mapping(source = "isTop", target = "isTop", qualifiedByName = "isTopToText")
+    ClientAnnouncementVO announcement2clientAnnouncementVO(Announcement announcement);
+
+    /**
+     * 将Announcement列表转换为ClientAnnouncementVO列表
+     * 用于客户端公告列表展示
+     *
+     * @param announcementList 源Announcement对象列表
+     * @return ClientAnnouncementVO对象列表
+     */
+    List<ClientAnnouncementVO> announcementList2clientAnnouncementVOList(List<Announcement> announcementList);
 
     /**
      * 将Announcement对象转换为AnnouncementExcel对象
