@@ -2,6 +2,7 @@ package com.backend.domain.excel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.backend.bean.base.BaseExcel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -80,4 +81,10 @@ public class TodoExcel extends BaseExcel {
     */
     @ExcelProperty(value = "是否置顶")
     private String isTop;
+
+    /**
+     * 专注时间：用户完整使用计时器积累的时间
+     */
+    @ExcelProperty(value = "专注时间")
+    private LocalDateTime focusTime;
 }

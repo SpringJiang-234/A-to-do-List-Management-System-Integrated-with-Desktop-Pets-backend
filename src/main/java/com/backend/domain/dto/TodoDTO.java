@@ -76,4 +76,10 @@ public class TodoDTO {
     * 是否置顶：1-未置顶 2-置顶
     */
     private Integer isTop;
+
+    /**
+     * 专注时间：用户完整使用计时器积累的时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime focusTime;
 }
