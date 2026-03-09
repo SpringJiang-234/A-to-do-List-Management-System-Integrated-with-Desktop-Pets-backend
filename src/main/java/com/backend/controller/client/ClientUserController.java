@@ -7,6 +7,8 @@ import com.backend.domain.entity.User;
 import com.backend.domain.info.UserInfo;
 import com.backend.service.UserService;
 import com.backend.utils.MinioUtil;
+import com.backend.utils.RedisUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +30,8 @@ public class ClientUserController {
     private UserConverter userConverter;
     @Autowired
     private MinioUtil minioUtil;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 获取当前用户信息
@@ -35,8 +39,31 @@ public class ClientUserController {
      * @return 用户信息
      */
     @GetMapping("/info")
-    public ResultBean<UserInfo> getUserInfo() {
-        return null;
+    public ResultBean<UserInfo> getUserInfo(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (token == null) {
+            return ResultBean.error("未登录", null);
+        }
+        
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        
+        Object userIdObj = redisUtil.get("token:" + token);
+        if (userIdObj == null) {
+            return ResultBean.error("登录已过期，请重新登录", null);
+        }
+        
+        Long userId = Long.valueOf(userIdObj.toString());
+        
+        User user = userService.getById(userId);
+        if (user == null) {
+            return ResultBean.error("用户不存在", null);
+        }
+        
+        UserInfo userInfo = userConverter.user2userInfo(user);
+        userInfo.setToken(token);
+        return ResultBean.success(userInfo);
     }
 
     /**

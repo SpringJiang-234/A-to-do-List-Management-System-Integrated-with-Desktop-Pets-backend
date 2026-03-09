@@ -30,6 +30,8 @@ public interface UserConverter {
      */
     @Mapping(source = "nickname", target = "username")
     @Mapping(source = "avatar", target = "avatar")
+    @Mapping(source = "gender", target = "gender")
+    @Mapping(source = "birth", target = "birth")
     UserInfo user2userInfo(User user);
 
     /**
