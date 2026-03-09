@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ClientAnnouncementVO extends BaseVO {
     private String title;
+    private String content;
     private LocalDateTime updateTime;
     private String isTop;
 }
