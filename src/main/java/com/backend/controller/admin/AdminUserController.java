@@ -235,7 +235,16 @@ public class AdminUserController {
             throw new GlobalException("请选择要上传的文件");
         }
         
-        // 上传文件到MinIO，指定文件夹为avatars
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            throw new GlobalException("只支持上传图片格式");
+        }
+        
+        long maxSize = 5 * 1024 * 1024;
+        if (file.getSize() > maxSize) {
+            throw new GlobalException("图片大小不能超过 5MB");
+        }
+        
         String avatarUrl = minioUtil.putObject(file, "avatars", null);
         
         if (avatarUrl == null) {

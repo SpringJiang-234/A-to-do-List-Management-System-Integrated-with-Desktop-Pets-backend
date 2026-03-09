@@ -119,6 +119,16 @@ public class ClientUserController {
             return ResultBean.error("请选择要上传的文件", null);
         }
         
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            return ResultBean.error("只支持上传图片格式", null);
+        }
+        
+        long maxSize = 5 * 1024 * 1024;
+        if (file.getSize() > maxSize) {
+            return ResultBean.error("图片大小不能超过 5MB", null);
+        }
+        
         String avatarUrl = minioUtil.putObject(file);
         
         if (avatarUrl == null) {
