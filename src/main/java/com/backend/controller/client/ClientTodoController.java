@@ -57,7 +57,7 @@ public class ClientTodoController {
      */
     @PostMapping("/list")
     public ResultBean<List<ClientTodoVO>> list(@RequestBody ClientTodoQuery clientTodoQuery) {
-        final List<Todo> todoList = todoService.getList(clientTodoQuery);
+        final List<Todo> todoList = todoService.getClientList(clientTodoQuery);
         
         final List<Long> tagIdList = clientTodoQuery.getTagIdList();
         if (tagIdList != null && !tagIdList.isEmpty()) {
@@ -72,8 +72,11 @@ public class ClientTodoController {
                         .map(TodoTag::getTagId)
                         .collect(Collectors.toList());
                 
-                if (todoTagIds.containsAll(tagIdList)) {
-                    filteredTodos.add(todo);
+                for (Long tagId : tagIdList) {
+                    if (todoTagIds.contains(tagId)) {
+                        filteredTodos.add(todo);
+                        break;
+                    }
                 }
             }
             final List<ClientTodoVO> clientTodoVOList = todoConverter.todoList2clientTodoVOList(filteredTodos);

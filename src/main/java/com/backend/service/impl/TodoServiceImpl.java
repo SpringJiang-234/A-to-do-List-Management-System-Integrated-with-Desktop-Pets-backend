@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.backend.bean.PageBean;
 import com.backend.domain.entity.Todo;
+import com.backend.domain.query.ClientTodoQuery;
 import com.backend.domain.query.TodoQuery;
 import com.backend.mapper.TodoMapper;
 import com.backend.service.TodoService;
@@ -33,6 +34,12 @@ public class TodoServiceImpl implements TodoService {
     public List<Todo> getList(TodoQuery todoQuery) {
         log.info("查询待办事项列表，查询条件：{}", todoQuery);
         return todoMapper.selectWithCondition(todoQuery);
+    }
+
+    @Override
+    public List<Todo> getClientList(ClientTodoQuery clientTodoQuery) {
+        log.info("查询客户端待办事项列表，查询条件：{}", clientTodoQuery);
+        return todoMapper.selectWithConditionForClient(clientTodoQuery);
     }
 
 

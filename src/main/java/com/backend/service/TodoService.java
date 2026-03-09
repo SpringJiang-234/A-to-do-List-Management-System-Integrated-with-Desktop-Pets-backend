@@ -2,6 +2,7 @@ package com.backend.service;
 
 import com.backend.bean.PageBean;
 import com.backend.domain.entity.Todo;
+import com.backend.domain.query.ClientTodoQuery;
 import com.backend.domain.query.TodoQuery;
 
 import java.util.List;
@@ -21,6 +22,13 @@ public interface TodoService {
      * @return 待办事项列表
      */
     List<Todo> getList(TodoQuery todoQuery);
+
+    /**
+     * 获取客户端待办事项列表（不分页）
+     * @param clientTodoQuery 客户端查询参数
+     * @return 待办事项列表
+     */
+    List<Todo> getClientList(ClientTodoQuery clientTodoQuery);
 
     /**
      * 根据ID获取待办事项信息

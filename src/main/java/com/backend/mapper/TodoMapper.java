@@ -1,10 +1,11 @@
 package com.backend.mapper;
 
 import com.backend.domain.entity.Todo;
+import com.backend.domain.query.ClientTodoQuery;
+import com.backend.domain.query.TodoQuery;
 import java.util.List;
 import java.util.Map;
 
-import com.backend.domain.query.TodoQuery;
 import org.apache.ibatis.annotations.Param;
 
 public interface TodoMapper {
@@ -39,6 +40,8 @@ public interface TodoMapper {
     int batchInsertOrUpdate(@Param("list") List<Todo> list);
 
     List<Todo> selectWithCondition(TodoQuery todoQuery);
+
+    List<Todo> selectWithConditionForClient(ClientTodoQuery clientTodoQuery);
 
     int countByCondition(TodoQuery todoQuery);
 

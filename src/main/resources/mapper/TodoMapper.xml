@@ -847,6 +847,62 @@
     order by create_time desc
   </select>
 
+  <select id="selectWithConditionForClient" resultMap="BaseResultMap" parameterType="com.backend.domain.query.ClientTodoQuery">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_todo
+    <where>
+      <choose>
+        <when test="isDelete != null">
+          and is_delete = #{isDelete,jdbcType=TINYINT}
+        </when>
+        <otherwise>
+          and is_delete = 1
+        </otherwise>
+      </choose>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="title != null and title != ''">
+        and title like concat('%', #{title}, '%')
+      </if>
+      <if test="content != null">
+        and content between #{content} and #{content}
+      </if>
+      <if test="categoryIdList != null and categoryIdList.size() > 0">
+        and category_id in
+        <foreach close=")" collection="categoryIdList" item="item" open="(" separator=", ">
+          #{item,jdbcType=BIGINT}
+        </foreach>
+      </if>
+      <if test="priorityList != null and priorityList.size() > 0">
+        and priority in
+        <foreach close=")" collection="priorityList" item="item" open="(" separator=", ">
+          #{item,jdbcType=TINYINT}
+        </foreach>
+      </if>
+      <if test="startTime != null">
+        and end_time &gt;= #{startTime.start}
+      </if>
+      <if test="endTime != null">
+        and start_time &lt;= #{endTime.end}
+      </if>
+      <if test="statusList != null and statusList.size() > 0">
+        and status in
+        <foreach close=")" collection="statusList" item="item" open="(" separator=", ">
+          #{item,jdbcType=TINYINT}
+        </foreach>
+      </if>
+      <if test="isTopList != null and isTopList.size() > 0">
+        and is_top in
+        <foreach close=")" collection="isTopList" item="item" open="(" separator=", ">
+          #{item,jdbcType=TINYINT}
+        </foreach>
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
   <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.TodoQuery">
     select count(*)
     from tb_todo
@@ -871,8 +927,20 @@
       <if test="categoryId != null">
         and category_id = #{categoryId,jdbcType=BIGINT}
       </if>
+      <if test="categoryIdList != null and categoryIdList.size() > 0">
+        and category_id in
+        <foreach close=")" collection="categoryIdList" item="item" open="(" separator=", ">
+          #{item,jdbcType=BIGINT}
+        </foreach>
+      </if>
       <if test="priority != null">
         and priority = #{priority,jdbcType=TINYINT}
+      </if>
+      <if test="priorityList != null and priorityList.size() > 0">
+        and priority in
+        <foreach close=")" collection="priorityList" item="item" open="(" separator=", ">
+          #{item,jdbcType=TINYINT}
+        </foreach>
       </if>
       <if test="startTime != null">
         and start_time between #{startTime.start} and #{startTime.end}
@@ -883,11 +951,23 @@
       <if test="status != null">
         and status = #{status,jdbcType=TINYINT}
       </if>
+      <if test="statusList != null and statusList.size() > 0">
+        and status in
+        <foreach close=")" collection="statusList" item="item" open="(" separator=", ">
+          #{item,jdbcType=TINYINT}
+        </foreach>
+      </if>
       <if test="finishTime != null">
         and finish_time between #{finishTime.start} and #{finishTime.end}
       </if>
       <if test="isTop != null">
         and is_top = #{isTop,jdbcType=TINYINT}
+      </if>
+      <if test="isTopList != null and isTopList.size() > 0">
+        and is_top in
+        <foreach close=")" collection="isTopList" item="item" open="(" separator=", ">
+          #{item,jdbcType=TINYINT}
+        </foreach>
       </if>
     </where>
   </select>
