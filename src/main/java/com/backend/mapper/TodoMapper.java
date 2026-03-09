@@ -104,4 +104,11 @@ public interface TodoMapper {
      * @return 完成率趋势列表
      */
     List<Map<String, Object>> getTodoCompletionRateTrend(@Param("startDate") String startDate, @Param("endDate") String endDate);
+
+    /**
+     * 更新待办事项专注时间
+     * @param params 包含id和focusTime的Map
+     * @return 更新的行数
+     */
+    int updateFocusTime(@Param("id") Long id, @Param("focusTime") Long focusTime);
 }

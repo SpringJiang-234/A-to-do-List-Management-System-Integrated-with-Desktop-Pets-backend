@@ -83,8 +83,8 @@ public class TodoExcel extends BaseExcel {
     private String isTop;
 
     /**
-     * 专注时间：用户完整使用计时器积累的时间
+     * 专注时间：用户完整使用计时器积累的时间（秒）
      */
-    @ExcelProperty(value = "专注时间")
-    private LocalDateTime focusTime;
+    @ExcelProperty(value = "专注时间（秒）")
+    private Long focusTime;
 }

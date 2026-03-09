@@ -18,11 +18,12 @@
     <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
     <result column="is_top" jdbcType="TINYINT" property="isTop" />
+    <result column="focus_time" jdbcType="BIGINT" property="focusTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, create_time, update_time, user_id, title, content, category_id, priority, start_time, 
-    end_time, `status`, finish_time, is_delete, is_top
+    end_time, `status`, finish_time, is_delete, is_top, focus_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -1063,4 +1064,15 @@
     group by DATE_FORMAT(create_time, '%Y-%m-%d')
     order by date
   </select>
+
+  <update id="updateFocusTime" parameterType="java.util.Map">
+    update tb_todo
+    set focus_time = 
+      case 
+        when focus_time is null or focus_time = 0 then #{focusTime,jdbcType=BIGINT}
+        else focus_time + #{focusTime,jdbcType=BIGINT}
+      end,
+      update_time = now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

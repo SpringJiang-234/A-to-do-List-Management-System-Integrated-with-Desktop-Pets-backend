@@ -70,7 +70,7 @@ public class TodoDetails extends BaseDetails {
     private String isTop;
 
     /**
-     * 专注时间：用户完整使用计时器积累的时间
+     * 专注时间：用户完整使用计时器积累的时间（秒）
      */
-    private LocalDateTime focusTime;
+    private Long focusTime;
 }

@@ -106,4 +106,10 @@ public class TodoServiceImpl implements TodoService {
         
         return result;
     }
+
+    @Override
+    public int updateFocusTime(Long id, Long focusTime) {
+        log.info("更新待办事项专注时间，id: {}, focusTime: {}", id, focusTime);
+        return todoMapper.updateFocusTime(id, focusTime);
+    }
 }

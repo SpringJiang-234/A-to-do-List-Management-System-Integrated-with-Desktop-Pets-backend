@@ -78,8 +78,7 @@ public class TodoDTO {
     private Integer isTop;
 
     /**
-     * 专注时间：用户完整使用计时器积累的时间
+     * 专注时间：用户完整使用计时器积累的时间（秒）
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime focusTime;
+    private Long focusTime;
 }

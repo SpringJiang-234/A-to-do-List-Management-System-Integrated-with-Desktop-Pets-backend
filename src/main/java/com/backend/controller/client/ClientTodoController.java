@@ -4,6 +4,7 @@ import com.backend.bean.PageBean;
 import com.backend.bean.ResultBean;
 import com.backend.converter.TodoConverter;
 import com.backend.domain.dto.ClientTodoDTO;
+import com.backend.domain.dto.ClientTodoFocusTimeUpdateDTO;
 import com.backend.domain.details.ClientTodoDetails;
 import com.backend.domain.details.TagDetails;
 import com.backend.domain.entity.Category;
@@ -293,5 +294,21 @@ public class ClientTodoController {
         todo.setFinishTime(LocalDateTime.now());
         todoService.insertOrUpdate(todo);
         return ResultBean.success("放弃成功!", null);
+    }
+
+    /**
+     * 待办事项计时累加
+     *
+     * @param dto 包含id和focusTime的DTO
+     * @return 更新结果
+     */
+    @PostMapping("/updateFocusTime")
+    public ResultBean<Void> updateFocusTime(@RequestBody com.backend.domain.dto.ClientTodoFocusTimeUpdateDTO dto) {
+        if (dto.getId() == null || dto.getFocusTime() == null) {
+            return ResultBean.error("参数错误", null);
+        }
+        
+        todoService.updateFocusTime(dto.getId(), dto.getFocusTime());
+        return ResultBean.success("更新成功", null);
     }
 }

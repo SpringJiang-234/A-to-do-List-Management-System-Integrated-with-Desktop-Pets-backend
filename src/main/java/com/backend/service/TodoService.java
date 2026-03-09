@@ -84,4 +84,11 @@ public interface TodoService {
      */
     java.util.List<java.util.Map<String, Object>> getNewTodosTrend();
 
+    /**
+     * 更新待办事项专注时间
+     * @param id 待办事项ID
+     * @param focusTime 专注时间（秒）
+     * @return 更新成功的记录数
+     */
+    int updateFocusTime(Long id, Long focusTime);
 }
