@@ -60,7 +60,12 @@ public class ClientTodoDetails extends BaseDetails {
     private Integer priority;
 
     /**
-    * 标签列表
+     * 专注时间（秒）
+     */
+    private Long focusTime;
+
+    /**
+     * 标签列表
      */
     private List<TagDetails> tags;
 }

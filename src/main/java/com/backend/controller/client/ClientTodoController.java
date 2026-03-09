@@ -123,6 +123,7 @@ public class ClientTodoController {
         clientTodoDetails.setStatus(String.valueOf(todo.getStatus()));
         clientTodoDetails.setIsTop(String.valueOf(todo.getIsTop()));
         clientTodoDetails.setPriority(todo.getPriority());
+        clientTodoDetails.setFocusTime(todo.getFocusTime());
         
         if (todo.getCategoryId() != null) {
             final Category category = categoryService.getById(todo.getCategoryId());
