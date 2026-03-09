@@ -115,6 +115,16 @@ public class ClientUserController {
      */
     @PostMapping("/uploadAvatar")
     public ResultBean<String> uploadAvatar(@RequestPart("file") MultipartFile file) {
-        return null;
+        if (file.isEmpty()) {
+            return ResultBean.error("请选择要上传的文件", null);
+        }
+        
+        String avatarUrl = minioUtil.putObject(file);
+        
+        if (avatarUrl == null) {
+            return ResultBean.error("头像上传失败", null);
+        }
+        
+        return ResultBean.success(avatarUrl, avatarUrl);
     }
 }
