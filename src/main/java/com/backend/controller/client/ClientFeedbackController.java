@@ -7,7 +7,7 @@ import com.backend.domain.entity.Feedback;
 import com.backend.domain.query.FeedbackQuery;
 import com.backend.domain.vo.FeedbackVO;
 import com.backend.service.FeedbackService;
-import com.backend.utils.RedisUtil;
+import com.backend.utils.AuthUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +30,7 @@ public class ClientFeedbackController {
     @Autowired
     private FeedbackConverter feedbackConverter;
     @Autowired
-    private RedisUtil redisUtil;
+    private AuthUtil authUtil;
 
     /**
      * 提交反馈
@@ -40,21 +40,10 @@ public class ClientFeedbackController {
      */
     @PostMapping("/submit")
     public ResultBean<Void> submit(@RequestBody FeedbackDTO feedbackDTO, HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if (token == null) {
-            return ResultBean.error("未登录", null);
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
         }
-
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
-
-        Object userIdObj = redisUtil.get("token:" + token);
-        if (userIdObj == null) {
-            return ResultBean.error("登录已过期，请重新登录", null);
-        }
-
-        Long userId = Long.valueOf(userIdObj.toString());
 
         Feedback feedback = feedbackConverter.feedbackDTO2feedback(feedbackDTO);
         feedback.setUserId(userId);
@@ -75,21 +64,10 @@ public class ClientFeedbackController {
      */
     @PostMapping("/myFeedbacks")
     public ResultBean<List<FeedbackVO>> getMyFeedbacks(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if (token == null) {
-            return ResultBean.error("未登录", null);
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
         }
-
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
-
-        Object userIdObj = redisUtil.get("token:" + token);
-        if (userIdObj == null) {
-            return ResultBean.error("登录已过期，请重新登录", null);
-        }
-
-        Long userId = Long.valueOf(userIdObj.toString());
 
         FeedbackQuery feedbackQuery = new FeedbackQuery();
         feedbackQuery.setUserId(userId);

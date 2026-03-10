@@ -7,6 +7,8 @@ import com.backend.domain.entity.Category;
 import com.backend.domain.query.ClientCategoryQuery;
 import com.backend.domain.vo.CategoryVO;
 import com.backend.service.CategoryService;
+import com.backend.utils.AuthUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,8 @@ public class ClientCategoryController {
     private CategoryService categoryService;
     @Autowired
     private CategoryConverter categoryConverter;
+    @Autowired
+    private AuthUtil authUtil;
 
     /**
      * 获取分类列表
@@ -60,8 +64,22 @@ public class ClientCategoryController {
      * @return 添加结果
      */
     @PostMapping("/insert")
-    public ResultBean<Void> insert(@RequestBody CategoryDTO categoryDTO) {
-        return null;
+    public ResultBean<Void> insert(@RequestBody CategoryDTO categoryDTO, HttpServletRequest request) {
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
+        }
+
+        Category category = categoryConverter.categoryDTO2category(categoryDTO);
+        category.setUserId(userId);
+        category.setIsDefault(2);
+        int result = categoryService.insertOrUpdate(category);
+
+        if (result > 0) {
+            return ResultBean.success("添加成功!", null);
+        } else {
+            return ResultBean.error("添加失败", null);
+        }
     }
 
     /**
@@ -71,8 +89,38 @@ public class ClientCategoryController {
      * @return 修改结果
      */
     @PostMapping("/update")
-    public ResultBean<Void> update(@RequestBody CategoryDTO categoryDTO) {
-        return null;
+    public ResultBean<Void> update(@RequestBody CategoryDTO categoryDTO, HttpServletRequest request) {
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
+        }
+
+        if (categoryDTO.getId() == null) {
+            return ResultBean.error("分类ID不能为空", null);
+        }
+
+        Category existingCategory = categoryService.getById(categoryDTO.getId());
+        if (existingCategory == null) {
+            return ResultBean.error("分类不存在", null);
+        }
+
+        if (!existingCategory.getUserId().equals(userId)) {
+            return ResultBean.error("无权修改此分类", null);
+        }
+
+        if (existingCategory.getIsDefault() != null && existingCategory.getIsDefault() == 1) {
+            return ResultBean.error("系统默认分类不允许修改", null);
+        }
+
+        Category category = categoryConverter.categoryDTO2category(categoryDTO);
+        category.setUserId(userId);
+        int result = categoryService.insertOrUpdate(category);
+
+        if (result > 0) {
+            return ResultBean.success("修改成功!", null);
+        } else {
+            return ResultBean.error("修改失败", null);
+        }
     }
 
     /**
@@ -82,7 +130,31 @@ public class ClientCategoryController {
      * @return 删除结果
      */
     @GetMapping("/delete/{id}")
-    public ResultBean<Void> delete(@PathVariable("id") Long id) {
-        return null;
+    public ResultBean<Void> delete(@PathVariable("id") Long id, HttpServletRequest request) {
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
+        }
+
+        Category existingCategory = categoryService.getById(id);
+        if (existingCategory == null) {
+            return ResultBean.error("分类不存在", null);
+        }
+
+        if (!existingCategory.getUserId().equals(userId)) {
+            return ResultBean.error("无权删除此分类", null);
+        }
+
+        if (existingCategory.getIsDefault() != null && existingCategory.getIsDefault() == 1) {
+            return ResultBean.error("系统默认分类不允许删除", null);
+        }
+
+        int result = categoryService.deleteById(id);
+
+        if (result > 0) {
+            return ResultBean.success("删除成功!", null);
+        } else {
+            return ResultBean.error("删除失败", null);
+        }
     }
 }
