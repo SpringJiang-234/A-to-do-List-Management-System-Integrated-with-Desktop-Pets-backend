@@ -70,7 +70,9 @@ public class DesktopPetServiceImpl implements DesktopPetService {
         
         LocalDate today = LocalDate.now();
         
-        if (!today.equals(pet.getLastEnergyResetDate())) {
+        if (pet.getLastEnergyResetDate() == null) {
+            pet.setLastEnergyResetDate(today);
+        } else if (!today.equals(pet.getLastEnergyResetDate())) {
             pet.setEnergy(0);
             pet.setLastEnergyResetDate(today);
         }
@@ -90,7 +92,9 @@ public class DesktopPetServiceImpl implements DesktopPetService {
         
         LocalDate today = LocalDate.now();
         
-        if (!today.equals(pet.getLastEnergyResetDate())) {
+        if (pet.getLastEnergyResetDate() == null) {
+            pet.setLastEnergyResetDate(today);
+        } else if (!today.equals(pet.getLastEnergyResetDate())) {
             pet.setEnergy(0);
             pet.setLastEnergyResetDate(today);
         }
@@ -126,7 +130,13 @@ public class DesktopPetServiceImpl implements DesktopPetService {
         
         LocalDate today = LocalDate.now();
         
-        if (!today.equals(pet.getLastLoginDate())) {
+        if (pet.getLastLoginDate() == null) {
+            pet.setLastLoginDate(today);
+            pet.setConsecutiveDays(Constant.DESKTOP_PET_CONSECUTIVE_DAYS_INIT);
+            int newIntimacy = pet.getIntimacy() + Constant.DESKTOP_PET_INTIMACY_INCREASE;
+            pet.setIntimacy(newIntimacy > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newIntimacy);
+            desktopPetMapper.updateByPrimaryKeySelective(pet);
+        } else if (!today.equals(pet.getLastLoginDate())) {
             LocalDate yesterday = today.minusDays(1);
             
             if (yesterday.equals(pet.getLastLoginDate())) {
