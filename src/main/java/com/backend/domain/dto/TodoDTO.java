@@ -3,6 +3,7 @@ package com.backend.domain.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -45,16 +46,16 @@ public class TodoDTO {
     private Integer priority;
 
     /**
-    * 开始时间
+    * 开始日期
     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
 
     /**
-    * 截止时间(结束时间)
+    * 截止日期(结束日期)
     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime endTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
 
     /**
     * 状态：1-未完成 2-完成 3-放弃

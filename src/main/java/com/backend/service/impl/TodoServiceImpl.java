@@ -74,8 +74,8 @@ public class TodoServiceImpl implements TodoService {
             if (isNew) {
                 desktopPetService.onNewTodo(todo.getUserId());
             } else if (isCompleted) {
-                boolean isCompletedOnTime = todo.getEndTime() != null && 
-                    !todo.getFinishTime().toLocalDate().isAfter(todo.getEndTime().toLocalDate());
+                boolean isCompletedOnTime = todo.getEndDate() != null && 
+                    !todo.getFinishTime().toLocalDate().isAfter(todo.getEndDate());
                 desktopPetService.onTodoCompleted(todo.getUserId(), isCompletedOnTime);
             }
         }

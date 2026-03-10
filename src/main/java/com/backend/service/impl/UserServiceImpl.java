@@ -148,9 +148,9 @@ public class UserServiceImpl implements UserService {
                 desktopPet.setIntimacy(0);
                 desktopPet.setExp(0);
                 desktopPet.setLevel(1);
-                desktopPet.setLastEnergyResetDate(LocalDateTime.now());
-                desktopPet.setLastMoodResetDate(LocalDateTime.now());
-                desktopPet.setLastLoginDate(LocalDateTime.now());
+                desktopPet.setLastEnergyResetDate(LocalDate.now());
+                desktopPet.setLastMoodResetDate(LocalDate.now());
+                desktopPet.setLastLoginDate(LocalDate.now());
                 desktopPet.setConsecutiveDays(Constant.DESKTOP_PET_CONSECUTIVE_DAYS_INIT);
                 desktopPetMapper.insertSelective(desktopPet);
             }

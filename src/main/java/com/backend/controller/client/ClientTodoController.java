@@ -118,8 +118,8 @@ public class ClientTodoController {
         clientTodoDetails.setUserId(todo.getUserId());
         clientTodoDetails.setTitle(todo.getTitle());
         clientTodoDetails.setContent(todo.getContent());
-        clientTodoDetails.setStartTime(todo.getStartTime() != null ? todo.getStartTime().toString() : null);
-        clientTodoDetails.setEndTime(todo.getEndTime() != null ? todo.getEndTime().toString() : null);
+        clientTodoDetails.setStartDate(todo.getStartDate() != null ? todo.getStartDate().toString() : null);
+        clientTodoDetails.setEndDate(todo.getEndDate() != null ? todo.getEndDate().toString() : null);
         clientTodoDetails.setStatus(String.valueOf(todo.getStatus()));
         clientTodoDetails.setIsTop(String.valueOf(todo.getIsTop()));
         clientTodoDetails.setPriority(todo.getPriority());

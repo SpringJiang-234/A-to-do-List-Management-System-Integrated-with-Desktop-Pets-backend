@@ -1,5 +1,6 @@
 package com.backend.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 public class LocalDateRange {
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate start;
+    
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate end;
 }

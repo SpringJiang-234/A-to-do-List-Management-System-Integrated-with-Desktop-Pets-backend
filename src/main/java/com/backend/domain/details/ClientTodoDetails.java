@@ -30,14 +30,14 @@ public class ClientTodoDetails extends BaseDetails {
     private String content;
 
     /**
-    * 开始时间
+    * 开始日期
     */
-    private String startTime;
+    private String startDate;
 
     /**
-    * 截止时间(结束时间)
+    * 截止日期(结束日期)
     */
-    private String endTime;
+    private String endDate;
 
     /**
     * 状态：1-未完成 2-完成 3-放弃

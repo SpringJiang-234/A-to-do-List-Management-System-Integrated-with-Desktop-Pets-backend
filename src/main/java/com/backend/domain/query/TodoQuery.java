@@ -1,5 +1,6 @@
 package com.backend.domain.query;
 
+import com.backend.bean.LocalDateRange;
 import com.backend.bean.LocalDateTimeRange;
 import com.backend.bean.base.BaseQuery;
 import lombok.*;
@@ -39,14 +40,14 @@ public class TodoQuery extends BaseQuery {
     private Integer priority;
 
     /**
-    * 开始时间
+    * 开始日期
     */
-    private LocalDateTimeRange startTime;
+    private LocalDateRange startDate;
 
     /**
-    * 截止时间(结束时间)
+    * 截止日期(结束日期)
     */
-    private LocalDateTimeRange endTime;
+    private LocalDateRange endDate;
 
     /**
     * 状态：1-未完成 2-完成 3-放弃

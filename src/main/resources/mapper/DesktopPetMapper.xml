@@ -14,10 +14,14 @@
     <result column="intimacy" jdbcType="TINYINT" property="intimacy" />
     <result column="exp" jdbcType="TINYINT" property="exp" />
     <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="last_login_date" jdbcType="DATE" property="lastLoginDate" />
+    <result column="last_energy_reset_date" jdbcType="DATE" property="lastEnergyResetDate" />
+    <result column="last_mood_reset_date" jdbcType="DATE" property="lastMoodResetDate" />
+    <result column="consecutive_days" jdbcType="INTEGER" property="consecutiveDays" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, create_time, update_time, user_id, nickname, energy, mood, intimacy, `exp`, `level`
+    id, create_time, update_time, user_id, nickname, energy, mood, intimacy, `exp`, `level`, last_login_date, last_energy_reset_date, last_mood_reset_date, consecutive_days
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -35,11 +39,12 @@
     <!--@mbg.generated-->
     insert into tb_desktop_pet (create_time, update_time, user_id, 
       nickname, energy, mood, 
-      intimacy, `exp`, `level`
+      intimacy, `exp`, `level`, last_login_date, last_energy_reset_date, last_mood_reset_date, consecutive_days
       )
     values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, 
       #{nickname,jdbcType=VARCHAR}, #{energy,jdbcType=TINYINT}, #{mood,jdbcType=TINYINT}, 
-      #{intimacy,jdbcType=TINYINT}, #{exp,jdbcType=TINYINT}, #{level,jdbcType=INTEGER}
+      #{intimacy,jdbcType=TINYINT}, #{exp,jdbcType=TINYINT}, #{level,jdbcType=INTEGER}, 
+      #{lastLoginDate,jdbcType=DATE}, #{lastEnergyResetDate,jdbcType=DATE}, #{lastMoodResetDate,jdbcType=DATE}, #{consecutiveDays,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.backend.domain.entity.DesktopPet" useGeneratedKeys="true">
@@ -73,6 +78,18 @@
       <if test="level != null">
         `level`,
       </if>
+      <if test="lastLoginDate != null">
+        last_login_date,
+      </if>
+      <if test="lastEnergyResetDate != null">
+        last_energy_reset_date,
+      </if>
+      <if test="lastMoodResetDate != null">
+        last_mood_reset_date,
+      </if>
+      <if test="consecutiveDays != null">
+        consecutive_days,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="createTime != null">
@@ -101,6 +118,18 @@
       </if>
       <if test="level != null">
         #{level,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginDate != null">
+        #{lastLoginDate,jdbcType=DATE},
+      </if>
+      <if test="lastEnergyResetDate != null">
+        #{lastEnergyResetDate,jdbcType=DATE},
+      </if>
+      <if test="lastMoodResetDate != null">
+        #{lastMoodResetDate,jdbcType=DATE},
+      </if>
+      <if test="consecutiveDays != null">
+        #{consecutiveDays,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -135,6 +164,18 @@
       <if test="level != null">
         `level` = #{level,jdbcType=INTEGER},
       </if>
+      <if test="lastLoginDate != null">
+        last_login_date = #{lastLoginDate,jdbcType=DATE},
+      </if>
+      <if test="lastEnergyResetDate != null">
+        last_energy_reset_date = #{lastEnergyResetDate,jdbcType=DATE},
+      </if>
+      <if test="lastMoodResetDate != null">
+        last_mood_reset_date = #{lastMoodResetDate,jdbcType=DATE},
+      </if>
+      <if test="consecutiveDays != null">
+        consecutive_days = #{consecutiveDays,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -149,7 +190,11 @@
       mood = #{mood,jdbcType=TINYINT},
       intimacy = #{intimacy,jdbcType=TINYINT},
       `exp` = #{exp,jdbcType=TINYINT},
-      `level` = #{level,jdbcType=INTEGER}
+      `level` = #{level,jdbcType=INTEGER},
+      last_login_date = #{lastLoginDate,jdbcType=DATE},
+      last_energy_reset_date = #{lastEnergyResetDate,jdbcType=DATE},
+      last_mood_reset_date = #{lastMoodResetDate,jdbcType=DATE},
+      consecutive_days = #{consecutiveDays,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateBatch" parameterType="java.util.List">
@@ -199,6 +244,26 @@
       <trim prefix="`level` = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           when id = #{item.id,jdbcType=BIGINT} then #{item.level,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="last_login_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.lastLoginDate,jdbcType=DATE}
+        </foreach>
+      </trim>
+      <trim prefix="last_energy_reset_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.lastEnergyResetDate,jdbcType=DATE}
+        </foreach>
+      </trim>
+      <trim prefix="last_mood_reset_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.lastMoodResetDate,jdbcType=DATE}
+        </foreach>
+      </trim>
+      <trim prefix="consecutive_days = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.consecutiveDays,jdbcType=INTEGER}
         </foreach>
       </trim>
     </trim>
@@ -274,6 +339,34 @@
           </if>
         </foreach>
       </trim>
+      <trim prefix="last_login_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.lastLoginDate != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.lastLoginDate,jdbcType=DATE}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="last_energy_reset_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.lastEnergyResetDate != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.lastEnergyResetDate,jdbcType=DATE}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="last_mood_reset_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.lastMoodResetDate != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.lastMoodResetDate,jdbcType=DATE}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="consecutive_days = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.consecutiveDays != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.consecutiveDays,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
     </trim>
     where id in
     <foreach close=")" collection="list" item="item" open="(" separator=", ">
@@ -283,26 +376,28 @@
   <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_desktop_pet
-    (create_time, update_time, user_id, nickname, energy, mood, intimacy, `exp`, `level`
+    (create_time, update_time, user_id, nickname, energy, mood, intimacy, `exp`, `level`, last_login_date, last_energy_reset_date, last_mood_reset_date, consecutive_days
       )
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.userId,jdbcType=BIGINT}, 
         #{item.nickname,jdbcType=VARCHAR}, #{item.energy,jdbcType=TINYINT}, #{item.mood,jdbcType=TINYINT}, 
-        #{item.intimacy,jdbcType=TINYINT}, #{item.exp,jdbcType=TINYINT}, #{item.level,jdbcType=INTEGER}
+        #{item.intimacy,jdbcType=TINYINT}, #{item.exp,jdbcType=TINYINT}, #{item.level,jdbcType=INTEGER}, 
+        #{item.lastLoginDate,jdbcType=DATE}, #{item.lastEnergyResetDate,jdbcType=DATE}, #{item.lastMoodResetDate,jdbcType=DATE}, #{item.consecutiveDays,jdbcType=INTEGER}
         )
     </foreach>
   </insert>
   <insert id="batchInsertOrUpdate" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_desktop_pet
-    (create_time, update_time, user_id, nickname, energy, mood, intimacy, `exp`, `level`
+    (create_time, update_time, user_id, nickname, energy, mood, intimacy, `exp`, `level`, last_login_date, last_energy_reset_date, last_mood_reset_date, consecutive_days
       )
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.userId,jdbcType=BIGINT}, 
         #{item.nickname,jdbcType=VARCHAR}, #{item.energy,jdbcType=TINYINT}, #{item.mood,jdbcType=TINYINT}, 
-        #{item.intimacy,jdbcType=TINYINT}, #{item.exp,jdbcType=TINYINT}, #{item.level,jdbcType=INTEGER}
+        #{item.intimacy,jdbcType=TINYINT}, #{item.exp,jdbcType=TINYINT}, #{item.level,jdbcType=INTEGER}, 
+        #{item.lastLoginDate,jdbcType=DATE}, #{item.lastEnergyResetDate,jdbcType=DATE}, #{item.lastMoodResetDate,jdbcType=DATE}, #{item.consecutiveDays,jdbcType=INTEGER}
         )
     </foreach>
     on duplicate key update 
@@ -314,7 +409,11 @@
     mood=values(mood),
     intimacy=values(intimacy),
     `exp`=values(`exp`),
-    `level`=values(`level`)
+    `level`=values(`level`),
+    last_login_date=values(last_login_date),
+    last_energy_reset_date=values(last_energy_reset_date),
+    last_mood_reset_date=values(last_mood_reset_date),
+    consecutive_days=values(consecutive_days)
   </insert>
   <delete id="deleteByPrimaryKeyIn">
     <!--@mbg.generated-->
@@ -362,7 +461,7 @@
   <insert id="batchInsertSelectiveUseDefaultForNull" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_desktop_pet
-    (create_time, update_time, user_id, nickname, energy, mood, intimacy, `exp`, `level`
+    (create_time, update_time, user_id, nickname, energy, mood, intimacy, `exp`, `level`, last_login_date, last_energy_reset_date, last_mood_reset_date, consecutive_days
       )
     values
     <foreach collection="list" item="item" separator=",">
@@ -448,6 +547,42 @@
           DEFAULT
         </otherwise>
       </choose>
+      <choose>
+        <when test="item.lastLoginDate != null">
+          #{item.lastLoginDate,jdbcType=DATE}
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.lastEnergyResetDate != null">
+          #{item.lastEnergyResetDate,jdbcType=DATE}
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.lastMoodResetDate != null">
+          #{item.lastMoodResetDate,jdbcType=DATE}
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.consecutiveDays != null">
+          #{item.consecutiveDays,jdbcType=INTEGER}
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT
+        </otherwise>
+      </choose>
       )
     </foreach>
   </insert>
@@ -467,6 +602,10 @@
       intimacy,
       `exp`,
       `level`,
+      last_login_date,
+      last_energy_reset_date,
+      last_mood_reset_date,
+      consecutive_days,
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -482,6 +621,10 @@
       #{intimacy,jdbcType=TINYINT},
       #{exp,jdbcType=TINYINT},
       #{level,jdbcType=INTEGER},
+      #{lastLoginDate,jdbcType=DATE},
+      #{lastEnergyResetDate,jdbcType=DATE},
+      #{lastMoodResetDate,jdbcType=DATE},
+      #{consecutiveDays,jdbcType=INTEGER},
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -497,6 +640,10 @@
       intimacy = #{intimacy,jdbcType=TINYINT},
       `exp` = #{exp,jdbcType=TINYINT},
       `level` = #{level,jdbcType=INTEGER},
+      last_login_date = #{lastLoginDate,jdbcType=DATE},
+      last_energy_reset_date = #{lastEnergyResetDate,jdbcType=DATE},
+      last_mood_reset_date = #{lastMoodResetDate,jdbcType=DATE},
+      consecutive_days = #{consecutiveDays,jdbcType=INTEGER},
     </trim>
   </insert>
   <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.backend.domain.entity.DesktopPet" useGeneratedKeys="true">
@@ -533,6 +680,18 @@
       <if test="level != null">
         `level`,
       </if>
+      <if test="lastLoginDate != null">
+        last_login_date,
+      </if>
+      <if test="lastEnergyResetDate != null">
+        last_energy_reset_date,
+      </if>
+      <if test="lastMoodResetDate != null">
+        last_mood_reset_date,
+      </if>
+      <if test="consecutiveDays != null">
+        consecutive_days,
+      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -566,6 +725,18 @@
       <if test="level != null">
         #{level,jdbcType=INTEGER},
       </if>
+      <if test="lastLoginDate != null">
+        #{lastLoginDate,jdbcType=DATE},
+      </if>
+      <if test="lastEnergyResetDate != null">
+        #{lastEnergyResetDate,jdbcType=DATE},
+      </if>
+      <if test="lastMoodResetDate != null">
+        #{lastMoodResetDate,jdbcType=DATE},
+      </if>
+      <if test="consecutiveDays != null">
+        #{consecutiveDays,jdbcType=INTEGER},
+      </if>
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -598,6 +769,18 @@
       </if>
       <if test="level != null">
         `level` = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginDate != null">
+        last_login_date = #{lastLoginDate,jdbcType=DATE},
+      </if>
+      <if test="lastEnergyResetDate != null">
+        last_energy_reset_date = #{lastEnergyResetDate,jdbcType=DATE},
+      </if>
+      <if test="lastMoodResetDate != null">
+        last_mood_reset_date = #{lastMoodResetDate,jdbcType=DATE},
+      </if>
+      <if test="consecutiveDays != null">
+        consecutive_days = #{consecutiveDays,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

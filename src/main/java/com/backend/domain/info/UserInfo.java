@@ -1,7 +1,7 @@
 package com.backend.domain.info;
 
 import lombok.Data;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class UserInfo {
@@ -12,5 +12,5 @@ public class UserInfo {
     private String token;
     private String avatar;
     private Integer gender;
-    private Date birth;
+    private LocalDate birth;
 }

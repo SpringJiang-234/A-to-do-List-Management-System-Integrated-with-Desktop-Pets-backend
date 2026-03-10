@@ -12,8 +12,8 @@
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
     <result column="category_id" jdbcType="BIGINT" property="categoryId" />
     <result column="priority" jdbcType="TINYINT" property="priority" />
-    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
@@ -22,8 +22,8 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, create_time, update_time, user_id, title, content, category_id, priority, start_time, 
-    end_time, `status`, finish_time, is_delete, is_top, focus_time
+    id, create_time, update_time, user_id, title, content, category_id, priority, start_date, 
+    end_date, `status`, finish_time, is_delete, is_top, focus_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -42,12 +42,12 @@
     <!--@mbg.generated-->
     insert into tb_todo (create_time, update_time, user_id, 
       title, content, category_id, 
-      priority, start_time, end_time, 
+      priority, start_date, end_date, 
       `status`, finish_time, is_delete, 
       is_top)
     values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, 
       #{title,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{categoryId,jdbcType=BIGINT}, 
-      #{priority,jdbcType=TINYINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{priority,jdbcType=TINYINT}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, 
       #{status,jdbcType=TINYINT}, #{finishTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, 
       #{isTop,jdbcType=TINYINT})
   </insert>
@@ -76,11 +76,11 @@
       <if test="priority != null">
         priority,
       </if>
-      <if test="startTime != null">
-        start_time,
+      <if test="startDate != null">
+        start_date,
       </if>
-      <if test="endTime != null">
-        end_time,
+      <if test="endDate != null">
+        end_date,
       </if>
       <if test="status != null">
         `status`,
@@ -117,11 +117,11 @@
       <if test="priority != null">
         #{priority,jdbcType=TINYINT},
       </if>
-      <if test="startTime != null">
-        #{startTime,jdbcType=TIMESTAMP},
+      <if test="startDate != null">
+        #{startDate,jdbcType=DATE},
       </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=TIMESTAMP},
+      <if test="endDate != null">
+        #{endDate,jdbcType=DATE},
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
@@ -162,11 +162,11 @@
       <if test="priority != null">
         priority = #{priority,jdbcType=TINYINT},
       </if>
-      <if test="startTime != null">
-        start_time = #{startTime,jdbcType=TIMESTAMP},
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=DATE},
       </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=DATE},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
@@ -193,8 +193,8 @@
       content = #{content,jdbcType=LONGVARCHAR},
       category_id = #{categoryId,jdbcType=BIGINT},
       priority = #{priority,jdbcType=TINYINT},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
       `status` = #{status,jdbcType=TINYINT},
       finish_time = #{finishTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT},
@@ -240,14 +240,14 @@
           when id = #{item.id,jdbcType=BIGINT} then #{item.priority,jdbcType=TINYINT}
         </foreach>
       </trim>
-      <trim prefix="start_time = case" suffix="end,">
+      <trim prefix="start_date = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=BIGINT} then #{item.startTime,jdbcType=TIMESTAMP}
+          when id = #{item.id,jdbcType=BIGINT} then #{item.startDate,jdbcType=DATE}
         </foreach>
       </trim>
-      <trim prefix="end_time = case" suffix="end,">
+      <trim prefix="end_date = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=BIGINT} then #{item.endTime,jdbcType=TIMESTAMP}
+          when id = #{item.id,jdbcType=BIGINT} then #{item.endDate,jdbcType=DATE}
         </foreach>
       </trim>
       <trim prefix="`status` = case" suffix="end,">
@@ -329,17 +329,17 @@
           </if>
         </foreach>
       </trim>
-      <trim prefix="start_time = case" suffix="end,">
+      <trim prefix="start_date = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          <if test="item.startTime != null">
-            when id = #{item.id,jdbcType=BIGINT} then #{item.startTime,jdbcType=TIMESTAMP}
+          <if test="item.startDate != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.startDate,jdbcType=DATE}
           </if>
         </foreach>
       </trim>
-      <trim prefix="end_time = case" suffix="end,">
+      <trim prefix="end_date = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          <if test="item.endTime != null">
-            when id = #{item.id,jdbcType=BIGINT} then #{item.endTime,jdbcType=TIMESTAMP}
+          <if test="item.endDate != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.endDate,jdbcType=DATE}
           </if>
         </foreach>
       </trim>
@@ -380,13 +380,13 @@
   <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_todo
-    (create_time, update_time, user_id, title, content, category_id, priority, start_time, 
-      end_time, `status`, finish_time, is_delete, is_top)
+    (create_time, update_time, user_id, title, content, category_id, priority, start_date, 
+      end_date, `status`, finish_time, is_delete, is_top)
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.userId,jdbcType=BIGINT}, 
         #{item.title,jdbcType=VARCHAR}, #{item.content,jdbcType=LONGVARCHAR}, #{item.categoryId,jdbcType=BIGINT}, 
-        #{item.priority,jdbcType=TINYINT}, #{item.startTime,jdbcType=TIMESTAMP}, #{item.endTime,jdbcType=TIMESTAMP}, 
+        #{item.priority,jdbcType=TINYINT}, #{item.startDate,jdbcType=DATE}, #{item.endDate,jdbcType=DATE}, 
         #{item.status,jdbcType=TINYINT}, #{item.finishTime,jdbcType=TIMESTAMP}, #{item.isDelete,jdbcType=TINYINT}, 
         #{item.isTop,jdbcType=TINYINT})
     </foreach>
@@ -394,13 +394,13 @@
   <insert id="batchInsertOrUpdate" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_todo
-    (create_time, update_time, user_id, title, content, category_id, priority, start_time, 
-      end_time, `status`, finish_time, is_delete, is_top)
+    (create_time, update_time, user_id, title, content, category_id, priority, start_date, 
+      end_date, `status`, finish_time, is_delete, is_top)
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.userId,jdbcType=BIGINT}, 
         #{item.title,jdbcType=VARCHAR}, #{item.content,jdbcType=LONGVARCHAR}, #{item.categoryId,jdbcType=BIGINT}, 
-        #{item.priority,jdbcType=TINYINT}, #{item.startTime,jdbcType=TIMESTAMP}, #{item.endTime,jdbcType=TIMESTAMP}, 
+        #{item.priority,jdbcType=TINYINT}, #{item.startDate,jdbcType=DATE}, #{item.endDate,jdbcType=DATE}, 
         #{item.status,jdbcType=TINYINT}, #{item.finishTime,jdbcType=TIMESTAMP}, #{item.isDelete,jdbcType=TINYINT}, 
         #{item.isTop,jdbcType=TINYINT})
     </foreach>
@@ -412,8 +412,8 @@
     content=values(content),
     category_id=values(category_id),
     priority=values(priority),
-    start_time=values(start_time),
-    end_time=values(end_time),
+    start_date=values(start_date),
+    end_date=values(end_date),
     `status`=values(`status`),
     finish_time=values(finish_time),
     is_delete=values(is_delete),
@@ -452,11 +452,11 @@
         <if test="item.priority != null">
           priority = #{item.priority,jdbcType=TINYINT},
         </if>
-        <if test="item.startTime != null">
-          start_time = #{item.startTime,jdbcType=TIMESTAMP},
+        <if test="item.startDate != null">
+          start_date = #{item.startDate,jdbcType=DATE},
         </if>
-        <if test="item.endTime != null">
-          end_time = #{item.endTime,jdbcType=TIMESTAMP},
+        <if test="item.endDate != null">
+          end_date = #{item.endDate,jdbcType=DATE},
         </if>
         <if test="item.status != null">
           `status` = #{item.status,jdbcType=TINYINT},
@@ -477,8 +477,8 @@
   <insert id="batchInsertSelectiveUseDefaultForNull" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_todo
-    (create_time, update_time, user_id, title, content, category_id, priority, start_time, 
-      end_time, `status`, finish_time, is_delete, is_top)
+    (create_time, update_time, user_id, title, content, category_id, priority, start_date, 
+      end_date, `status`, finish_time, is_delete, is_top)
     values
     <foreach collection="list" item="item" separator=",">
       (
@@ -546,8 +546,8 @@
         </otherwise>
       </choose>
       <choose>
-        <when test="item.startTime != null">
-          #{item.startTime,jdbcType=TIMESTAMP},
+        <when test="item.startDate != null">
+          #{item.startDate,jdbcType=DATE},
         </when>
         <!--@ignoreSql-->
         <otherwise>
@@ -555,8 +555,8 @@
         </otherwise>
       </choose>
       <choose>
-        <when test="item.endTime != null">
-          #{item.endTime,jdbcType=TIMESTAMP},
+        <when test="item.endDate != null">
+          #{item.endDate,jdbcType=DATE},
         </when>
         <!--@ignoreSql-->
         <otherwise>
@@ -616,8 +616,8 @@
       content,
       category_id,
       priority,
-      start_time,
-      end_time,
+      start_date,
+      end_date,
       `status`,
       finish_time,
       is_delete,
@@ -635,8 +635,8 @@
       #{content,jdbcType=LONGVARCHAR},
       #{categoryId,jdbcType=BIGINT},
       #{priority,jdbcType=TINYINT},
-      #{startTime,jdbcType=TIMESTAMP},
-      #{endTime,jdbcType=TIMESTAMP},
+      #{startDate,jdbcType=DATE},
+      #{endDate,jdbcType=DATE},
       #{status,jdbcType=TINYINT},
       #{finishTime,jdbcType=TIMESTAMP},
       #{isDelete,jdbcType=TINYINT},
@@ -654,8 +654,8 @@
       content = #{content,jdbcType=LONGVARCHAR},
       category_id = #{categoryId,jdbcType=BIGINT},
       priority = #{priority,jdbcType=TINYINT},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
       `status` = #{status,jdbcType=TINYINT},
       finish_time = #{finishTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT},
@@ -690,11 +690,11 @@
       <if test="priority != null">
         priority,
       </if>
-      <if test="startTime != null">
-        start_time,
+      <if test="startDate != null">
+        start_date,
       </if>
-      <if test="endTime != null">
-        end_time,
+      <if test="endDate != null">
+        end_date,
       </if>
       <if test="status != null">
         `status`,
@@ -735,11 +735,11 @@
       <if test="priority != null">
         #{priority,jdbcType=TINYINT},
       </if>
-      <if test="startTime != null">
-        #{startTime,jdbcType=TIMESTAMP},
+      <if test="startDate != null">
+        #{startDate,jdbcType=DATE},
       </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=TIMESTAMP},
+      <if test="endDate != null">
+        #{endDate,jdbcType=DATE},
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
@@ -780,11 +780,11 @@
       <if test="priority != null">
         priority = #{priority,jdbcType=TINYINT},
       </if>
-      <if test="startTime != null">
-        start_time = #{startTime,jdbcType=TIMESTAMP},
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=DATE},
       </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=DATE},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
@@ -829,11 +829,11 @@
       <if test="priority != null">
         and priority = #{priority,jdbcType=TINYINT}
       </if>
-      <if test="startTime != null">
-        and end_time &gt;= #{startTime.start}
+      <if test="startDate != null">
+        and end_date &gt;= #{startDate.start}
       </if>
-      <if test="endTime != null">
-        and start_time &lt;= #{endTime.end}
+      <if test="endDate != null">
+        and start_date &lt;= #{endDate.end}
       </if>
       <if test="status != null">
         and status = #{status,jdbcType=TINYINT}
@@ -885,11 +885,11 @@
           #{item,jdbcType=TINYINT}
         </foreach>
       </if>
-      <if test="startTime != null">
-        and end_time &gt;= #{startTime.start}
+      <if test="startDate != null">
+        and end_date &gt;= #{startDate.start}
       </if>
-      <if test="endTime != null">
-        and start_time &lt;= #{endTime.end}
+      <if test="endDate != null">
+        and start_date &lt;= #{endDate.end}
       </if>
       <if test="statusList != null and statusList.size() > 0">
         and status in
@@ -946,11 +946,11 @@
           #{item,jdbcType=TINYINT}
         </foreach>
       </if>
-      <if test="startTime != null">
-        and start_time between #{startTime.start} and #{startTime.end}
+      <if test="startDate != null">
+        and start_date between #{startDate.start} and #{startDate.end}
       </if>
-      <if test="endTime != null">
-        and end_time between #{endTime.start} and #{endTime.end}
+      <if test="endDate != null">
+        and end_date between #{endDate.start} and #{endDate.end}
       </if>
       <if test="status != null">
         and status = #{status,jdbcType=TINYINT}
@@ -1018,13 +1018,13 @@
 
   <select id="getTodoDeadlineWarning" resultType="java.util.Map">
     select
-      DATE(end_time) as deadline,
+      DATE(end_date) as deadline,
       count(*) as count
     from tb_todo
     where is_delete = 1
     and status = 1
-    and end_time between now() and date_add(now(), interval #{days} day)
-    group by DATE(end_time)
+    and end_date between now() and date_add(now(), interval #{days} day)
+    group by DATE(end_date)
     order by deadline
   </select>
 
