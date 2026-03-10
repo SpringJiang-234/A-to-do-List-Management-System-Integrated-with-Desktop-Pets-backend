@@ -111,4 +111,12 @@ public interface TodoMapper {
      * @return 更新的行数
      */
     int updateFocusTime(@Param("id") Long id, @Param("focusTime") Long focusTime);
+
+    /**
+     * 批量更新待办事项的分类ID
+     * @param oldCategoryId 原分类ID
+     * @param newCategoryId 新分类ID
+     * @return 更新的行数
+     */
+    int updateCategoryIdByOldCategoryId(@Param("oldCategoryId") Long oldCategoryId, @Param("newCategoryId") Long newCategoryId);
 }

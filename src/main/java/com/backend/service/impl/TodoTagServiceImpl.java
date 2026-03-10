@@ -54,4 +54,9 @@ public class TodoTagServiceImpl implements TodoTagService {
     public int batchInsert(List<TodoTag> todoTagList) {
         return todoTagMapper.batchInsertSelectiveUseDefaultForNull(todoTagList);
     }
+
+    @Override
+    public int deleteByTagId(Long tagId) {
+        return todoTagMapper.deleteByTagId(tagId);
+    }
 }

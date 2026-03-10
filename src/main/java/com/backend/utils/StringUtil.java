@@ -6,8 +6,6 @@ import java.util.regex.Pattern;
 
 /**
  * 字符串工具类 - 提供高效、安全的字符串处理方法
- * @author hc
- * @date 2025-09-05 14:22
  */
 public final class StringUtil {
     // 字符池，使用不可变字符数组提高性能

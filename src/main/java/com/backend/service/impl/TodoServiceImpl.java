@@ -112,4 +112,10 @@ public class TodoServiceImpl implements TodoService {
         log.info("更新待办事项专注时间，id: {}, focusTime: {}", id, focusTime);
         return todoMapper.updateFocusTime(id, focusTime);
     }
+
+    @Override
+    public int updateCategoryIdByOldCategoryId(Long oldCategoryId, Long newCategoryId) {
+        log.info("批量更新待办事项的分类ID，oldCategoryId: {}, newCategoryId: {}", oldCategoryId, newCategoryId);
+        return todoMapper.updateCategoryIdByOldCategoryId(oldCategoryId, newCategoryId);
+    }
 }

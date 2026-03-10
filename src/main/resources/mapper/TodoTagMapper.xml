@@ -378,4 +378,9 @@
       </if>
     </where>
   </select>
+
+  <delete id="deleteByTagId">
+    delete from tb_todo_tag
+    where tag_id = #{tagId,jdbcType=BIGINT}
+  </delete>
 </mapper>

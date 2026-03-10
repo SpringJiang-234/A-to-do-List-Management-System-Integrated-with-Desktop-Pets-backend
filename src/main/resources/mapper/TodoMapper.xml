@@ -1075,4 +1075,11 @@
       update_time = now()
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <update id="updateCategoryIdByOldCategoryId">
+    update tb_todo
+    set category_id = #{newCategoryId,jdbcType=BIGINT},
+        update_time = now()
+    where category_id = #{oldCategoryId,jdbcType=BIGINT}
+  </update>
 </mapper>

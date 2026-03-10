@@ -50,4 +50,10 @@ public interface TodoTagService {
      */
     int batchInsert(List<TodoTag> todoTagList);
 
+    /**
+     * 根据标签ID删除所有待办标签关联
+     * @param tagId 标签ID
+     * @return 删除的记录数
+     */
+    int deleteByTagId(Long tagId);
 }

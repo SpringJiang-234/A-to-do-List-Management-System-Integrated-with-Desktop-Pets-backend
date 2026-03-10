@@ -91,4 +91,12 @@ public interface TodoService {
      * @return 更新成功的记录数
      */
     int updateFocusTime(Long id, Long focusTime);
+
+    /**
+     * 批量更新待办事项的分类ID
+     * @param oldCategoryId 原分类ID
+     * @param newCategoryId 新分类ID
+     * @return 更新成功的记录数
+     */
+    int updateCategoryIdByOldCategoryId(Long oldCategoryId, Long newCategoryId);
 }

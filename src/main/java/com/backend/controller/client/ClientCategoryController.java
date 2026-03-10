@@ -1,12 +1,14 @@
 package com.backend.controller.client;
 
 import com.backend.bean.ResultBean;
+import com.backend.constant.Constant;
 import com.backend.converter.CategoryConverter;
 import com.backend.domain.dto.CategoryDTO;
 import com.backend.domain.entity.Category;
 import com.backend.domain.query.ClientCategoryQuery;
 import com.backend.domain.vo.CategoryVO;
 import com.backend.service.CategoryService;
+import com.backend.service.TodoService;
 import com.backend.utils.AuthUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class ClientCategoryController {
     private CategoryConverter categoryConverter;
     @Autowired
     private AuthUtil authUtil;
+    @Autowired
+    private TodoService todoService;
 
     /**
      * 获取分类列表
@@ -148,6 +152,8 @@ public class ClientCategoryController {
         if (existingCategory.getIsDefault() != null && existingCategory.getIsDefault() == 1) {
             return ResultBean.error("系统默认分类不允许删除", null);
         }
+
+        todoService.updateCategoryIdByOldCategoryId(id, Constant.UNCLASSIFIED_CATEGORY_ID);
 
         int result = categoryService.deleteById(id);
 
