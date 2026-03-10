@@ -19,7 +19,7 @@ public interface Constant {
     /**
      * 桌宠活力值增加量（新建/完成待办）
      */
-    Integer DESKTOP_PET_ENERGY_INCREASE = 5;
+    Integer DESKTOP_PET_ENERGY_INCREASE = 20;
 
     /**
      * 桌宠成长值增加量（完成待办）
@@ -34,12 +34,12 @@ public interface Constant {
     /**
      * 桌宠心情值按时完成增加量
      */
-    Integer DESKTOP_PET_MOOD_ON_TIME_INCREASE = 5;
+    Integer DESKTOP_PET_MOOD_ON_TIME_INCREASE = 20;
 
     /**
      * 桌宠心情值逾期减少量
      */
-    Integer DESKTOP_PET_MOOD_OVERDUE_DECREASE = 3;
+    Integer DESKTOP_PET_MOOD_OVERDUE_DECREASE = 10;
 
     /**
      * 桌宠心情值默认值
