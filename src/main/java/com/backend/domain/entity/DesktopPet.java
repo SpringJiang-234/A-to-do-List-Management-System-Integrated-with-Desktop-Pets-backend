@@ -1,6 +1,6 @@
 package com.backend.domain.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.backend.bean.base.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -52,4 +52,24 @@ public class DesktopPet extends BaseEntity {
     * 成长等级
     */
     private Integer level;
+
+    /**
+    * 最后登录日期
+    */
+    private LocalDate lastLoginDate;
+
+    /**
+    * 活力值最后重置日期
+    */
+    private LocalDate lastEnergyResetDate;
+
+    /**
+    * 心情值最后重置日期
+    */
+    private LocalDate lastMoodResetDate;
+
+    /**
+    * 连续登录天数
+    */
+    private Integer consecutiveDays;
 }

@@ -96,4 +96,67 @@ public class ClientDesktopPetController {
     public ResultBean<Void> dismiss() {
         return null;
     }
+
+    /**
+     * 新建待办时更新活力值（测试接口）
+     *
+     * @param request HTTP请求
+     * @return 更新结果
+     */
+    @PostMapping("/onNewTodo")
+    public ResultBean<Void> onNewTodo(HttpServletRequest request) {
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
+        }
+
+        desktopPetService.onNewTodo(userId);
+        return ResultBean.success("更新成功", null);
+    }
+
+    /**
+     * 完成待办时更新活力值、成长值和心情值（测试接口）
+     *
+     * @param request HTTP请求
+     * @param isCompletedOnTime 是否按时完成
+     * @return 更新结果
+     */
+    @PostMapping("/onTodoCompleted")
+    public ResultBean<Void> onTodoCompleted(HttpServletRequest request, boolean isCompletedOnTime) {
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
+        }
+
+        desktopPetService.onTodoCompleted(userId, isCompletedOnTime);
+        return ResultBean.success("更新成功", null);
+    }
+
+    /**
+     * 更新亲密度（测试接口）
+     *
+     * @param request HTTP请求
+     * @return 更新结果
+     */
+    @PostMapping("/updateIntimacyOnLogin")
+    public ResultBean<Void> updateIntimacyOnLogin(HttpServletRequest request) {
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
+        }
+
+        desktopPetService.updateIntimacyOnLogin(userId);
+        return ResultBean.success("更新成功", null);
+    }
+
+    /**
+     * 每日重置（测试接口）
+     *
+     * @return 重置结果
+     */
+    @PostMapping("/dailyReset")
+    public ResultBean<Void> dailyReset() {
+        desktopPetService.dailyReset();
+        return ResultBean.success("重置成功", null);
+    }
 }

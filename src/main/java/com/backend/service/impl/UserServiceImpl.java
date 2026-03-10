@@ -1,5 +1,6 @@
 package com.backend.service.impl;
 
+import com.backend.constant.Constant;
 import com.backend.mapper.UserMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -15,6 +16,8 @@ import com.backend.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -68,10 +71,14 @@ public class UserServiceImpl implements UserService {
                 desktopPet.setUserId(user.getId());
                 desktopPet.setNickname("桌宠");
                 desktopPet.setEnergy(0);
-                desktopPet.setMood(60);
+                desktopPet.setMood(Constant.DESKTOP_PET_MOOD_DEFAULT);
                 desktopPet.setIntimacy(0);
                 desktopPet.setExp(0);
                 desktopPet.setLevel(1);
+                desktopPet.setLastEnergyResetDate(LocalDate.now());
+                desktopPet.setLastMoodResetDate(LocalDate.now());
+                desktopPet.setLastLoginDate(LocalDate.now());
+                desktopPet.setConsecutiveDays(Constant.DESKTOP_PET_CONSECUTIVE_DAYS_INIT);
                 desktopPetMapper.insertSelective(desktopPet);
             }
         }
