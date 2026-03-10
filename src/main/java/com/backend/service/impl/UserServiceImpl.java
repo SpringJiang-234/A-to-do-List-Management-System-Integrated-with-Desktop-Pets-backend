@@ -9,6 +9,7 @@ import com.backend.domain.dto.RegisterDTO;
 import com.backend.domain.entity.User;
 import com.backend.domain.entity.DesktopPet;
 import com.backend.domain.query.UserQuery;
+import com.backend.domain.query.DesktopPetQuery;
 import com.backend.service.UserService;
 import com.backend.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,13 +58,22 @@ public class UserServiceImpl implements UserService {
         }
         int result = userMapper.insertOrUpdateSelective(user);
         
-        // 如果是新增用户，且插入成功
         if (result > 0 && user.getId() != null) {
-            // 为该用户创建桌宠
-            DesktopPet desktopPet = new DesktopPet();
-            desktopPet.setUserId(user.getId());
-            desktopPet.setNickname("桌宠");
-            desktopPetMapper.insertSelective(desktopPet);
+            DesktopPetQuery query = new DesktopPetQuery();
+            query.setUserId(user.getId());
+            List<DesktopPet> existingPets = desktopPetMapper.selectWithCondition(query);
+            
+            if (existingPets == null || existingPets.isEmpty()) {
+                DesktopPet desktopPet = new DesktopPet();
+                desktopPet.setUserId(user.getId());
+                desktopPet.setNickname("桌宠");
+                desktopPet.setEnergy(0);
+                desktopPet.setMood(60);
+                desktopPet.setIntimacy(0);
+                desktopPet.setExp(0);
+                desktopPet.setLevel(1);
+                desktopPetMapper.insertSelective(desktopPet);
+            }
         }
         return result;
     }
