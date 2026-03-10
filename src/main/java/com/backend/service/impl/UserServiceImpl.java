@@ -1,7 +1,9 @@
 package com.backend.service.impl;
 
 import com.backend.constant.Constant;
+import com.backend.mapper.DesktopPetMapper;
 import com.backend.mapper.UserMapper;
+import com.backend.service.DesktopPetService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.backend.bean.PageBean;
@@ -26,7 +28,10 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     
     @Autowired
-    private com.backend.mapper.DesktopPetMapper desktopPetMapper;
+    private DesktopPetMapper desktopPetMapper;
+
+    @Autowired
+    private DesktopPetService desktopPetService;
 
     @Override
     public PageBean<User> getPage(UserQuery userQuery) {
@@ -128,21 +133,24 @@ public class UserServiceImpl implements UserService {
             user.setAccount(registerDTO.getAccount());
             user.setPasswordHash(PasswordUtil.hashPassword(registerDTO.getPassword()));
             user.setNickname(registerDTO.getUsername());
-            user.setType(2); // 默认类型 用户类型：1-管理员 2-普通用户
-            user.setStatus(1); // 默认状态 状态：1-正常 2-已注销
-            user.setGender(3); // 默认性别 性别：1-男 2-女 3-未知
+            user.setType(2);
+            user.setStatus(1);
+            user.setGender(3);
             int result = userMapper.insertSelective(user);
             
-            // 如果注册成功，为用户创建桌宠
             if (result > 0 && user.getId() != null) {
                 DesktopPet desktopPet = new DesktopPet();
                 desktopPet.setUserId(user.getId());
                 desktopPet.setNickname("桌宠");
                 desktopPet.setEnergy(0);
-                desktopPet.setMood(60);
+                desktopPet.setMood(Constant.DESKTOP_PET_MOOD_DEFAULT);
                 desktopPet.setIntimacy(0);
                 desktopPet.setExp(0);
                 desktopPet.setLevel(1);
+                desktopPet.setLastEnergyResetDate(LocalDate.now());
+                desktopPet.setLastMoodResetDate(LocalDate.now());
+                desktopPet.setLastLoginDate(LocalDate.now());
+                desktopPet.setConsecutiveDays(Constant.DESKTOP_PET_CONSECUTIVE_DAYS_INIT);
                 desktopPetMapper.insertSelective(desktopPet);
             }
             
@@ -177,15 +185,16 @@ public class UserServiceImpl implements UserService {
             System.out.println("密码验证结果: " + passwordMatch);
             if (passwordMatch) {
                 System.out.println("登录成功");
+                desktopPetService.updateIntimacyOnLogin(user.getId());
                 return user;
             }
         } catch (NumberFormatException e) {
             System.out.println("密码哈希格式异常: " + e.getMessage());
-            // 如果密码哈希值格式不正确，重新生成哈希值并更新到数据库
             String newHashedPassword = PasswordUtil.hashPassword(loginDTO.getPassword());
             user.setPasswordHash(newHashedPassword);
             userMapper.updateByPrimaryKeySelective(user);
             System.out.println("已更新密码哈希");
+            desktopPetService.updateIntimacyOnLogin(user.getId());
             return user;
         }
         
@@ -225,15 +234,16 @@ public class UserServiceImpl implements UserService {
             System.out.println("密码验证结果: " + passwordMatch);
             if (passwordMatch) {
                 System.out.println("登录成功");
+                desktopPetService.updateIntimacyOnLogin(user.getId());
                 return user;
             }
         } catch (NumberFormatException e) {
             System.out.println("密码哈希格式异常: " + e.getMessage());
-            // 如果密码哈希值格式不正确，重新生成哈希值并更新到数据库
             String newHashedPassword = PasswordUtil.hashPassword(loginDTO.getPassword());
             user.setPasswordHash(newHashedPassword);
             userMapper.updateByPrimaryKeySelective(user);
             System.out.println("已更新密码哈希");
+            desktopPetService.updateIntimacyOnLogin(user.getId());
             return user;
         }
         

@@ -1,17 +1,24 @@
 package com.backend.service.impl;
 
+import com.backend.constant.Constant;
+import com.backend.domain.entity.DesktopPet;
+import com.backend.domain.entity.Todo;
+import com.backend.domain.query.ClientTodoQuery;
+import com.backend.domain.query.DesktopPetQuery;
+import com.backend.domain.query.TodoQuery;
+import com.backend.mapper.DesktopPetMapper;
+import com.backend.mapper.TodoMapper;
+import com.backend.service.DesktopPetService;
+import com.backend.service.TodoService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.backend.bean.PageBean;
-import com.backend.domain.entity.Todo;
-import com.backend.domain.query.ClientTodoQuery;
-import com.backend.domain.query.TodoQuery;
-import com.backend.mapper.TodoMapper;
-import com.backend.service.TodoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -19,6 +26,9 @@ import java.util.List;
 public class TodoServiceImpl implements TodoService {
     @Autowired
     private TodoMapper todoMapper;
+
+    @Autowired
+    private DesktopPetService desktopPetService;
 
     @Override
     public PageBean<Todo> getPage(TodoQuery todoQuery) {
@@ -49,8 +59,28 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertOrUpdate(Todo todo) {
-        return todoMapper.insertOrUpdateSelective(todo);
+        boolean isNew = todo.getId() == null;
+        boolean isCompleted = Integer.valueOf(2).equals(todo.getStatus());
+        
+        if (isCompleted) {
+            todo.setFinishTime(LocalDateTime.now());
+        }
+        
+        int result = todoMapper.insertOrUpdateSelective(todo);
+        
+        if (result > 0 && todo.getUserId() != null) {
+            if (isNew) {
+                desktopPetService.onNewTodo(todo.getUserId());
+            } else if (isCompleted) {
+                boolean isCompletedOnTime = todo.getEndTime() != null && 
+                    !todo.getFinishTime().isAfter(todo.getEndTime());
+                desktopPetService.onTodoCompleted(todo.getUserId(), isCompletedOnTime);
+            }
+        }
+        
+        return result;
     }
 
     @Override
