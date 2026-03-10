@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -147,9 +148,9 @@ public class UserServiceImpl implements UserService {
                 desktopPet.setIntimacy(0);
                 desktopPet.setExp(0);
                 desktopPet.setLevel(1);
-                desktopPet.setLastEnergyResetDate(LocalDate.now());
-                desktopPet.setLastMoodResetDate(LocalDate.now());
-                desktopPet.setLastLoginDate(LocalDate.now());
+                desktopPet.setLastEnergyResetDate(LocalDateTime.now());
+                desktopPet.setLastMoodResetDate(LocalDateTime.now());
+                desktopPet.setLastLoginDate(LocalDateTime.now());
                 desktopPet.setConsecutiveDays(Constant.DESKTOP_PET_CONSECUTIVE_DAYS_INIT);
                 desktopPetMapper.insertSelective(desktopPet);
             }
