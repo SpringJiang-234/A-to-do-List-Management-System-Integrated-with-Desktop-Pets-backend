@@ -4,13 +4,18 @@ import com.backend.bean.ResultBean;
 import com.backend.converter.DesktopPetConverter;
 import com.backend.domain.dto.DesktopPetDTO;
 import com.backend.domain.entity.DesktopPet;
+import com.backend.domain.query.DesktopPetQuery;
 import com.backend.service.DesktopPetService;
+import com.backend.utils.AuthUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 桌宠控制层
@@ -22,6 +27,8 @@ public class ClientDesktopPetController {
     private DesktopPetService desktopPetService;
     @Autowired
     private DesktopPetConverter desktopPetConverter;
+    @Autowired
+    private AuthUtil authUtil;
 
     /**
      * 获取桌宠信息
@@ -29,8 +36,21 @@ public class ClientDesktopPetController {
      * @return 桌宠信息
      */
     @GetMapping("/info")
-    public ResultBean<DesktopPet> getDesktopPetInfo() {
-        return null;
+    public ResultBean<DesktopPet> getDesktopPetInfo(HttpServletRequest request) {
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
+        }
+
+        DesktopPetQuery query = new DesktopPetQuery();
+        query.setUserId(userId);
+        List<DesktopPet> desktopPetList = desktopPetService.getAll(query);
+
+        if (desktopPetList == null || desktopPetList.isEmpty()) {
+            return ResultBean.success("桌宠信息获取成功", null);
+        }
+
+        return ResultBean.success("桌宠信息获取成功", desktopPetList.get(0));
     }
 
     /**
@@ -40,8 +60,21 @@ public class ClientDesktopPetController {
      * @return 更新结果
      */
     @PostMapping("/update")
-    public ResultBean<Void> update(@RequestBody DesktopPetDTO desktopPetDTO) {
-        return null;
+    public ResultBean<Void> update(@RequestBody DesktopPetDTO desktopPetDTO, HttpServletRequest request) {
+        Long userId = authUtil.getCurrentUserId(request);
+        if (userId == null) {
+            return ResultBean.error("未登录或登录已过期", null);
+        }
+
+        DesktopPet desktopPet = desktopPetConverter.desktopPetDTO2desktopPet(desktopPetDTO);
+        desktopPet.setUserId(userId);
+        int result = desktopPetService.insertOrUpdate(desktopPet);
+
+        if (result > 0) {
+            return ResultBean.success("更新成功!", null);
+        } else {
+            return ResultBean.error("更新失败", null);
+        }
     }
 
     /**
