@@ -466,7 +466,7 @@
         and is_default = #{isDefault,jdbcType=TINYINT}
       </if>
     </where>
-    order by create_time desc
+    order by sort_order desc
   </select>
 
   <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.backend.domain.query.CategoryQuery">
