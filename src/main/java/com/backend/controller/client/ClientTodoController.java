@@ -90,14 +90,14 @@ public class ClientTodoController {
     }
 
     /**
-     * 获取分类/标签页面待办事项列表
+     * 根据分类或标签查询待办事项列表
      *
-     * @param todoQuery 查询参数
+     * @param clientTodoQuery 查询参数
      * @return 待办事项列表
      */
     @PostMapping("/list-by-category-or-tag")
-    public ResultBean<List<ClientTodoVO>> listByCategoryOrTag(@RequestBody TodoQuery todoQuery) {
-        final List<Todo> todoList = todoService.getList(todoQuery);
+    public ResultBean<List<ClientTodoVO>> listByCategoryOrTag(@RequestBody ClientTodoQuery clientTodoQuery) {
+        final List<Todo> todoList = todoService.getClientList(clientTodoQuery);
         final List<ClientTodoVO> clientTodoVOList = todoConverter.todoList2clientTodoVOList(todoList);
         return ResultBean.success(clientTodoVOList);
     }
