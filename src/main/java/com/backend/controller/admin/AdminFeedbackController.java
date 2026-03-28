@@ -98,11 +98,11 @@ public class AdminFeedbackController {
      * @param id
      * @return
      */
-    // @GetMapping("/delete/{id}")
-    // public ResultBean<Void> delete(@PathVariable("id") Long id) {
-    //     feedbackService.deleteById(id);
-    //     return ResultBean.success("删除成功!", null);
-    // }
+    @GetMapping("/delete/{id}")
+    public ResultBean<Void> delete(@PathVariable("id") Long id) {
+        feedbackService.deleteById(id);
+        return ResultBean.success("删除成功!", null);
+    }
 
     /**
      * 批量删除反馈信息
@@ -110,11 +110,11 @@ public class AdminFeedbackController {
      * @param ids
      * @return
      */
-    // @GetMapping("/batchDelete/{ids}")
-    // public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
-    //     feedbackService.deleteByIds(ids);
-    //     return ResultBean.success("批量删除成功!", null);
-    // }
+    @GetMapping("/batchDelete/{ids}")
+    public ResultBean<Void> batchDelete(@PathVariable("ids") String ids) {
+        feedbackService.deleteByIds(ids);
+        return ResultBean.success("批量删除成功!", null);
+    }
 
     /**
      * 导出反馈信息
