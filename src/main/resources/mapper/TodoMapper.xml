@@ -903,6 +903,34 @@
           #{item,jdbcType=TINYINT}
         </foreach>
       </if>
+      <if test="tagIdList != null and tagIdList.size() > 0">
+        and id in (select todo_id from tb_todo_tag where tag_id in
+        <foreach close=")" collection="tagIdList" item="item" open="(" separator=", ">
+          #{item,jdbcType=BIGINT}
+        </foreach>
+        )
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <select id="selectTodosWithoutTags" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_todo
+    <where>
+      <choose>
+        <when test="isDelete != null">
+          and is_delete = #{isDelete,jdbcType=TINYINT}
+        </when>
+        <otherwise>
+          and is_delete = 1
+        </otherwise>
+      </choose>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      and id not in (select todo_id from tb_todo_tag)
     </where>
     order by create_time desc
   </select>

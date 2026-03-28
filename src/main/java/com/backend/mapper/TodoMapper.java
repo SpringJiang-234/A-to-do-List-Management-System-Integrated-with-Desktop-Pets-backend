@@ -119,4 +119,12 @@ public interface TodoMapper {
      * @return 更新的行数
      */
     int updateCategoryIdByOldCategoryId(@Param("oldCategoryId") Long oldCategoryId, @Param("newCategoryId") Long newCategoryId);
+
+    /**
+     * 查询没有标签的待办
+     * @param userId 用户ID
+     * @param isDelete 是否删除
+     * @return 没有标签的待办列表
+     */
+    List<Todo> selectTodosWithoutTags(@Param("userId") Long userId, @Param("isDelete") Integer isDelete);
 }
