@@ -1119,6 +1119,7 @@
     from tb_todo t
     left join tb_category c on t.category_id = c.id
     where t.is_delete = 1
+    and t.category_id is not null
     <if test="startDate != null and startDate != ''">
       and t.end_date &gt;= #{startDate}
     </if>
@@ -1144,6 +1145,7 @@
     from tb_todo t
     left join tb_category c on t.category_id = c.id
     where t.is_delete = 1
+    and t.category_id is not null
     <if test="startDate != null and startDate != ''">
       and t.end_date &gt;= #{startDate}
     </if>
