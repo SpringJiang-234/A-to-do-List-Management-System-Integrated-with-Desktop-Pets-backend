@@ -286,4 +286,50 @@ public class StatisticsServiceImpl implements StatisticsService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date);
     }
+    
+    @Override
+    public List<Map<String, Object>> getTodoCountByDate(String startDate, String endDate, List<Long> categoryIdList) {
+        // 调用mapper查询数据
+        List<Map<String, Object>> todos = todoMapper.getTodoCountByDate(startDate, endDate, categoryIdList);
+        
+        // 处理数据，按日期分组
+        Map<String, Integer> dateMap = new HashMap<>();
+        
+        for (Map<String, Object> todo : todos) {
+            Object dateObj = todo.get("date");
+            String dateStr = null;
+            
+            // 处理日期类型转换
+            if (dateObj instanceof java.sql.Date) {
+                dateStr = dateObj.toString();
+            } else if (dateObj instanceof String) {
+                dateStr = (String) dateObj;
+            }
+            
+            Object sumObj = todo.get("sum");
+            Integer sum = null;
+            
+            // 处理 sum 类型转换
+            if (sumObj instanceof Integer) {
+                sum = (Integer) sumObj;
+            } else if (sumObj instanceof Long) {
+                sum = ((Long) sumObj).intValue();
+            }
+            
+            if (dateStr != null && sum != null) {
+                dateMap.put(dateStr, sum);
+            }
+        }
+        
+        // 转换为结果格式
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : dateMap.entrySet()) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("date", entry.getKey());
+            item.put("sum", entry.getValue());
+            result.add(item);
+        }
+        
+        return result;
+    }
 }

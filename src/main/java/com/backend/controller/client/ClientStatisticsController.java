@@ -47,4 +47,17 @@ public class ClientStatisticsController {
         List<Long> categoryIdList = (List<Long>) params.get("categoryIdList");
         return ResultBean.success(statisticsService.getTodoCountByCategoryAndDate(startDate, endDate, categoryIdList));
     }
+    
+    /**
+     * 按日期分组查询待办数量（用于热力图）
+     * @param params 查询参数
+     * @return 按日期分组的待办数量
+     */
+    @PostMapping("/todo-count-by-date")
+    public ResultBean<List<Map<String, Object>>> getTodoCountByDate(@RequestBody Map<String, Object> params) {
+        String startDate = (String) params.get("startDate");
+        String endDate = (String) params.get("endDate");
+        List<Long> categoryIdList = (List<Long>) params.get("categoryIdList");
+        return ResultBean.success(statisticsService.getTodoCountByDate(startDate, endDate, categoryIdList));
+    }
 }

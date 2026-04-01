@@ -145,4 +145,13 @@ public interface TodoMapper {
      * @return 按类别和日期分组的待办数量
      */
     List<Map<String, Object>> getTodoCountByCategoryAndDate(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("categoryIdList") List<Long> categoryIdList);
+    
+    /**
+     * 按日期分组查询待办数量（用于热力图）
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @param categoryIdList 类别ID列表
+     * @return 按日期分组的待办数量
+     */
+    List<Map<String, Object>> getTodoCountByDate(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("categoryIdList") List<Long> categoryIdList);
 }

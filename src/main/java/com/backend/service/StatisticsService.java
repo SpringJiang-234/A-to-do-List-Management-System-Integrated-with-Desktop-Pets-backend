@@ -52,4 +52,5 @@ public interface StatisticsService {
     // 报表相关方法
     List<Map<String, Object>> getTodoCountByCategory(String startDate, String endDate, List<Long> categoryIdList);
     List<Map<String, Object>> getTodoCountByCategoryAndDate(String startDate, String endDate, List<Long> categoryIdList);
+    List<Map<String, Object>> getTodoCountByDate(String startDate, String endDate, List<Long> categoryIdList);
 }
