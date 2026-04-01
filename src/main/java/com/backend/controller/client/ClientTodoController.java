@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -311,5 +312,30 @@ public class ClientTodoController {
         
         todoService.updateFocusTime(dto.getId(), dto.getFocusTime());
         return ResultBean.success("更新成功", null);
+    }
+
+    /**
+     * 查询endDate为今日的待办事项
+     *
+     * @param clientTodoQuery 查询参数
+     * @return 今日截止的待办事项列表
+     */
+    @PostMapping("/list-today-end")
+    public ResultBean<List<ClientTodoVO>> listTodayEnd(@RequestBody ClientTodoQuery clientTodoQuery) {
+        final List<Todo> todoList = todoService.getClientList(clientTodoQuery);
+        
+        final LocalDate today = LocalDate.now();
+        
+        final List<Todo> todayEndTodos = todoList.stream()
+                .filter(todo -> {
+                    if (todo.getEndDate() == null) {
+                        return false;
+                    }
+                    return todo.getEndDate().equals(today);
+                })
+                .collect(Collectors.toList());
+        
+        final List<ClientTodoVO> clientTodoVOList = todoConverter.todoList2clientTodoVOList(todayEndTodos);
+        return ResultBean.success(clientTodoVOList);
     }
 }
