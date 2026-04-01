@@ -5,8 +5,9 @@ import com.backend.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
@@ -196,6 +197,93 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
     
     public List<Map<String, Object>> getTodoCountByCategoryAndDate(String startDate, String endDate, List<Integer> categoryIdList) {
-        return todoMapper.getTodoCountByCategoryAndDate(startDate, endDate, categoryIdList);
+        List<Map<String, Object>> todoDetails = todoMapper.getTodoCountByCategoryAndDate(startDate, endDate, categoryIdList);
+        Map<String, Map<String, Integer>> categoryDateCount = new HashMap<>();
+        
+        for (Map<String, Object> todo : todoDetails) {
+            Long categoryId = (Long) todo.get("categoryId");
+            String categoryName = (String) todo.get("categoryName");
+            Date start = (Date) todo.get("startDate");
+            Date end = (Date) todo.get("endDate");
+            
+            // 计算待办事项在查询范围内的所有日期
+            List<Date> dates = getDatesBetween(start, end, startDate, endDate);
+            
+            for (Date date : dates) {
+                String dateStr = formatDate(date);
+                String key = categoryId + "_" + categoryName;
+                
+                if (!categoryDateCount.containsKey(key)) {
+                    categoryDateCount.put(key, new HashMap<>());
+                }
+                
+                Map<String, Integer> dateCount = categoryDateCount.get(key);
+                dateCount.put(dateStr, dateCount.getOrDefault(dateStr, 0) + 1);
+            }
+        }
+        
+        // 转换为返回格式
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Map<String, Integer>> entry : categoryDateCount.entrySet()) {
+            String[] keyParts = entry.getKey().split("_");
+            Long categoryId = Long.parseLong(keyParts[0]);
+            String categoryName = entry.getKey().substring(keyParts[0].length() + 1);
+            
+            Map<String, Integer> dateCount = entry.getValue();
+            for (Map.Entry<String, Integer> dateEntry : dateCount.entrySet()) {
+                Map<String, Object> item = new HashMap<>();
+                item.put("categoryId", categoryId);
+                item.put("categoryName", categoryName);
+                item.put("date", dateEntry.getKey());
+                item.put("sum", dateEntry.getValue());
+                result.add(item);
+            }
+        }
+        
+        // 按日期和类别排序
+        result.sort((a, b) -> {
+            int dateCompare = ((String) a.get("date")).compareTo((String) b.get("date"));
+            if (dateCompare != 0) {
+                return dateCompare;
+            }
+            return ((Long) a.get("categoryId")).compareTo((Long) b.get("categoryId"));
+        });
+        
+        return result;
+    }
+    
+    /**
+     * 获取两个日期之间的所有日期，并且限制在查询范围内
+     */
+    private List<Date> getDatesBetween(Date start, Date end, String queryStart, String queryEnd) {
+        List<Date> dates = new ArrayList<>();
+        
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date queryStartDate = sdf.parse(queryStart);
+            Date queryEndDate = sdf.parse(queryEnd);
+            
+            // 调整开始日期为查询开始日期和待办开始日期的最大值
+            Date current = start.before(queryStartDate) ? queryStartDate : start;
+            // 调整结束日期为查询结束日期和待办结束日期的最小值
+            Date last = end.after(queryEndDate) ? queryEndDate : end;
+            
+            while (!current.after(last)) {
+                dates.add(new Date(current.getTime()));
+                current.setDate(current.getDate() + 1);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        return dates;
+    }
+    
+    /**
+     * 格式化日期为 yyyy-MM-dd 格式
+     */
+    private String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
     }
 }

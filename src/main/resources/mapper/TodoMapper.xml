@@ -1120,10 +1120,10 @@
     left join tb_category c on t.category_id = c.id
     where t.is_delete = 1
     <if test="startDate != null and startDate != ''">
-      and DATE_FORMAT(t.create_time, '%Y-%m-%d') &gt;= #{startDate}
+      and t.end_date &gt;= #{startDate}
     </if>
     <if test="endDate != null and endDate != ''">
-      and DATE_FORMAT(t.create_time, '%Y-%m-%d') &lt;= #{endDate}
+      and t.start_date &lt;= #{endDate}
     </if>
     <if test="categoryIdList != null and categoryIdList.size() > 0">
       and c.id in
@@ -1138,16 +1138,17 @@
     select
       c.id as categoryId,
       c.name as categoryName,
-      DATE_FORMAT(t.create_time, '%Y-%m-%d') as date,
-      count(t.id) as sum
+      t.id as todoId,
+      t.start_date as startDate,
+      t.end_date as endDate
     from tb_todo t
     left join tb_category c on t.category_id = c.id
     where t.is_delete = 1
     <if test="startDate != null and startDate != ''">
-      and DATE_FORMAT(t.create_time, '%Y-%m-%d') &gt;= #{startDate}
+      and t.end_date &gt;= #{startDate}
     </if>
     <if test="endDate != null and endDate != ''">
-      and DATE_FORMAT(t.create_time, '%Y-%m-%d') &lt;= #{endDate}
+      and t.start_date &lt;= #{endDate}
     </if>
     <if test="categoryIdList != null and categoryIdList.size() > 0">
       and c.id in
@@ -1155,7 +1156,5 @@
         #{item,jdbcType=INTEGER}
       </foreach>
     </if>
-    group by c.id, c.name, DATE_FORMAT(t.create_time, '%Y-%m-%d')
-    order by date, c.id
   </select>
 </mapper>
