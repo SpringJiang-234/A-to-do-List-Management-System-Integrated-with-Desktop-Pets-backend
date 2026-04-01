@@ -104,13 +104,13 @@ public class ClientDesktopPetController {
      * @return 更新结果
      */
     @PostMapping("/onNewTodo")
-    public ResultBean<Void> onNewTodo(HttpServletRequest request) {
+    public ResultBean<Void> onNewTodo(HttpServletRequest request, boolean enablePetGrowth) {
         Long userId = authUtil.getCurrentUserId(request);
         if (userId == null) {
             return ResultBean.error("未登录或登录已过期", null);
         }
 
-        desktopPetService.onNewTodo(userId);
+        desktopPetService.onNewTodo(userId, enablePetGrowth);
         return ResultBean.success("更新成功", null);
     }
 
@@ -119,16 +119,17 @@ public class ClientDesktopPetController {
      *
      * @param request HTTP请求
      * @param isCompletedOnTime 是否按时完成
+     * @param enablePetGrowth 是否启用桌宠养成数据
      * @return 更新结果
      */
     @PostMapping("/onTodoCompleted")
-    public ResultBean<Void> onTodoCompleted(HttpServletRequest request, boolean isCompletedOnTime) {
+    public ResultBean<Void> onTodoCompleted(HttpServletRequest request, boolean isCompletedOnTime, boolean enablePetGrowth) {
         Long userId = authUtil.getCurrentUserId(request);
         if (userId == null) {
             return ResultBean.error("未登录或登录已过期", null);
         }
 
-        desktopPetService.onTodoCompleted(userId, isCompletedOnTime);
+        desktopPetService.onTodoCompleted(userId, isCompletedOnTime, enablePetGrowth);
         return ResultBean.success("更新成功", null);
     }
 
@@ -136,16 +137,17 @@ public class ClientDesktopPetController {
      * 更新亲密度（测试接口）
      *
      * @param request HTTP请求
+     * @param enablePetGrowth 是否启用桌宠养成数据
      * @return 更新结果
      */
     @PostMapping("/updateIntimacyOnLogin")
-    public ResultBean<Void> updateIntimacyOnLogin(HttpServletRequest request) {
+    public ResultBean<Void> updateIntimacyOnLogin(HttpServletRequest request, boolean enablePetGrowth) {
         Long userId = authUtil.getCurrentUserId(request);
         if (userId == null) {
             return ResultBean.error("未登录或登录已过期", null);
         }
 
-        desktopPetService.updateIntimacyOnLogin(userId);
+        desktopPetService.updateIntimacyOnLogin(userId, enablePetGrowth);
         return ResultBean.success("更新成功", null);
     }
 

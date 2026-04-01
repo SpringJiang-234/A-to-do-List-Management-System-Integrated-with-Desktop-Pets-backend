@@ -61,20 +61,24 @@ public interface DesktopPetService {
      * 新建待办时更新活力值
      * @param userId 用户ID
      */
-    void onNewTodo(Long userId);
+    void onNewTodo(Long userId, boolean enablePetGrowth);
 
     /**
      * 完成待办时更新活力值、成长值和心情值
+     *
      * @param userId 用户ID
-     * @param isCompletedOnTime 是否按时完成（仅影响心情值）
+     * @param isCompletedOnTime 是否按时完成
+     * @param enablePetGrowth 是否启用桌宠养成数据
      */
-    void onTodoCompleted(Long userId, boolean isCompletedOnTime);
+    void onTodoCompleted(Long userId, boolean isCompletedOnTime, boolean enablePetGrowth);
 
     /**
-     * 用户登录时更新亲密度
+     * 更新亲密度
+     *
      * @param userId 用户ID
+     * @param enablePetGrowth 是否启用桌宠养成数据
      */
-    void updateIntimacyOnLogin(Long userId);
+    void updateIntimacyOnLogin(Long userId, boolean enablePetGrowth);
 
     /**
      * 每日重置活力值和心情值

@@ -88,6 +88,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         logger.info("用户信息: {}, 类型: {}", user.getAccount(), user.getType());
 
         // 验证角色权限
+        logger.info("验证角色权限，请求路径: {}", requestURI);
         if (requestURI.startsWith("/admin")) {
             // 管理员路径需要管理员权限
             logger.info("验证管理员权限，用户类型: {}", user.getType());
@@ -104,6 +105,11 @@ public class AuthInterceptor implements HandlerInterceptor {
         } else if (requestURI.startsWith("/common")) {
             // 公共路径所有用户都可以访问
             logger.info("公共路径，允许访问");
+        } else {
+            // 其他路径，默认拒绝访问
+            logger.warn("无权限访问，请求路径: {}", requestURI);
+            sendError(response, "无权限访问");
+            return false;
         }
 
         // 将用户信息存储到请求中，方便后续使用

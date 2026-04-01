@@ -62,7 +62,7 @@ public class DesktopPetServiceImpl implements DesktopPetService {
     }
 
     @Override
-    public void onNewTodo(Long userId) {
+    public void onNewTodo(Long userId, boolean enablePetGrowth) {
         DesktopPet pet = getDesktopPetByUserId(userId);
         if (pet == null) {
             return;
@@ -70,21 +70,23 @@ public class DesktopPetServiceImpl implements DesktopPetService {
         
         LocalDate today = LocalDate.now();
         
-        if (pet.getLastEnergyResetDate() == null) {
-            pet.setLastEnergyResetDate(today);
-        } else if (!today.equals(pet.getLastEnergyResetDate())) {
-            pet.setEnergy(0);
-            pet.setLastEnergyResetDate(today);
+        if (enablePetGrowth) {
+            if (pet.getLastEnergyResetDate() == null) {
+                pet.setLastEnergyResetDate(today);
+            } else if (!today.equals(pet.getLastEnergyResetDate())) {
+                pet.setEnergy(0);
+                pet.setLastEnergyResetDate(today);
+            }
+            
+            int newEnergy = pet.getEnergy() + Constant.DESKTOP_PET_ENERGY_INCREASE;
+            pet.setEnergy(newEnergy > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newEnergy);
         }
-        
-        int newEnergy = pet.getEnergy() + Constant.DESKTOP_PET_ENERGY_INCREASE;
-        pet.setEnergy(newEnergy > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newEnergy);
         
         desktopPetMapper.updateByPrimaryKeySelective(pet);
     }
 
     @Override
-    public void onTodoCompleted(Long userId, boolean isCompletedOnTime) {
+    public void onTodoCompleted(Long userId, boolean isCompletedOnTime, boolean enablePetGrowth) {
         DesktopPet pet = getDesktopPetByUserId(userId);
         if (pet == null) {
             return;
@@ -92,16 +94,27 @@ public class DesktopPetServiceImpl implements DesktopPetService {
         
         LocalDate today = LocalDate.now();
         
-        if (pet.getLastEnergyResetDate() == null) {
-            pet.setLastEnergyResetDate(today);
-        } else if (!today.equals(pet.getLastEnergyResetDate())) {
-            pet.setEnergy(0);
-            pet.setLastEnergyResetDate(today);
+        if (enablePetGrowth) {
+            if (pet.getLastEnergyResetDate() == null) {
+                pet.setLastEnergyResetDate(today);
+            } else if (!today.equals(pet.getLastEnergyResetDate())) {
+                pet.setEnergy(0);
+                pet.setLastEnergyResetDate(today);
+            }
+            
+            int newEnergy = pet.getEnergy() + Constant.DESKTOP_PET_ENERGY_INCREASE;
+            pet.setEnergy(newEnergy > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newEnergy);
+            
+            if (isCompletedOnTime) {
+                int newMood = pet.getMood() + Constant.DESKTOP_PET_MOOD_ON_TIME_INCREASE;
+                pet.setMood(newMood > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newMood);
+            } else {
+                int newMood = pet.getMood() - Constant.DESKTOP_PET_MOOD_OVERDUE_DECREASE;
+                pet.setMood(newMood < 0 ? 0 : newMood);
+            }
         }
         
-        int newEnergy = pet.getEnergy() + Constant.DESKTOP_PET_ENERGY_INCREASE;
-        pet.setEnergy(newEnergy > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newEnergy);
-        
+        // 成长值和等级不受开关控制，始终更新
         int newExp = pet.getExp() + Constant.DESKTOP_PET_EXP_INCREASE;
         if (newExp >= Constant.DESKTOP_PET_EXP_LEVEL_UP) {
             pet.setLevel(pet.getLevel() + 1);
@@ -110,19 +123,11 @@ public class DesktopPetServiceImpl implements DesktopPetService {
             pet.setExp(newExp);
         }
         
-        if (isCompletedOnTime) {
-            int newMood = pet.getMood() + Constant.DESKTOP_PET_MOOD_ON_TIME_INCREASE;
-            pet.setMood(newMood > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newMood);
-        } else {
-            int newMood = pet.getMood() - Constant.DESKTOP_PET_MOOD_OVERDUE_DECREASE;
-            pet.setMood(newMood < 0 ? 0 : newMood);
-        }
-        
         desktopPetMapper.updateByPrimaryKeySelective(pet);
     }
 
     @Override
-    public void updateIntimacyOnLogin(Long userId) {
+    public void updateIntimacyOnLogin(Long userId, boolean enablePetGrowth) {
         DesktopPet pet = getDesktopPetByUserId(userId);
         if (pet == null) {
             return;
@@ -130,26 +135,28 @@ public class DesktopPetServiceImpl implements DesktopPetService {
         
         LocalDate today = LocalDate.now();
         
-        if (pet.getLastLoginDate() == null) {
-            pet.setLastLoginDate(today);
-            pet.setConsecutiveDays(Constant.DESKTOP_PET_CONSECUTIVE_DAYS_INIT);
-            int newIntimacy = pet.getIntimacy() + Constant.DESKTOP_PET_INTIMACY_INCREASE;
-            pet.setIntimacy(newIntimacy > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newIntimacy);
-            desktopPetMapper.updateByPrimaryKeySelective(pet);
-        } else if (!today.equals(pet.getLastLoginDate())) {
-            LocalDate yesterday = today.minusDays(1);
-            
-            if (yesterday.equals(pet.getLastLoginDate())) {
-                pet.setConsecutiveDays(pet.getConsecutiveDays() + 1);
-            } else {
+        if (enablePetGrowth) {
+            if (pet.getLastLoginDate() == null) {
+                pet.setLastLoginDate(today);
                 pet.setConsecutiveDays(Constant.DESKTOP_PET_CONSECUTIVE_DAYS_INIT);
+                int newIntimacy = pet.getIntimacy() + Constant.DESKTOP_PET_INTIMACY_INCREASE;
+                pet.setIntimacy(newIntimacy > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newIntimacy);
+                desktopPetMapper.updateByPrimaryKeySelective(pet);
+            } else if (!today.equals(pet.getLastLoginDate())) {
+                LocalDate yesterday = today.minusDays(1);
+                
+                if (yesterday.equals(pet.getLastLoginDate())) {
+                    pet.setConsecutiveDays(pet.getConsecutiveDays() + 1);
+                } else {
+                    pet.setConsecutiveDays(Constant.DESKTOP_PET_CONSECUTIVE_DAYS_INIT);
+                }
+                
+                int newIntimacy = pet.getIntimacy() + Constant.DESKTOP_PET_INTIMACY_INCREASE;
+                pet.setIntimacy(newIntimacy > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newIntimacy);
+                
+                pet.setLastLoginDate(today);
+                desktopPetMapper.updateByPrimaryKeySelective(pet);
             }
-            
-            int newIntimacy = pet.getIntimacy() + Constant.DESKTOP_PET_INTIMACY_INCREASE;
-            pet.setIntimacy(newIntimacy > Constant.DESKTOP_PET_MAX_VALUE ? Constant.DESKTOP_PET_MAX_VALUE : newIntimacy);
-            
-            pet.setLastLoginDate(today);
-            desktopPetMapper.updateByPrimaryKeySelective(pet);
         }
     }
 

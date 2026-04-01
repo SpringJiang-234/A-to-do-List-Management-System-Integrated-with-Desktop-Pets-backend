@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService {
             System.out.println("密码验证结果: " + passwordMatch);
             if (passwordMatch) {
                 System.out.println("登录成功");
-                desktopPetService.updateIntimacyOnLogin(user.getId());
+                desktopPetService.updateIntimacyOnLogin(user.getId(), true);
                 return user;
             }
         } catch (NumberFormatException e) {
@@ -195,7 +195,7 @@ public class UserServiceImpl implements UserService {
             user.setPasswordHash(newHashedPassword);
             userMapper.updateByPrimaryKeySelective(user);
             System.out.println("已更新密码哈希");
-            desktopPetService.updateIntimacyOnLogin(user.getId());
+            desktopPetService.updateIntimacyOnLogin(user.getId(), true);
             return user;
         }
         
@@ -235,7 +235,7 @@ public class UserServiceImpl implements UserService {
             System.out.println("密码验证结果: " + passwordMatch);
             if (passwordMatch) {
                 System.out.println("登录成功");
-                desktopPetService.updateIntimacyOnLogin(user.getId());
+                desktopPetService.updateIntimacyOnLogin(user.getId(), true);
                 return user;
             }
         } catch (NumberFormatException e) {
@@ -244,7 +244,7 @@ public class UserServiceImpl implements UserService {
             user.setPasswordHash(newHashedPassword);
             userMapper.updateByPrimaryKeySelective(user);
             System.out.println("已更新密码哈希");
-            desktopPetService.updateIntimacyOnLogin(user.getId());
+            desktopPetService.updateIntimacyOnLogin(user.getId(), true);
             return user;
         }
         

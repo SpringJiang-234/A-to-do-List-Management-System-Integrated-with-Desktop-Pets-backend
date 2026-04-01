@@ -43,6 +43,14 @@ public interface TodoService {
      * @return 更新成功的记录数
      */
     int insertOrUpdate(Todo todo);
+    
+    /**
+     * 更新待办事项信息（带桌宠养成数据开关）
+     * @param todo 待办事项信息对象
+     * @param enablePetGrowth 是否启用桌宠养成数据
+     * @return 更新成功的记录数
+     */
+    int insertOrUpdate(Todo todo, boolean enablePetGrowth);
 
     /**
      * 根据ID删除待办事项

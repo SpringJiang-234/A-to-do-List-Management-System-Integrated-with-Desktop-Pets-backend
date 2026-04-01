@@ -26,7 +26,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.backend.domain.entity.User;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,10 +59,18 @@ public class ClientTodoController {
      * 获取待办事项列表
      *
      * @param clientTodoQuery 查询参数
+     * @param request 请求对象
      * @return 待办事项列表
      */
     @PostMapping("/list")
-    public ResultBean<List<ClientTodoVO>> list(@RequestBody ClientTodoQuery clientTodoQuery) {
+    public ResultBean<List<ClientTodoVO>> list(@RequestBody ClientTodoQuery clientTodoQuery, HttpServletRequest request) {
+        // 从请求中获取用户信息
+        User user = (User) request.getAttribute("user");
+        log.info("从请求中获取用户信息: {}", user);
+        if (user != null) {
+            clientTodoQuery.setUserId(user.getId());
+            log.info("设置用户ID: {}", user.getId());
+        }
         final List<Todo> todoList = todoService.getClientList(clientTodoQuery);
         
         final List<Long> tagIdList = clientTodoQuery.getTagIdList();
@@ -94,10 +105,16 @@ public class ClientTodoController {
      * 根据分类或标签查询待办事项列表
      *
      * @param clientTodoQuery 查询参数
+     * @param request 请求对象
      * @return 待办事项列表
      */
     @PostMapping("/list-by-category-or-tag")
-    public ResultBean<List<ClientTodoVO>> listByCategoryOrTag(@RequestBody ClientTodoQuery clientTodoQuery) {
+    public ResultBean<List<ClientTodoVO>> listByCategoryOrTag(@RequestBody ClientTodoQuery clientTodoQuery, HttpServletRequest request) {
+        // 从请求中获取用户信息
+        User user = (User) request.getAttribute("user");
+        if (user != null) {
+            clientTodoQuery.setUserId(user.getId());
+        }
         final List<Todo> todoList = todoService.getClientList(clientTodoQuery);
         final List<ClientTodoVO> clientTodoVOList = todoConverter.todoList2clientTodoVOList(todoList);
         return ResultBean.success(clientTodoVOList);
@@ -172,7 +189,7 @@ public class ClientTodoController {
     @PostMapping("/insert")
     public ResultBean<Void> insert(@RequestBody ClientTodoDTO clientTodoDTO) {
         final Todo todo = todoConverter.clientTodoDTO2todo(clientTodoDTO);
-        todoService.insertOrUpdate(todo);
+        todoService.insertOrUpdate(todo, clientTodoDTO.isEnablePetGrowth());
         
         final List<Long> tagIdList = clientTodoDTO.getTagIdList();
         if (tagIdList != null && !tagIdList.isEmpty()) {
@@ -257,14 +274,15 @@ public class ClientTodoController {
      * 完成待办事项
      *
      * @param id 待办事项id
+     * @param enablePetGrowth 是否启用桌宠养成数据
      * @return 完成结果
      */
     @GetMapping("/complete/{id}")
-    public ResultBean<Void> complete(@PathVariable("id") Long id) {
+    public ResultBean<Void> complete(@PathVariable("id") Long id, @RequestParam("enablePetGrowth") boolean enablePetGrowth) {
         final Todo todo = todoService.getById(id);
         todo.setStatus(2);
         todo.setFinishTime(LocalDateTime.now());
-        todoService.insertOrUpdate(todo);
+        todoService.insertOrUpdate(todo, enablePetGrowth);
         return ResultBean.success("完成成功!", null);
     }
 
@@ -318,10 +336,16 @@ public class ClientTodoController {
      * 查询endDate为今日的待办事项
      *
      * @param clientTodoQuery 查询参数
+     * @param request 请求对象
      * @return 今日截止的待办事项列表
      */
     @PostMapping("/list-today-end")
-    public ResultBean<List<ClientTodoVO>> listTodayEnd(@RequestBody ClientTodoQuery clientTodoQuery) {
+    public ResultBean<List<ClientTodoVO>> listTodayEnd(@RequestBody ClientTodoQuery clientTodoQuery, HttpServletRequest request) {
+        // 从请求中获取用户信息
+        User user = (User) request.getAttribute("user");
+        if (user != null) {
+            clientTodoQuery.setUserId(user.getId());
+        }
         final List<Todo> todoList = todoService.getClientList(clientTodoQuery);
         
         final LocalDate today = LocalDate.now();

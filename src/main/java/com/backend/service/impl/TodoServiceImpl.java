@@ -71,12 +71,38 @@ public class TodoServiceImpl implements TodoService {
         int result = todoMapper.insertOrUpdateSelective(todo);
         
         if (result > 0 && todo.getUserId() != null) {
+            // 默认启用桌宠养成数据
+            boolean enablePetGrowth = true;
+            
             if (isNew) {
-                desktopPetService.onNewTodo(todo.getUserId());
+                desktopPetService.onNewTodo(todo.getUserId(), enablePetGrowth);
             } else if (isCompleted) {
                 boolean isCompletedOnTime = todo.getEndDate() != null && 
                     !todo.getFinishTime().toLocalDate().isAfter(todo.getEndDate());
-                desktopPetService.onTodoCompleted(todo.getUserId(), isCompletedOnTime);
+                desktopPetService.onTodoCompleted(todo.getUserId(), isCompletedOnTime, enablePetGrowth);
+            }
+        }
+        
+        return result;
+    }
+    
+    public int insertOrUpdate(Todo todo, boolean enablePetGrowth) {
+        boolean isNew = todo.getId() == null;
+        boolean isCompleted = Integer.valueOf(2).equals(todo.getStatus());
+        
+        if (isCompleted) {
+            todo.setFinishTime(LocalDateTime.now());
+        }
+        
+        int result = todoMapper.insertOrUpdateSelective(todo);
+        
+        if (result > 0 && todo.getUserId() != null) {
+            if (isNew) {
+                desktopPetService.onNewTodo(todo.getUserId(), enablePetGrowth);
+            } else if (isCompleted) {
+                boolean isCompletedOnTime = todo.getEndDate() != null && 
+                    !todo.getFinishTime().toLocalDate().isAfter(todo.getEndDate());
+                desktopPetService.onTodoCompleted(todo.getUserId(), isCompletedOnTime, enablePetGrowth);
             }
         }
         

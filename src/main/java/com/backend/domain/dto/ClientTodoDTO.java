@@ -17,4 +17,9 @@ public class ClientTodoDTO extends TodoDTO {
     * 标签ID列表
     */
     private List<Long> tagIdList;
+    
+    /**
+    * 是否启用桌宠养成数据
+    */
+    private boolean enablePetGrowth = true;
 }
