@@ -127,4 +127,22 @@ public interface TodoMapper {
      * @return 没有标签的待办列表
      */
     List<Todo> selectTodosWithoutTags(@Param("userId") Long userId, @Param("isDelete") Integer isDelete);
+    
+    /**
+     * 按类别分组查询待办数量
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @param categoryIdList 类别ID列表
+     * @return 按类别分组的待办数量
+     */
+    List<Map<String, Object>> getTodoCountByCategory(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("categoryIdList") List<Integer> categoryIdList);
+    
+    /**
+     * 按类别和日期分组查询待办数量
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @param categoryIdList 类别ID列表
+     * @return 按类别和日期分组的待办数量
+     */
+    List<Map<String, Object>> getTodoCountByCategoryAndDate(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("categoryIdList") List<Integer> categoryIdList);
 }

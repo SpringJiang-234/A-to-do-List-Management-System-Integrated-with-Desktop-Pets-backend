@@ -48,4 +48,8 @@ public interface StatisticsService {
 
     // 系统健康度仪表盘数据
     Map<String, Object> getSystemHealthDashboard(String startDate, String endDate);
+    
+    // 报表相关方法
+    List<Map<String, Object>> getTodoCountByCategory(String startDate, String endDate, List<Integer> categoryIdList);
+    List<Map<String, Object>> getTodoCountByCategoryAndDate(String startDate, String endDate, List<Integer> categoryIdList);
 }

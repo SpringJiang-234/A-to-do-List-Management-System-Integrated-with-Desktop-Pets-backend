@@ -1110,4 +1110,52 @@
         update_time = now()
     where category_id = #{oldCategoryId,jdbcType=BIGINT}
   </update>
+  
+  <select id="getTodoCountByCategory" resultType="java.util.Map">
+    select
+      c.id as categoryId,
+      c.name as categoryName,
+      count(t.id) as sum
+    from tb_todo t
+    left join tb_category c on t.category_id = c.id
+    where t.is_delete = 1
+    <if test="startDate != null and startDate != ''">
+      and DATE_FORMAT(t.create_time, '%Y-%m-%d') &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and DATE_FORMAT(t.create_time, '%Y-%m-%d') &lt;= #{endDate}
+    </if>
+    <if test="categoryIdList != null and categoryIdList.size() > 0">
+      and c.id in
+      <foreach close=")" collection="categoryIdList" item="item" open="(" separator=", ">
+        #{item,jdbcType=INTEGER}
+      </foreach>
+    </if>
+    group by c.id, c.name
+  </select>
+  
+  <select id="getTodoCountByCategoryAndDate" resultType="java.util.Map">
+    select
+      c.id as categoryId,
+      c.name as categoryName,
+      DATE_FORMAT(t.create_time, '%Y-%m-%d') as date,
+      count(t.id) as sum
+    from tb_todo t
+    left join tb_category c on t.category_id = c.id
+    where t.is_delete = 1
+    <if test="startDate != null and startDate != ''">
+      and DATE_FORMAT(t.create_time, '%Y-%m-%d') &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and DATE_FORMAT(t.create_time, '%Y-%m-%d') &lt;= #{endDate}
+    </if>
+    <if test="categoryIdList != null and categoryIdList.size() > 0">
+      and c.id in
+      <foreach close=")" collection="categoryIdList" item="item" open="(" separator=", ">
+        #{item,jdbcType=INTEGER}
+      </foreach>
+    </if>
+    group by c.id, c.name, DATE_FORMAT(t.create_time, '%Y-%m-%d')
+    order by date, c.id
+  </select>
 </mapper>

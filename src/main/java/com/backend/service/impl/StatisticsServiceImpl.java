@@ -189,4 +189,13 @@ public class StatisticsServiceImpl implements StatisticsService {
         
         return dashboard;
     }
+    
+    // 报表相关方法
+    public List<Map<String, Object>> getTodoCountByCategory(String startDate, String endDate, List<Integer> categoryIdList) {
+        return todoMapper.getTodoCountByCategory(startDate, endDate, categoryIdList);
+    }
+    
+    public List<Map<String, Object>> getTodoCountByCategoryAndDate(String startDate, String endDate, List<Integer> categoryIdList) {
+        return todoMapper.getTodoCountByCategoryAndDate(startDate, endDate, categoryIdList);
+    }
 }
