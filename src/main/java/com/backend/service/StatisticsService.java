@@ -50,6 +50,6 @@ public interface StatisticsService {
     Map<String, Object> getSystemHealthDashboard(String startDate, String endDate);
     
     // 报表相关方法
-    List<Map<String, Object>> getTodoCountByCategory(String startDate, String endDate, List<Integer> categoryIdList);
-    List<Map<String, Object>> getTodoCountByCategoryAndDate(String startDate, String endDate, List<Integer> categoryIdList);
+    List<Map<String, Object>> getTodoCountByCategory(String startDate, String endDate, List<Long> categoryIdList);
+    List<Map<String, Object>> getTodoCountByCategoryAndDate(String startDate, String endDate, List<Long> categoryIdList);
 }

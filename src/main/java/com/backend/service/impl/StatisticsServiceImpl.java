@@ -192,11 +192,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
     
     // 报表相关方法
-    public List<Map<String, Object>> getTodoCountByCategory(String startDate, String endDate, List<Integer> categoryIdList) {
+    public List<Map<String, Object>> getTodoCountByCategory(String startDate, String endDate, List<Long> categoryIdList) {
         return todoMapper.getTodoCountByCategory(startDate, endDate, categoryIdList);
     }
     
-    public List<Map<String, Object>> getTodoCountByCategoryAndDate(String startDate, String endDate, List<Integer> categoryIdList) {
+    public List<Map<String, Object>> getTodoCountByCategoryAndDate(String startDate, String endDate, List<Long> categoryIdList) {
         List<Map<String, Object>> todoDetails = todoMapper.getTodoCountByCategoryAndDate(startDate, endDate, categoryIdList);
         Map<String, Map<String, Integer>> categoryDateCount = new HashMap<>();
         

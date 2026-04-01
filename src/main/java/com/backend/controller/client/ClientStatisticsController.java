@@ -31,7 +31,7 @@ public class ClientStatisticsController {
     public ResultBean<List<Map<String, Object>>> getTodoCountByCategory(@RequestBody Map<String, Object> params) {
         String startDate = (String) params.get("startDate");
         String endDate = (String) params.get("endDate");
-        List<Integer> categoryIdList = (List<Integer>) params.get("categoryIdList");
+        List<Long> categoryIdList = (List<Long>) params.get("categoryIdList");
         return ResultBean.success(statisticsService.getTodoCountByCategory(startDate, endDate, categoryIdList));
     }
     
@@ -44,7 +44,7 @@ public class ClientStatisticsController {
     public ResultBean<List<Map<String, Object>>> getTodoCountByCategoryAndDate(@RequestBody Map<String, Object> params) {
         String startDate = (String) params.get("startDate");
         String endDate = (String) params.get("endDate");
-        List<Integer> categoryIdList = (List<Integer>) params.get("categoryIdList");
+        List<Long> categoryIdList = (List<Long>) params.get("categoryIdList");
         return ResultBean.success(statisticsService.getTodoCountByCategoryAndDate(startDate, endDate, categoryIdList));
     }
 }

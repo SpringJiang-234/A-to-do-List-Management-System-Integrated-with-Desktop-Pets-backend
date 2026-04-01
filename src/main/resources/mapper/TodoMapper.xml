@@ -1128,7 +1128,7 @@
     <if test="categoryIdList != null and categoryIdList.size() > 0">
       and c.id in
       <foreach close=")" collection="categoryIdList" item="item" open="(" separator=", ">
-        #{item,jdbcType=INTEGER}
+        #{item,jdbcType=BIGINT}
       </foreach>
     </if>
     group by c.id, c.name
@@ -1153,7 +1153,7 @@
     <if test="categoryIdList != null and categoryIdList.size() > 0">
       and c.id in
       <foreach close=")" collection="categoryIdList" item="item" open="(" separator=", ">
-        #{item,jdbcType=INTEGER}
+        #{item,jdbcType=BIGINT}
       </foreach>
     </if>
   </select>
